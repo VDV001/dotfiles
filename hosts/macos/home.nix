@@ -23,6 +23,7 @@
     ../../home/translateshell
     ../../home/yazi
     ../../home/zsh
+    ../../home/go
   ];
 
   home = {

@@ -43,12 +43,8 @@
       "linearmouse"
       "maccy"
       "orbstack"
-      #"microsoft-excel"
-      #"microsoft-powerpoint"
-      #"microsoft-word"
       "telegram-desktop"
       "visual-studio-code"
-      #"whatsapp"
     ];
   };
 }

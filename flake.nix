@@ -27,9 +27,11 @@
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    mac-app-util.url = "github:hraban/mac-app-util";
   };
 
-  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nix-vscode-extensions, stylix, disko, impermanence, ... }:
+  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nix-vscode-extensions, stylix, disko, impermanence, mac-app-util, ... }:
   {
     # darwin-rebuild build --flake .#MacBook-Air-daniil
     darwinConfigurations = {
@@ -62,8 +64,12 @@
 
             stylix.darwinModules.stylix
             ./hosts/macos
+            mac-app-util.darwinModules.default
             home-manager.darwinModules.home-manager
             {
+              home-manager.sharedModules = [
+                mac-app-util.homeManagerModules.default
+              ];
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = specialArgs;
