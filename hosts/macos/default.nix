@@ -45,6 +45,7 @@
       "orbstack"
       "telegram-desktop"
       "visual-studio-code"
+      "notchnook"
     ];
   };
 }
