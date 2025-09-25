@@ -44,8 +44,8 @@
       "maccy"
       "orbstack"
       "telegram-desktop"
+      "termius"
       "visual-studio-code"
-      "notchnook"
     ];
   };
 }
