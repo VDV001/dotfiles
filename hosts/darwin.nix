@@ -7,7 +7,7 @@ let
     {
       host,
       user,
-      useremail ? "mail@dfjay.com",
+      useremail ? "daniilvdovin4@gmail.com",
       system,
       homeModules ? [ ],
       darwinModules ? [ ],
@@ -79,31 +79,25 @@ in
 {
   imports = [
     (mkDarwinConfiguration {
-      host = "dfjay-laptop";
-      user = "dfjay";
+      host = "MacBook-Air-daniil";
+      user = "daniil";
       system = "aarch64-darwin";
       darwinModules = with modules; [
         darwin-system
-        darwin-macos
-        darwin-aerospace
-        stylix
       ];
       homeModules = with modules; [
         sops
-        claude
         bat
         docker
         eza
         fastfetch
         formats
         git
-        helix
         htop
         k8s
         kitty
         lazydocker
         lazygit
-        nushell
         nvchad
         postgresql
         proto
@@ -116,15 +110,11 @@ in
         zed
         zoxide
         zsh
-        languages.erlang
         languages.go
         languages.js
-        languages.kotlin
         languages.python
-        languages.rust
-        languages.solidity
       ];
-      hostModules = [ ./dfjay-laptop ];
+      hostModules = [ ./daniil-laptop ];
     })
   ];
 }

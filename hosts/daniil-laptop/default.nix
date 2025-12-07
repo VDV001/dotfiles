@@ -32,7 +32,6 @@
     };
 
     masApps = {
-      #"Logic Pro" = 634148309;
       "Xcode" = 497799835;
     };
 
@@ -56,14 +55,11 @@
       "maccy"
       "orbstack"
       "outline-manager"
-      "microsoft-excel"
-      "microsoft-powerpoint"
-      "microsoft-teams"
-      "microsoft-word"
+      "parallels"
       "telegram-desktop"
       "termius"
       "visual-studio-code"
-      "vmware-fusion"
+      "utm"
       "webstorm"
     ];
   };
