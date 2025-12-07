@@ -54,7 +54,21 @@
 
               nixpkgs.hostPlatform = "aarch64-darwin";
 
-              nixpkgs.overlays = [ inputs.nix-vscode-extensions.overlays.default ];
+              nixpkgs.overlays = [
+                inputs.nix-vscode-extensions.overlays.default
+                # Fix fish 4.2.1 build - pexpect missing in test environment
+                (final: prev: {
+                  fish = prev.fish.overrideAttrs (old: {
+                    nativeCheckInputs = (old.nativeCheckInputs or []) ++ [
+                      prev.python3Packages.pexpect
+                    ];
+                    checkPhase = ''
+                      export PYTHONPATH="${prev.python3Packages.pexpect}/${prev.python3.sitePackages}:$PYTHONPATH"
+                      ${old.checkPhase or ""}
+                    '';
+                  });
+                })
+              ];
               
               users.users.daniil = {
                 name = username;

@@ -3,10 +3,13 @@
 {
   programs.ssh = {
     enable = true;
-    addKeysToAgent = "yes";
+    enableDefaultConfig = false;
     includes = [
       "~/.colima/ssh_config"
       "~/.orbstack/ssh"
     ];
+    matchBlocks."*" = {
+      addKeysToAgent = "yes";
+    };
   };
 }

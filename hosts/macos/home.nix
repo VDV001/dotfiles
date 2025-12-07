@@ -22,6 +22,7 @@
     ../../home/starship
     ../../home/translateshell
     ../../home/yazi
+    ../../home/zed
     ../../home/zsh
     ../../home/go
   ];
