@@ -1,0 +1,18 @@
+keys:
+  - &yubikey A82705DF08BC95859FF5CB7E577260D68251AC22
+
+  - &mac ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ9W6B9WBu7PbMJWdKGFzBLMR1y2IK+kFuSsIWh2fwqg
+  - &mac-age age169gkmzkh42gjt6pylegtk07tzhxhct8ajst32zpqsvanax2u3y5szwxp3t
+  # - &desktop ssh-ed25519 AAAAC3...
+  - &linode-age age19rylum5rf0xe400vkf8tkgwv94p3wqjt5aldxv3kmnyqyf9lm5lsmu6a2y
+
+creation_rules:
+  - path_regex: secrets/.*\.yaml$
+    key_groups:
+      - pgp:
+          - *yubikey
+        age:
+          - *mac
+          - *mac-age
+          # - *desktop
+          - *linode-age

@@ -1,11 +1,23 @@
 {
-  description = "dfjay flake config";
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
+
     home-manager = {
       url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    home-manager-stable = {
+      url = "github:nix-community/home-manager/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -21,76 +33,42 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    impermanence.url = "github:nix-community/impermanence";
+    preservation.url = "github:nix-community/preservation";
 
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin/master";
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    mac-app-util.url = "github:hraban/mac-app-util";
-  };
+    colmena = {
+      url = "github:zhaofengli/colmena";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, nix-vscode-extensions, stylix, disko, impermanence, mac-app-util, ... }:
-  {
-    # darwin-rebuild build --flake .#MacBook-Air-daniil
-    darwinConfigurations = {
-      "MacBook-Air-daniil" = 
-        let
-          username = "daniil";  
-          useremail = "daniilvdovin4@gmail.com";
-          specialArgs = inputs // { inherit inputs username useremail; };
-        in
-        nix-darwin.lib.darwinSystem {
-          inherit specialArgs;
-          modules = [ 
-            ({ pkgs, lib, ... }: {
-              # Set Git commit hash for darwin-version.
-              system.configurationRevision = self.rev or self.dirtyRev or null;
+    nix4nvchad = {
+      url = "github:nix-community/nix4nvchad";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-              # $ darwin-rebuild changelog
-              system.stateVersion = 6;
-              system.primaryUser = username;
-
-              nixpkgs.hostPlatform = "aarch64-darwin";
-
-              nixpkgs.overlays = [
-                inputs.nix-vscode-extensions.overlays.default
-                # Fix fish 4.2.1 build - pexpect missing in test environment
-                (final: prev: {
-                  fish = prev.fish.overrideAttrs (old: {
-                    nativeCheckInputs = (old.nativeCheckInputs or []) ++ [
-                      prev.python3Packages.pexpect
-                    ];
-                    checkPhase = ''
-                      export PYTHONPATH="${prev.python3Packages.pexpect}/${prev.python3.sitePackages}:$PYTHONPATH"
-                      ${old.checkPhase or ""}
-                    '';
-                  });
-                })
-              ];
-              
-              users.users.daniil = {
-                name = username;
-                home = "/Users/${username}";
-              };
-            })
-
-            stylix.darwinModules.stylix
-            ./hosts/macos
-            mac-app-util.darwinModules.default
-            home-manager.darwinModules.home-manager
-            {
-              home-manager.sharedModules = [
-                mac-app-util.homeManagerModules.default
-              ];
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = specialArgs;
-              home-manager.users.${username} = import ./hosts/macos/home.nix;
-            }
-          ];
-        };
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
     };
   };
+
+  outputs =
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "aarch64-darwin"
+        "x86_64-linux"
+      ];
+
+      imports = [
+        ./hosts/flake-module.nix
+        ./modules/flake-parts/flake-module.nix
+      ];
+    };
 }

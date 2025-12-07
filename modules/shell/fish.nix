@@ -1,9 +1,12 @@
-{ pkgs, username, ... }:
-
 {
-  users.users.${username} = {
-    shell = pkgs.fish;
-  };
+  nixosModule =
+    { pkgs, username, ... }:
 
-  programs.fish.enable = true;
+    {
+      users.users.${username} = {
+        shell = pkgs.fish;
+      };
+
+      programs.fish.enable = true;
+    };
 }

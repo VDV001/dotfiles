@@ -1,25 +1,25 @@
-{ pkgs, ... }:
-
 {
-  services.displayManager.gdm = {
-    enable = true;
-  };
+  nixosModule =
+    { pkgs, ... }:
 
-  services.desktopManager.gnome = {
-    enable = true;
-  };
+    {
+      services.displayManager.gdm = {
+        enable = true;
+      };
 
-  programs.dconf.enable = true;
+      services.desktopManager.gnome = {
+        enable = true;
+      };
 
-  environment.gnome.excludePackages = with pkgs; [
-    geary
-  ];
+      programs.dconf.enable = true;
 
-  environment.systemPackages = with pkgs.gnomeExtensions; [
-    dash-to-dock
-    blur-my-shell
-    gsconnect
-    forge
-    pop-shell
-  ];
+      environment.gnome.excludePackages = with pkgs; [
+        geary
+      ];
+
+      environment.systemPackages = with pkgs.gnomeExtensions; [
+        blur-my-shell
+        gsconnect
+      ];
+    };
 }

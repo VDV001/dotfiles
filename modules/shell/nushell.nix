@@ -1,9 +1,12 @@
-{ pkgs, username, ... }:
-
 {
-  users.users.${username} = {
-    shell = pkgs.nushell;
-  };
+  nixosModule =
+    { pkgs, username, ... }:
 
-  programs.nushell.enable = true;
+    {
+      users.users.${username} = {
+        shell = pkgs.nushell;
+      };
+
+      programs.nushell.enable = true;
+    };
 }

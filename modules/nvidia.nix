@@ -1,19 +1,22 @@
-{ config, ... }:
-
 {
-  services.xserver.videoDrivers = ["nvidia"];
+  nixosModule =
+    { config, ... }:
 
-  hardware.nvidia = {
-    modesetting.enable = true;
+    {
+      services.xserver.videoDrivers = [ "nvidia" ];
 
-    open = false;
-    nvidiaSettings = true;
-    forceFullCompositionPipeline = true;
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
+      hardware.nvidia = {
+        modesetting.enable = true;
 
-    powerManagement = {
-      enable = false;
-      finegrained = false;
+        open = false;
+        nvidiaSettings = true;
+        forceFullCompositionPipeline = true;
+        package = config.boot.kernelPackages.nvidiaPackages.latest;
+
+        powerManagement = {
+          enable = false;
+          finegrained = false;
+        };
+      };
     };
-  };
 }
