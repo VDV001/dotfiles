@@ -58,6 +58,7 @@
       "telegram-desktop"
       "termius"
       "visual-studio-code"
+      "webstorm"
     ];
   };
 }
