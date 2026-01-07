@@ -51,7 +51,6 @@
       "google-chrome"
       "iina"
       "linearmouse"
-      "logseq"
       "maccy"
       "orbstack"
       "outline-manager"
@@ -60,7 +59,6 @@
       "termius"
       "visual-studio-code"
       "utm"
-      "webstorm"
     ];
   };
 }

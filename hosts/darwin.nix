@@ -87,6 +87,7 @@ in
       ];
       homeModules = with modules; [
         sops
+        claude
         bat
         docker
         eza
@@ -107,7 +108,6 @@ in
         starship
         translateshell
         yazi
-        zed
         zoxide
         zsh
         languages.go
