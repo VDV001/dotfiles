@@ -61,7 +61,6 @@ let
               ];
             };
           }
-          inputs.stylix.darwinModules.stylix
           inputs.sops-nix.darwinModules.sops
           inputs.home-manager.darwinModules.home-manager
           {

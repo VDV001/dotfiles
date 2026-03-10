@@ -10,6 +10,7 @@
         enableDefaultConfig = false;
         includes = [
           "~/.colima/ssh_config"
+          "~/.orbstack/ssh/config"
         ];
         matchBlocks."*" = {
           addKeysToAgent = "yes";

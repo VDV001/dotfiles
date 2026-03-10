@@ -1,67 +1,115 @@
-{ pkgs, pkgs-master, ... }:
+{ modules }:
 
 {
-  environment.systemPackages = with pkgs; [
-    age
-    aria2
-    betterdisplay
-    codex
-    claude-code
-    dive
-    docker
-    docker-credential-helpers
-    dua
-    ffmpeg
-    gh
-    glab
-    glow
-    httpie
-    insomnia
-    just
+  system = "aarch64-darwin";
+  user = "daniil";
+  useremail = "daniilvdovin4@gmail.com";
+
+  darwinStateVersion = 6;
+  homeStateVersion = "26.05";
+
+  modules = with modules; [
     sops
-    sshpass
+    claude
+    bat
+    direnv
+    docker
+    eza
+    fastfetch
+    fd
+    formats
+    git
+    helix
+    btop
+    k8s
+    kitty
+    lazydocker
+    lazygit
+    neovim
+    nix-index
+    postgresql
+    proto
+    ripgrep
+    skim
+    ssh
+    starship
+    tealdeer
+    yazi
+    zoxide
+    zsh
+
+    languages.go
+    languages.js
   ];
-  environment.variables.EDITOR = "nvim";
 
-  homebrew = {
-    enable = true;
+  config =
+    { pkgs, username, ... }:
+    {
+      home-manager.users.${username} = {
+        sops.age.keyFile = "/Users/${username}/.config/sops/age/keys.txt";
+        services.gpg-agent.pinentry.package = pkgs.pinentry_mac;
+      };
 
-    onActivation = {
-      autoUpdate = true;
-      upgrade = true;
-      cleanup = "zap";
+      environment.systemPackages = with pkgs; [
+        nh
+        age
+        aria2
+        betterdisplay
+        codex
+        dive
+        docker
+        docker-credential-helpers
+        dua
+        ffmpeg
+        gh
+        glab
+        glow
+        just
+        sops
+        sshpass
+        xh
+
+        # GUI
+        bruno
+        iina
+      ];
+      environment.variables.EDITOR = "hx";
+
+      homebrew = {
+        enable = true;
+
+        onActivation = {
+          autoUpdate = true;
+          upgrade = true;
+          cleanup = "zap";
+        };
+
+        masApps = {
+          "Xcode" = 497799835;
+        };
+
+        taps = [ ];
+
+        brews = [
+          "ollama"
+        ];
+
+        casks = [
+          "claude"
+          "figma"
+          "gpg-suite"
+          "google-chrome"
+          "linearmouse"
+          "logseq"
+          "maccy"
+          "orbstack"
+          "outline-manager"
+          "parallels"
+          "telegram-desktop"
+          "termius"
+          "visual-studio-code"
+          "utm"
+        ];
+      };
     };
-
-    masApps = {
-      "Xcode" = 497799835;
-    };
-
-    taps = [ ];
-
-    brews = [
-      "gnupg"
-      "pinentry-mac"
-      "ykman"
-      "ollama"
-    ];
-
-    casks = [
-      "claude"
-      "figma"
-      "gpg-suite"
-      "google-chrome"
-      "iina"
-      "linearmouse"
-      "webstorm"
-      "logseq"
-      "maccy"
-      "orbstack"
-      "outline-manager"
-      "parallels"
-      "telegram-desktop"
-      "termius"
-      "visual-studio-code"
-      "utm"
-    ];
-  };
 }
