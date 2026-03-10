@@ -19,6 +19,7 @@
     insomnia
     just
     sops
+    sshpass
   ];
   environment.variables.EDITOR = "nvim";
 
@@ -51,6 +52,8 @@
       "google-chrome"
       "iina"
       "linearmouse"
+      "webstorm"
+      "logseq"
       "maccy"
       "orbstack"
       "outline-manager"
