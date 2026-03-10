@@ -1,11 +1,11 @@
 {
   homeModule =
-    { ... }:
+    { pkgs, ... }:
 
     {
       programs.ghostty = {
         enable = true;
-        enableZshIntegration = true;
+        package = if pkgs.stdenv.isDarwin then null else pkgs.ghostty;
       };
     };
 }

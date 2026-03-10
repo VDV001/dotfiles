@@ -40,14 +40,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     colmena = {
       url = "github:zhaofengli/colmena";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix4nvchad = {
-      url = "github:nix-community/nix4nvchad";
-      inputs.nixpkgs.follows = "nixpkgs";
+    portfolio = {
+      url = "github:dfjay/dfjay.com";
+      flake = false;
     };
 
     flake-parts = {
@@ -65,8 +70,15 @@
       ];
 
       imports = [
-        ./hosts/flake-module.nix
-        ./modules/flake-parts/flake-module.nix
+        ./hosts/darwin.nix
+        ./hosts/nixos.nix
+        ./hosts/router/flake-module.nix
       ];
+
+      perSystem =
+        { pkgs, ... }:
+        {
+          formatter = pkgs.nixfmt-tree;
+        };
     };
 }

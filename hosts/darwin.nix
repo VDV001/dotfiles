@@ -7,11 +7,12 @@ let
     {
       host,
       user,
-      useremail ? "daniilvdovin4@gmail.com",
+      useremail,
       system,
-      homeModules ? [ ],
-      darwinModules ? [ ],
+      darwinStateVersion,
+      homeStateVersion,
       hostModules ? [ ],
+      hostConfig ? null,
     }:
     let
       pkgs-master = import inputs.nixpkgs-master {
@@ -29,30 +30,42 @@ let
       flake.darwinConfigurations.${host} = inputs.nix-darwin.lib.darwinSystem {
         inherit specialArgs;
         modules = [
-          (
-            { ... }:
-            {
-              system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
-              system.stateVersion = 6;
-              system.primaryUser = user;
-              nixpkgs.hostPlatform = system;
-              nixpkgs.overlays = [ inputs.nix-vscode-extensions.overlays.default ];
-              users.users.${user} = {
-                name = user;
-                home = "/Users/${user}";
+          {
+            system.configurationRevision = inputs.self.rev or inputs.self.dirtyRev or null;
+            system.stateVersion = darwinStateVersion;
+            system.primaryUser = user;
+            nixpkgs.hostPlatform = system;
+            nixpkgs.config.allowUnfree = true;
+            nixpkgs.overlays = [
+              inputs.nix-vscode-extensions.overlays.default
+            ]
+            ++ (import ../overlays);
+            users.users.${user} = {
+              name = user;
+              home = "/Users/${user}";
+            };
+
+            security.pam.services.sudo_local.touchIdAuth = true;
+
+            nix = {
+              gc = {
+                automatic = true;
+                interval = {
+                  Weekday = 7;
+                };
+                options = "--delete-older-than 14d";
               };
-            }
-          )
+              settings.experimental-features = [
+                "nix-command"
+                "flakes"
+              ];
+            };
+          }
           inputs.stylix.darwinModules.stylix
           inputs.sops-nix.darwinModules.sops
-        ]
-        ++ getDarwinModules darwinModules
-        ++ hostModules
-        ++ [
           inputs.home-manager.darwinModules.home-manager
           {
             home-manager.sharedModules = [
-              inputs.nix4nvchad.homeManagerModules.default
               inputs.sops-nix.homeManagerModules.sops
             ];
             home-manager.backupFileExtension = "backup";
@@ -62,59 +75,36 @@ let
             home-manager.users.${user} =
               { ... }:
               {
-                imports = getHomeModules homeModules;
+                imports = getHomeModules hostModules;
                 home = {
                   username = user;
                   homeDirectory = "/Users/${user}";
-                  stateVersion = "25.11";
+                  stateVersion = homeStateVersion;
                 };
-                programs.home-manager.enable = true;
               };
           }
-        ];
+        ]
+        ++ getDarwinModules hostModules
+        ++ lib.optional (hostConfig != null) hostConfig;
       };
     };
+
+  laptop = import ./daniil-laptop { inherit modules; };
 
 in
 {
   imports = [
     (mkDarwinConfiguration {
       host = "MacBook-Air-daniil";
-      user = "daniil";
-      system = "aarch64-darwin";
-      darwinModules = with modules; [
-        darwin-system
-      ];
-      homeModules = with modules; [
-        sops
-        claude
-        bat
-        docker
-        eza
-        fastfetch
-        formats
-        git
-        htop
-        k8s
-        kitty
-        lazydocker
-        lazygit
-        nvchad
-        postgresql
-        proto
-        ripgrep
-        skim
-        ssh
-        starship
-        translateshell
-        yazi
-        zoxide
-        zsh
-        languages.go
-        languages.js
-        languages.python
-      ];
-      hostModules = [ ./daniil-laptop ];
+      inherit (laptop)
+        system
+        user
+        useremail
+        darwinStateVersion
+        homeStateVersion
+        ;
+      hostModules = laptop.modules;
+      hostConfig = laptop.config;
     })
   ];
 }

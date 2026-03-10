@@ -43,6 +43,7 @@
               "**/templates/**/*.yml"
               "**/helmfile.d/**/*.yaml"
               "**/helmfile.d/**/*.yml"
+              "**/values*.yaml"
             ];
           };
           lsp = {

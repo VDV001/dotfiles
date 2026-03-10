@@ -3,14 +3,7 @@
     { pkgs, ... }:
 
     {
-      home.packages = with pkgs; [
-        (pkgs.python313.withPackages (ps: [
-          ps.pip
-          ps.pyyaml
-          ps.pandas
-          ps.requests
-        ]))
-      ];
+      home.packages = [ pkgs.python314 ];
 
       programs.uv.enable = true;
     };

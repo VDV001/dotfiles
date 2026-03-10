@@ -11,13 +11,20 @@ history:
 # Garbage collect all unused nix store entries
 [group('nix')]
 gc:
-  # garbage collect all unused nix store entries(system-wide)
-  sudo nix-collect-garbage --delete-older-than 7d
-  # garbage collect all unused nix store entries(for the user - home-manager)
-  # https://github.com/NixOS/nix/issues/8508
-  nix-collect-garbage --delete-older-than 7d
+  nh clean all --keep-since 7d --keep 5
 
 # Show all the auto gc roots in the nix store
 [group('nix')]
 gcroot:
   ls -al /nix/var/nix/gcroots/auto/
+
+# Build OpenWrt sysupgrade image for GL-MT6000
+[group('router')]
+router-build:
+  hosts/router/build.sh
+
+# Deploy firmware to router via sysupgrade
+[group('router')]
+router-deploy:
+  scp result/sysupgrade.bin root@192.168.1.1:/tmp/firmware.bin
+  ssh root@192.168.1.1 'sysupgrade -n /tmp/firmware.bin'

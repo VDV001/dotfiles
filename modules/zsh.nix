@@ -1,6 +1,6 @@
 {
   homeModule =
-    { ... }:
+    { config, lib, ... }:
     {
       programs.zsh = {
         enable = true;
@@ -29,16 +29,21 @@
             "rust"
             "ssh"
             "systemd"
-            "vagrant"
-            "pip"
           ];
-          theme = "robbyrussell";
         };
 
         shellAliases = {
-          ll = "eza -la --sort name --group-directories-first --no-permissions --no-filesize --no-user --no-time";
           edit = "sudo -e";
+        }
+        // lib.optionalAttrs config.programs.eza.enable {
+          ll = "eza -la --sort name --group-directories-first --no-permissions --no-filesize --no-user --no-time";
           tree = "eza --tree";
+        }
+        // lib.optionalAttrs config.programs.bat.enable {
+          cat = "bat";
+        }
+        // lib.optionalAttrs config.programs.btop.enable {
+          top = "btop";
         };
 
         history = {

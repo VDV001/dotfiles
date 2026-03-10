@@ -1,6 +1,7 @@
 {
   homeModule =
     {
+      pkgs,
       lib,
       username,
       useremail,
@@ -11,16 +12,11 @@
         rm -f ~/.gitconfig
       '';
 
+      home.packages = [ pkgs.git-absorb ];
+
       programs.git = {
         enable = true;
         lfs.enable = true;
-
-        includes = [
-          {
-            path = "~/spectrum/.gitconfig";
-            condition = "gitdir:~/spectrum/";
-          }
-        ];
 
         ignores = [
           ".claude/"
@@ -38,6 +34,12 @@
           push.autoSetupRemote = true;
           push.rebase = true;
           pull.rebase = false;
+
+          branch.sort = "-committerdate";
+          fetch.prune = true;
+          diff.algorithm = "histogram";
+          merge.conflictstyle = "zdiff3";
+          rerere.enabled = true;
 
           alias = {
             ls = "log --pretty=format:\"%C(yellow)%h%Cred%d\\\\ %Creset%s%Cblue\\\\ [%cn]\" --decorate";

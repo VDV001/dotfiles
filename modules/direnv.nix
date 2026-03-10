@@ -3,9 +3,9 @@
     { ... }:
 
     {
-      programs.nvchad = {
+      programs.direnv = {
         enable = true;
-        hm-activation = true;
+        nix-direnv.enable = true;
       };
     };
 }

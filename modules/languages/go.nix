@@ -16,8 +16,6 @@
         golangci-lint
         gopls
         gosec
-        sqlc
-        go-migrate
       ];
     };
 }

@@ -1,6 +1,6 @@
 {
   darwinModule =
-    { username, ... }:
+    { ... }:
     {
       # https://daiderd.com/nix-darwin/manual/index.html#sec-options
       # https://github.com/yannbertrand/macos-defaults
@@ -35,7 +35,9 @@
           };
 
           trackpad = {
-
+            Clicking = false;
+            TrackpadRightClick = true;
+            TrackpadThreeFingerDrag = true;
           };
 
           WindowManager = {
@@ -59,7 +61,5 @@
           remapCapsLockToEscape = true;
         };
       };
-
-      programs.zsh.enable = true;
     };
 }

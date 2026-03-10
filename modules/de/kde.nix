@@ -20,6 +20,7 @@
       };
 
       programs.dconf.enable = true;
+      programs.kdeconnect.enable = true;
 
       environment.plasma6.excludePackages = with pkgs.kdePackages; [
         konsole

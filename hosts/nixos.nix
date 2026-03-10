@@ -3,24 +3,17 @@ let
   self-lib = import ../lib.nix { inherit lib; };
   inherit (self-lib) modules getHomeModules getNixosModules;
 
-  # Colmena deployment targets
-  colmenaHosts = {
-    linode-vps = {
-      targetHost = "subs.dfjay.com";
-      targetUser = "dfjay";
-    };
-  };
-
   mkNixosConfiguration =
     {
       host,
       user,
-      useremail ? "mail@dfjay.com",
+      useremail,
       userdesc ? user,
       system,
-      homeModules ? [ ],
-      nixosModules ? [ ],
+      nixosStateVersion,
+      homeStateVersion,
       hostModules ? [ ],
+      hostConfig ? null,
       nixpkgs ? inputs.nixpkgs,
       home-manager ? inputs.home-manager,
     }:
@@ -41,25 +34,37 @@ let
       flake.nixosConfigurations.${host} = nixpkgs.lib.nixosSystem {
         inherit system specialArgs;
         modules = [
-          (
-            { ... }:
-            {
-              nixpkgs.overlays = [ inputs.nix-vscode-extensions.overlays.default ];
-            }
-          )
-          inputs.nix-flatpak.nixosModules.nix-flatpak
+          {
+            system.stateVersion = nixosStateVersion;
+            nixpkgs.config.allowUnfree = true;
+            nixpkgs.overlays = [
+              inputs.nix-vscode-extensions.overlays.default
+            ]
+            ++ (import ../overlays);
+
+            nix = {
+              gc = {
+                automatic = true;
+                dates = "weekly";
+                options = "--delete-older-than 14d";
+              };
+              settings = {
+                auto-optimise-store = true;
+                experimental-features = [
+                  "nix-command"
+                  "flakes"
+                ];
+              };
+            };
+          }
           inputs.stylix.nixosModules.stylix
           inputs.disko.nixosModules.disko
           inputs.preservation.nixosModules.preservation
           inputs.sops-nix.nixosModules.sops
-        ]
-        ++ getNixosModules nixosModules
-        ++ hostModules
-        ++ [
+          inputs.lanzaboote.nixosModules.lanzaboote
           home-manager.nixosModules.home-manager
           {
             home-manager.sharedModules = [
-              inputs.nix4nvchad.homeManagerModules.default
               inputs.sops-nix.homeManagerModules.sops
             ];
             home-manager.useGlobalPkgs = true;
@@ -68,123 +73,74 @@ let
             home-manager.users.${user} =
               { pkgs, ... }:
               {
-                imports = getHomeModules homeModules;
+                imports = getHomeModules hostModules;
                 home = {
                   username = user;
                   homeDirectory = "/home/${user}";
-                  stateVersion = "25.11";
-                  packages = with pkgs; [
-                    nerd-fonts.fira-code
-                    nerd-fonts.droid-sans-mono
-                    nerd-fonts.noto
-                    nerd-fonts.hack
-                    nerd-fonts.ubuntu
-                  ];
+                  stateVersion = homeStateVersion;
                 };
-                news.display = "show";
-                programs.home-manager.enable = true;
               };
           }
-        ];
+        ]
+        ++ getNixosModules hostModules
+        ++ lib.optional (hostConfig != null) hostConfig;
       };
     };
+
+  vps = import ./vps { inherit modules; };
+  desktop = import ./dfjay-desktop { inherit modules; };
 
 in
 {
-  flake.colmena = let
-    conf = inputs.self.nixosConfigurations;
-  in {
-    meta = {
-      nixpkgs = import inputs.nixpkgs-stable { system = "x86_64-linux"; };
-      nodeNixpkgs = builtins.mapAttrs (name: value: value.pkgs) conf;
-      nodeSpecialArgs = builtins.mapAttrs (name: value: value._module.specialArgs) conf;
-    };
-
-    linode-vps = {
-      deployment = {
-        targetHost = colmenaHosts.linode-vps.targetHost;
-        targetUser = colmenaHosts.linode-vps.targetUser;
-        buildOnTarget = true;
+  flake.colmena =
+    let
+      conf = inputs.self.nixosConfigurations;
+    in
+    {
+      meta = {
+        nixpkgs = import inputs.nixpkgs-stable { system = "x86_64-linux"; };
+        nodeNixpkgs = builtins.mapAttrs (name: value: value.pkgs) conf;
+        nodeSpecialArgs = builtins.mapAttrs (name: value: value._module.specialArgs) conf;
       };
-      imports = conf.linode-vps._module.args.modules;
+
+      vps = {
+        deployment = {
+          targetHost = vps.colmena.targetHost;
+          targetUser = vps.colmena.targetUser;
+          buildOnTarget = true;
+        };
+        imports = conf.vps._module.args.modules;
+      };
     };
-  };
 
   imports = [
     (mkNixosConfiguration {
-      host = "linode-vps";
-      user = "dfjay";
-      userdesc = "Pavel Yozhikov";
-      system = "x86_64-linux";
+      host = "vps";
+      inherit (vps)
+        system
+        user
+        useremail
+        userdesc
+        nixosStateVersion
+        homeStateVersion
+        ;
+      hostModules = vps.modules;
+      hostConfig = vps.config;
       nixpkgs = inputs.nixpkgs-stable;
       home-manager = inputs.home-manager-stable;
-      nixosModules = with modules; [
-        locale
-      ];
-      homeModules = with modules; [
-        bat
-        btop
-        eza
-        git
-        helix
-        ripgrep
-        starship
-        yazi
-        zoxide
-      ];
-      hostModules = [ ./linode-vps ];
     })
     (mkNixosConfiguration {
       host = "dfjay-desktop";
-      user = "dfjay";
-      userdesc = "Pavel Yozhikov";
-      system = "x86_64-linux";
-      nixosModules = with modules; [
-        audio
-        bluetooth
-        de.cosmic
-        flatpak
-        games
-        locale
-        shell.zsh
-        sops
+      inherit (desktop)
         system
-        stylix
-      ];
-      homeModules = with modules; [
-        bat
-        btop
-        eza
-        fastfetch
-        ghostty
-        git
-        gpg
-        gradle
-        helix
-        k8s
-        kitty
-        lazydocker
-        lazygit
-        librewolf
-        nvchad
-        postgresql
-        ripgrep
-        skim
-        starship
-        translateshell
-        vscode
-        yazi
-        zed
-        zoxide
-        zsh
-        languages.go
-        languages.js
-        languages.jdk
-        languages.kotlin
-        languages.rust
-        languages.python
-      ];
-      hostModules = [ ./dfjay-desktop ];
+        user
+        useremail
+        userdesc
+        nixosStateVersion
+        homeStateVersion
+        ;
+      hostModules = desktop.modules;
+      hostConfig = desktop.config;
     })
   ];
 }

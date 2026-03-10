@@ -1,18 +1,16 @@
 {
   homeModule =
-    { pkgs, ... }:
+    { ... }:
 
     {
-      programs = {
-        gpg = {
-          enable = true;
-        };
-      };
+      programs.gpg.enable = true;
+      services.gpg-agent.enable = true;
+      services.gpg-agent.enableSshSupport = true;
+    };
 
-      services.gpg-agent = {
-        enable = true;
-        enableZshIntegration = true;
-        pinentry.package = pkgs.pinentry-curses;
-      };
+  darwinModule =
+    { ... }:
+    {
+      environment.variables.SSH_AUTH_SOCK = "$(gpgconf --list-dirs agent-ssh-socket)";
     };
 }

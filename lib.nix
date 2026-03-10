@@ -22,13 +22,11 @@ let
     let
       contents = readDir path;
 
-      # Regular .nix files (excluding default.nix)
       nixFiles = filterAttrs (
         name: type: type == "regular" && hasSuffix ".nix" name && name != "default.nix"
       ) contents;
 
-      # Subdirectories (excluding flake-parts and other special dirs)
-      subDirs = filterAttrs (name: type: type == "directory" && name != "flake-parts") contents;
+      subDirs = filterAttrs (name: type: type == "directory") contents;
 
       # Import .nix files as modules
       fileModules = mapAttrs' (

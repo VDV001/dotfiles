@@ -1,9 +1,8 @@
 {
   homeModule =
     { ... }:
-
     {
-      programs.htop = {
+      programs.fd = {
         enable = true;
       };
     };
