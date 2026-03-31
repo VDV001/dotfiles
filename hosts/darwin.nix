@@ -36,6 +36,9 @@ let
             system.primaryUser = user;
             nixpkgs.hostPlatform = system;
             nixpkgs.config.allowUnfree = true;
+            nixpkgs.config.permittedInsecurePackages = [
+              "electron-38.8.4"
+            ];
             nixpkgs.overlays = [
               inputs.nix-vscode-extensions.overlays.default
             ]

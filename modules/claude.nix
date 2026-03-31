@@ -6,6 +6,9 @@
       sops.secrets.context7_api_key = { };
       sops.secrets.magic_21st_api_key = { };
       sops.secrets.figma_api_key = { };
+      sops.secrets.openbrand_api_key = { };
+      sops.secrets.telegram_bot_token = { };
+      sops.secrets.stitch_api_key = { };
 
       # ── MCP servers with secrets → ~/.mcp.json (via sops) ─────
       sops.templates."mcp.json" = {
@@ -45,6 +48,45 @@
                 "--stdio"
               ];
             };
+
+            # Brand asset search (OpenBrand)
+            openbrand = {
+              type = "stdio";
+              command = "npx";
+              args = [
+                "-y"
+                "openbrand-mcp"
+              ];
+              env = {
+                OPENBRAND_API_KEY = config.sops.placeholder.openbrand_api_key;
+              };
+            };
+
+            # Google Stitch
+            stitch = {
+              type = "http";
+              url = "https://stitch.googleapis.com/mcp";
+              headers = {
+                X-Goog-Api-Key = config.sops.placeholder.stitch_api_key;
+              };
+            };
+
+            # Telegram channel
+            telegram = {
+              type = "stdio";
+              command = "bun";
+              args = [
+                "run"
+                "--cwd"
+                "${config.home.homeDirectory}/.claude/plugins/marketplaces/claude-plugins-official/external_plugins/telegram"
+                "--shell=bun"
+                "--silent"
+                "start"
+              ];
+              env = {
+                TELEGRAM_BOT_TOKEN = config.sops.placeholder.telegram_bot_token;
+              };
+            };
           };
         };
       };
@@ -61,6 +103,14 @@
             "gopls-lsp@claude-plugins-official" = true;
             "superpowers@superpowers-marketplace" = true;
             "modern-go-guidelines@goland-claude-marketplace" = true;
+            "telegram@claude-plugins-official" = true;
+          };
+
+          # Statusline — model, git, cost, context, VPS monitoring
+          statusLine = {
+            type = "command";
+            command = "bash ${config.home.homeDirectory}/.claude/statusline.sh";
+            padding = 0;
           };
         };
 

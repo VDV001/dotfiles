@@ -67,6 +67,7 @@
         just
         sops
         sshpass
+        bun
         xh
 
         # GUI
@@ -95,8 +96,10 @@
         ];
 
         casks = [
+          "amneziavpn"
           "claude"
           "figma"
+          "firefox"
           "gpg-suite"
           "google-chrome"
           "linearmouse"
