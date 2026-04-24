@@ -36,6 +36,7 @@
     tealdeer
     yazi
     zoxide
+    zed
     zsh
 
     languages.go
@@ -86,6 +87,7 @@
         };
 
         masApps = {
+          "TestFlight" = 899247664;
           "Xcode" = 497799835;
         };
 

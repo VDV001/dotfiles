@@ -1,12 +1,13 @@
 {
   homeModule =
-    { ... }:
+    { config, ... }:
 
     {
       programs.zed-editor = {
         enable = true;
         extensions = [
           "catppuccin"
+
           "dockerfile"
           "docker-compose"
           "git-firefly"
@@ -31,6 +32,12 @@
           "mcp-server-context7"
         ];
         userSettings = {
+          theme = {
+            mode = "system";
+            light = "Ayu Light";
+            dark = "Catppuccin Mocha";
+          };
+          icon_theme = "Material Icon Theme";
           telemetry = {
             metrics = false;
           };

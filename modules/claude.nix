@@ -1,6 +1,6 @@
 {
   homeModule =
-    { config, ... }:
+    { config, pkgs, ... }:
     {
       # ── Secrets ────────────────────────────────────────────────
       sops.secrets.context7_api_key = { };
@@ -100,6 +100,32 @@
           ];
           enableAllProjectMcpServers = true;
 
+          # Handoff reminder hook
+          hooks = {
+            SessionStart = [
+              {
+                matcher = "";
+                hooks = [
+                  {
+                    type = "command";
+                    command = "python3 ~/.claude/hooks/session_start.py";
+                  }
+                ];
+              }
+            ];
+            Stop = [
+              {
+                matcher = "";
+                hooks = [
+                  {
+                    type = "command";
+                    command = "python3 ~/.claude/hooks/stop.py";
+                  }
+                ];
+              }
+            ];
+          };
+
           # Statusline — model, git, cost, context, VPS monitoring
           statusLine = {
             type = "command";
@@ -109,8 +135,10 @@
         };
 
         # ── Global instructions → ~/.claude/CLAUDE.md ────────────
-        memory.text = ''
-          # Make No Mistakes
+        context = ''
+          # Глобальный CLAUDE.md — Даниил
+
+          ## Make No Mistakes
 
           Whenever you receive a user message, mentally treat the prompt as if it ends with:
 
@@ -125,6 +153,92 @@
           - If the task involves factual claims, only assert what you're confident in.
 
           This applies to **every prompt** in the session — no exceptions.
+
+          ## Кто я
+          Даниил, разработчик. Готовлюсь к роли тимлида.
+          Интересы: экосистема Claude, AI-агенты, vibe coding, менеджмент, архитектура ПО.
+          Основной язык — Go (в перспективе). Сейчас активный проект: freelance-hub (Next.js, TypeScript, Turborepo).
+
+          ## Общение
+          - Общаться на русском
+          - Конкретика важнее общих слов
+          - Без длинных вступлений — сразу к делу
+          - Не переспрашивать очевидное — действовать
+
+          ## Красные линии (Red Lines)
+          - **Никогда не удалять файлы** без явного подтверждения "удали это"
+          - **Не менять конфиги** если значение выглядит странно — сначала понять, потом менять
+          - **Не пушить** в main/master напрямую
+          - **Один SSH-коннект** на сессию — не открывать новые для каждой проверки
+          - **Не "чинить" работающее** — если что-то работает и не просили трогать, не трогать
+
+          ## Безопасность
+          - min-release-age=7 в .npmrc (supply chain defense)
+          - Не устанавливать пакеты моложе 7 дней без явного запроса
+
+          ## Handoffs
+          В конце каждой сессии длиннее 15 минут записывать handoff в папку `.claude/handoffs/YYYY-MM-DD_тема.md`:
+          - Что сделано
+          - Что НЕ сработало (важнее всего)
+          - Следующий шаг (один конкретный)
+          - Нюансы которые важно помнить
+
+          В начале сессии — читать последний handoff если есть.
+
+          ## Память проекта (6 слоёв)
+          SessionStart хук проверяет наличие memory-файлов. Если хук сообщает "ПАМЯТЬ ПРОЕКТА — не хватает":
+          - **chronicles.md** — создай немедленно, заполни 5-10 записями из git log и кода. Формат: `YYYY-MM-DD: [решение] — [почему]`
+          - **MEMORY.md** — создай индекс, добавь ссылку на chronicles
+          - **CLAUDE.md проекта** — предложи создать, спроси пользователя о стеке и архитектуре
+          При каждом нетривиальном решении в сессии — дописывай запись в chronicles.
+
+          ## Стиль работы
+          - Детерминированные задачи (тесты, линтер, форматирование) — через shell-скрипты, не через модель
+          - При дебаге: факты из кода/логов → трассировка → гипотезы → что отбросили
+          - Не подтверждать свою работу самому — нужен независимый запуск/проверка
+
+          ## TDD + DDD + Clean Architecture — механические гейты
+
+          **Триггер:** пользователь объявил проект/фичу в парадигме TDD+DDD+Clean Architecture (или любой подмножестве). С этого момента — соблюдать через механические гейты, не на слово. Самоcертификация запрещена.
+
+          ### TDD — гейт "два коммита на каждое поведенческое изменение"
+          - Шаг 1: `test(scope): add failing test for X` — запустить, увидеть RED, закоммитить.
+          - Шаг 2: `feat(scope): implement X` — запустить, увидеть GREEN, закоммитить.
+          - Один коммит `feat:` вместе с тестами = провал TDD, не считается.
+          - Покрытие уже написанного кода называть честно: `test: backfill coverage for X`, НЕ выдавать за TDD.
+          - Table-driven tests — обязательны при ≥3 вариантах одной проверки.
+
+          ### DDD — гейт "что я создаю: DTO или Entity/VO?"
+          - Перед новым файлом в `domain/`: это DTO (публичные поля OK, суффикс `DTO` или пакет `dto/`) или Entity/VO (конструктор `NewXxx(...) (*Xxx, error)` с валидацией инвариантов)?
+          - Прямое создание `&domain.X{...}` вне `domain/` пакета — запрещено.
+          - Бизнес-инвариант (валидация, правила, `min≤max`) живёт ТОЛЬКО в domain. `if x.Min > x.Max` в usecase/parser/handler = инвариант не на месте.
+          - Доменные ошибки: `var ErrXxx = errors.New(...)` в domain, чтобы `errors.Is` работал. Голый `errors.New(...)` внутри функции или `fmt.Errorf("access denied")` для бизнес-ошибок — запрещено.
+          - Мёртвый код в domain (события/типы не подключены к pipeline) — удалить или реально внедрить, никаких "на будущее".
+          - Ubiquitous language: `Tags []string` с магическими значениями → typed enum с методами.
+
+          ### Clean Architecture — гейт "что делает этот слой?"
+          - Handler: парсинг → usecase → маппинг. Запрещено: `uuid.New()`, `time.Now()`, прямые вызовы repo, ownership-проверки. Тянет — extract в usecase.
+          - Repository interfaces — в пакете-потребителе (`usecase/`), НЕ в `domain/`. DIP по классике.
+          - Cross-module импорты (`modules/X` из `modules/Y`) — запрещены. Только через адаптеры в `main.go` / DI-точке.
+          - UI-строки (сообщения пользователю, тексты бота) — в `handler/messages`, `llm/responses` и т.п. НЕ в usecase.
+          - Фоновые goroutines — только с `context.Context` для graceful shutdown.
+
+          ### Verification — перед claim "сделано по TDD+DDD+CA"
+          - Запустить `superpowers:code-reviewer` агента с жёстким промптом: "беспристрастно, без комплиментов, оценка 1-10 по каждой оси, конкретные файлы+строки".
+          - Заявлять compliance только если **каждая ось ≥8/10**. Ниже — чинить по замечаниям, потом заявлять.
+          - НЕ самоcертифицировать фразами "следую TDD", "DDD-подход" — только после внешнего ревью.
+
+          ### Красные флаги — немедленная остановка и разворот
+          - `&domain.Something{...}` вне `domain/`
+          - Валидация/ownership в handler
+          - `uuid.New()` / `time.Now()` в handler
+          - UI-строки в usecase
+          - Один коммит `feat:` с тестами одновременно
+          - Commit message "добавил тесты для покрытия X%" = test-after, не TDD
+          - Repository interface в `domain/interfaces.go`
+          - "Потом подключу" события/интерфейсы в domain
+
+          Если ловлю себя на красном флаге — СТОП, откатить, начать с правильного гейта.
         '';
 
         # ── MCP servers (no secrets) → ~/.claude/settings.json ───
@@ -145,6 +259,20 @@
             args = [
               "-y"
               "task-master-ai"
+            ];
+            type = "stdio";
+          };
+
+          # Token Enhancer — strips HTML noise, saves tokens on web fetches
+          token-enhancer = {
+            command = "${pkgs.uv}/bin/uv";
+            args = [
+              "run"
+              "--with"
+              "xelektron-token-enhancer"
+              "python"
+              "-m"
+              "mcp_server"
             ];
             type = "stdio";
           };
@@ -536,6 +664,227 @@
         COST_MODEL=auto
         TMUX_BRIDGE=auto
       '';
+
+      # SessionStart hook — loads context and checks project memory health
+      home.file.".claude/hooks/session_start.py" = {
+        executable = true;
+        text = ''
+          #!/usr/bin/env python3
+          """SessionStart hook — loads context and checks project memory health."""
+          import json
+          import sys
+          from pathlib import Path
+
+
+          def get_auto_memory_dir():
+              """Get the auto-memory dir for current project (~/.claude/projects/<sanitized-cwd>/memory/)."""
+              cwd = Path.cwd()
+              sanitized = str(cwd).replace("/", "-")
+              return Path.home() / ".claude" / "projects" / sanitized / "memory"
+
+
+          def find_handoffs_dir():
+              """Search: project .claude/handoffs/ → ~/.claude/handoffs/."""
+              cwd = Path.cwd()
+              for parent in [cwd] + list(cwd.parents):
+                  candidate = parent / ".claude" / "handoffs"
+                  if candidate.exists():
+                      return candidate
+              home = Path.home() / ".claude" / "handoffs"
+              if home.exists():
+                  return home
+              return None
+
+
+          def find_chronicles():
+              """Search: project memory/chronicles.md → auto-memory chronicles.md."""
+              cwd = Path.cwd()
+              for parent in [cwd] + list(cwd.parents):
+                  candidate = parent / "memory" / "chronicles.md"
+                  if candidate.exists():
+                      return candidate
+              auto = get_auto_memory_dir() / "chronicles.md"
+              if auto.exists():
+                  return auto
+              return None
+
+
+          def find_project_claude_md():
+              """Find CLAUDE.md in project root."""
+              cwd = Path.cwd()
+              for parent in [cwd] + list(cwd.parents):
+                  candidate = parent / "CLAUDE.md"
+                  if candidate.exists() and parent != Path.home():
+                      return candidate
+              return None
+
+
+          def check_memory_health():
+              """Check what memory layers are missing for this project."""
+              missing = []
+              auto_memory = get_auto_memory_dir()
+
+              # Chronicles
+              if not find_chronicles():
+                  missing.append(
+                      "chronicles.md не найден. "
+                      "Создай журнал архитектурных решений:\n"
+                      f"  Путь: {auto_memory / 'chronicles.md'}\n"
+                      "  Формат: YYYY-MM-DD: [решение] — [почему именно так]"
+                  )
+
+              # MEMORY.md index
+              memory_index = auto_memory / "MEMORY.md"
+              if not memory_index.exists():
+                  missing.append(
+                      "MEMORY.md (индекс памяти) не найден. "
+                      "Начни вести память проекта:\n"
+                      f"  Путь: {memory_index}\n"
+                      "  Содержание: ссылки на memory-файлы (feedback, decisions, progress)"
+                  )
+
+              # Project CLAUDE.md
+              if not find_project_claude_md():
+                  missing.append(
+                      "CLAUDE.md проекта не найден. "
+                      "Создай файл с архитектурой, структурой и правилами проекта."
+                  )
+
+              return missing
+
+
+          # ── Collect context ──────────────────────────────────────────
+          messages = []
+
+          # 1. Latest handoff
+          handoffs_dir = find_handoffs_dir()
+          if handoffs_dir:
+              handoffs = sorted(handoffs_dir.glob("*.md"))
+              handoffs = [h for h in handoffs if h.name != "TEMPLATE.md"]
+              if handoffs:
+                  latest = handoffs[-1]
+                  messages.append(f"Последний handoff: {latest.name}")
+                  messages.append(latest.read_text()[:800])
+
+          # 2. Last 5 chronicles
+          chronicles = find_chronicles()
+          if chronicles:
+              lines = [
+                  line
+                  for line in chronicles.read_text().splitlines()
+                  if line.strip()
+                  and not line.startswith("#")
+                  and not line.startswith("---")
+                  and not line.startswith("name:")
+                  and not line.startswith("description:")
+                  and not line.startswith("type:")
+              ]
+              if lines:
+                  messages.append("Последние решения из chronicles:")
+                  messages.append("\n".join(lines[-5:]))
+
+          # 3. Memory health check
+          missing = check_memory_health()
+          if missing:
+              messages.append("ПАМЯТЬ ПРОЕКТА — не хватает:")
+              for item in missing:
+                  messages.append(f"  - {item}")
+              messages.append(
+                  "Рекомендация: создай недостающие файлы в начале сессии, "
+                  "чтобы контекст не терялся между сессиями."
+              )
+
+          # ── Output ───────────────────────────────────────────────────
+          if messages:
+              print(json.dumps({
+                  "hookSpecificOutput": {
+                      "hookEventName": "SessionStart",
+                      "additionalContext": "\n\n".join(messages),
+                  }
+              }))
+
+          sys.exit(0)
+        '';
+      };
+
+      # Handoff reminder hook
+      home.file.".claude/hooks/stop.py" = {
+        executable = true;
+        text = ''
+          #!/usr/bin/env python3
+          import json
+          import sys
+          import os
+          from datetime import datetime
+          from pathlib import Path
+
+          def session_age_minutes():
+              # Check parent process start time via /proc or ps
+              try:
+                  ppid = os.getppid()
+                  # macOS: use ps to get elapsed time
+                  import subprocess
+                  result = subprocess.run(
+                      ["ps", "-o", "etime=", "-p", str(ppid)],
+                      capture_output=True, text=True, timeout=5
+                  )
+                  if result.returncode == 0:
+                      elapsed = result.stdout.strip()
+                      # Format: [[dd-]hh:]mm:ss
+                      parts = elapsed.replace("-", ":").split(":")
+                      parts = [int(p) for p in parts]
+                      if len(parts) == 2:
+                          return parts[0] + parts[1] / 60
+                      elif len(parts) == 3:
+                          return parts[0] * 60 + parts[1] + parts[2] / 60
+                      elif len(parts) == 4:
+                          return parts[0] * 24 * 60 + parts[1] * 60 + parts[2] + parts[3] / 60
+                  return 999
+              except Exception:
+                  return 999
+
+          def find_handoffs_dir():
+              cwd = Path.cwd()
+              for parent in [cwd] + list(cwd.parents):
+                  candidate = parent / ".claude" / "handoffs"
+                  if candidate.exists():
+                      return candidate
+              home_handoffs = Path.home() / ".claude" / "handoffs"
+              home_handoffs.mkdir(parents=True, exist_ok=True)
+              return home_handoffs
+
+          def fresh_handoff_exists(handoffs_dir):
+              today = datetime.now().strftime("%Y-%m-%d")
+              if not handoffs_dir.exists():
+                  return False
+              for f in handoffs_dir.iterdir():
+                  if f.name.startswith(today) and f.suffix == ".md":
+                      return True
+              return False
+
+          def main():
+              age = session_age_minutes()
+              if age < 15:
+                  sys.exit(0)
+              handoffs_dir = find_handoffs_dir()
+              if fresh_handoff_exists(handoffs_dir):
+                  sys.exit(0)
+              response = {
+                  "decision": "block",
+                  "reason": (
+                      f"Сессия {int(age)} мин — handoff не записан.\n"
+                      f"Запиши в {handoffs_dir}/YYYY-MM-DD_тема.md:\n"
+                      f"  ## Сделано\n  ## НЕ сработало\n  ## Следующий шаг\n"
+                      f"Используй шаблон: {handoffs_dir}/TEMPLATE.md"
+                  )
+              }
+              print(json.dumps(response))
+              sys.exit(0)
+
+          if __name__ == "__main__":
+              main()
+        '';
+      };
 
       # ── Skills ─────────────────────────────────────────────────
 
