@@ -34,6 +34,9 @@
 
         shellAliases = {
           edit = "sudo -e";
+          claude-old = "claude --model 'claude-opus-4-6[1m]'";
+          claude-work = "CLAUDE_CONFIG_DIR=$HOME/.claude-work claude";
+          claude-personal = "CLAUDE_CONFIG_DIR=$HOME/.claude-personal claude";
         }
         // lib.optionalAttrs config.programs.eza.enable {
           ll = "eza -la --sort name --group-directories-first --no-permissions --no-filesize --no-user --no-time";

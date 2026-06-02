@@ -1,6 +1,6 @@
 {
   homeModule =
-    { config, pkgs, ... }:
+    { config, pkgs, lib, pkgs-master, ... }:
     {
       # ── Secrets ────────────────────────────────────────────────
       sops.secrets.context7_api_key = { };
@@ -77,6 +77,7 @@
       # ── Claude Code (all-in-one config) ────────────────────────
       programs.claude-code = {
         enable = true;
+        package = pkgs-master.claude-code;
 
         # ── Settings → ~/.claude/settings.json ───────────────────
         settings = {
@@ -316,6 +317,7 @@
           CONFIG_FILE="''${CLAUDE_STATUSLINE_CONF:-$HOME/.claude/statusline.conf}"
 
           SHOW_MODEL="''${SHOW_MODEL:-true}"
+          SHOW_PROFILE="''${SHOW_PROFILE:-true}"
           SHOW_COST="''${SHOW_COST:-true}"
           SHOW_CONTEXT="''${SHOW_CONTEXT:-true}"
           SHOW_LINES="''${SHOW_LINES:-true}"
@@ -369,7 +371,8 @@
           }
 
           get_usage_limits() {
-            local cache_file="$HOME/.claude/.usage-cache.json"
+            local config_dir="''${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+            local cache_file="$config_dir/.usage-cache.json"
             local now=$(date +%s)
 
             if [[ -f "$cache_file" ]]; then
@@ -381,19 +384,21 @@
               fi
             fi
 
+            local keychain_service="Claude Code-credentials"
+            if [[ -n "''${CLAUDE_CONFIG_DIR:-}" ]]; then
+              local dir_hash=$(echo -n "$CLAUDE_CONFIG_DIR" | openssl dgst -sha256 2>/dev/null | awk '{print $NF}' | cut -c1-8)
+              keychain_service="Claude Code-credentials-''${dir_hash}"
+            fi
+
             local cred_json=""
             if [[ "$(uname)" == "Darwin" ]]; then
-              cred_json=$(security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null || true)
+              cred_json=$(security find-generic-password -s "$keychain_service" -w 2>/dev/null || true)
             elif command -v secret-tool &>/dev/null; then
-              cred_json=$(secret-tool lookup service "Claude Code-credentials" 2>/dev/null || true)
-            elif [[ -f "$HOME/.claude/.credentials.json" ]]; then
-              cred_json=$(cat "$HOME/.claude/.credentials.json" 2>/dev/null || true)
-            elif [[ -f "$HOME/.claude/.credentials" ]]; then
-              cred_json=$(cat "$HOME/.claude/.credentials" 2>/dev/null || true)
-            elif [[ -n "''${APPDATA:-}" ]]; then
-              cred_json=$(cat "$APPDATA/claude/.credentials.json" 2>/dev/null || cat "$APPDATA/claude/.credentials" 2>/dev/null || true)
-            elif [[ -n "''${LOCALAPPDATA:-}" ]]; then
-              cred_json=$(cat "$LOCALAPPDATA/claude/.credentials.json" 2>/dev/null || cat "$LOCALAPPDATA/claude/.credentials" 2>/dev/null || true)
+              cred_json=$(secret-tool lookup service "$keychain_service" 2>/dev/null || true)
+            elif [[ -f "$config_dir/.credentials.json" ]]; then
+              cred_json=$(cat "$config_dir/.credentials.json" 2>/dev/null || true)
+            elif [[ -f "$config_dir/.credentials" ]]; then
+              cred_json=$(cat "$config_dir/.credentials" 2>/dev/null || true)
             fi
 
             [[ -z "$cred_json" ]] && return 1
@@ -474,6 +479,13 @@
 
           if [[ "$SHOW_MODEL" == "true" ]]; then
             segments+=("''${C_MAGENTA}''${C_BOLD}''${MODEL_NAME}''${C_RESET}")
+          fi
+
+          if [[ "$SHOW_PROFILE" == "true" && -n "''${CLAUDE_CONFIG_DIR:-}" ]]; then
+            PROFILE_NAME=$(basename "$CLAUDE_CONFIG_DIR" | sed 's/^\.claude-//')
+            if [[ -n "$PROFILE_NAME" ]]; then
+              segments+=("''${C_BOLD}''${C_WHITE}''${PROFILE_NAME}''${C_RESET}")
+            fi
           fi
 
           if [[ "$SHOW_GIT" == "true" && -n "$WORK_DIR" ]]; then
@@ -644,6 +656,7 @@
       home.file.".claude/statusline.conf".text = ''
         # claude-statusline config
         SHOW_MODEL=true
+        SHOW_PROFILE=true
         SHOW_COST=true
         SHOW_CONTEXT=true
         SHOW_LINES=true
@@ -900,5 +913,32 @@
       home.file.".claude/skills/codebase-to-course/README.md".text = builtins.readFile ./claude-skills/codebase-to-course/README.md;
       home.file.".claude/skills/codebase-to-course/references/design-system.md".text = builtins.readFile ./claude-skills/codebase-to-course/references/design-system.md;
       home.file.".claude/skills/codebase-to-course/references/interactive-elements.md".text = builtins.readFile ./claude-skills/codebase-to-course/references/interactive-elements.md;
+
+      # ── Profile sync: symlink shared config into work/personal profiles ──
+      home.activation.claudeProfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        for profile in .claude-work .claude-personal; do
+          dir="$HOME/$profile"
+          [ -d "$dir" ] || continue
+          mkdir -p "$dir/hooks"
+          ln -sf "$HOME/.claude/statusline.sh" "$dir/statusline.sh"
+          ln -sf "$HOME/.claude/statusline.conf" "$dir/statusline.conf"
+          ln -sf "$HOME/.claude/settings.json" "$dir/settings.json"
+          ln -sf "$HOME/.claude/CLAUDE.md" "$dir/CLAUDE.md"
+          ln -sf "$HOME/.claude/hooks/session_start.py" "$dir/hooks/session_start.py"
+          ln -sf "$HOME/.claude/hooks/stop.py" "$dir/hooks/stop.py"
+          # Skills
+          if [ -d "$HOME/.claude/skills" ]; then
+            ln -sfn "$HOME/.claude/skills" "$dir/skills"
+          fi
+          # Plugins — single source of truth in ~/.claude/plugins
+          # On first run, replace any non-symlink plugins/ directory with a symlink.
+          if [ -d "$HOME/.claude/plugins" ]; then
+            if [ -e "$dir/plugins" ] && [ ! -L "$dir/plugins" ]; then
+              rm -rf "$dir/plugins"
+            fi
+            ln -sfn "$HOME/.claude/plugins" "$dir/plugins"
+          fi
+        done
+      '';
     };
 }

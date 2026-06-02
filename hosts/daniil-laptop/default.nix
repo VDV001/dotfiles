@@ -9,8 +9,8 @@
   homeStateVersion = "26.05";
 
   modules = with modules; [
-    sops
     claude
+    sops
     bat
     direnv
     docker
@@ -55,8 +55,8 @@
         nh
         age
         aria2
+        bash
         betterdisplay
-        codex
         dive
         docker
         docker-credential-helpers
@@ -95,6 +95,7 @@
 
         brews = [
           "ollama"
+          "vercel-cli"
         ];
 
         casks = [
@@ -110,6 +111,7 @@
           "orbstack"
           "outline-manager"
           "parallels"
+          "tailscale-app"
           "telegram-desktop"
           "termius"
           "visual-studio-code"
