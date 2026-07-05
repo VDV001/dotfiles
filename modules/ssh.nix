@@ -12,7 +12,7 @@
           "~/.colima/ssh_config"
           "~/.orbstack/ssh/config"
         ];
-        matchBlocks."*" = {
+        settings."*" = {
           addKeysToAgent = "yes";
           controlMaster = "auto";
           controlPath = "~/.ssh/sockets/%r@%h-%p";

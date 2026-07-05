@@ -62,6 +62,11 @@
         docker-credential-helpers
         dua
         ffmpeg
+        poppler-utils # pdftotext/pdftoppm/pdfinfo — чтение и рендер PDF (резюме, доки)
+        # /watch skill: yt-dlp + bgutil PO-token плагин В ОДНОМ python-env, чтобы yt-dlp грузил плагин
+        # (иначе YouTube отдаёт 403 без PO-token). Пакет bgutil бандлит и node-сервер (script-режим).
+        # Проверено 2026-07-03: генерит токен + качает YouTube + ffmpeg режет кадры. Пара к ffmpeg + whisper-cpp.
+        (python3.withPackages (ps: with ps; [ yt-dlp bgutil-ytdlp-pot-provider ]))
         gh
         glab
         glow
@@ -84,10 +89,19 @@
           autoUpdate = true;
           upgrade = true;
           cleanup = "zap";
+          # Новый Homebrew требует подтверждения при `brew bundle --cleanup`
+          # (--force / --force-cleanup / $HOMEBREW_ASK). Дописываем точечный --force-cleanup
+          # через extraFlags -> `brew bundle ... --cleanup --zap --force-cleanup`.
+          # --force-cleanup авторизует именно очистку (не трогает переустановки, в отличие от
+          # широкого --force). Так zap сохраняется, ошибка решается штатно, а не отключается.
+          extraFlags = [ "--force-cleanup" ];
         };
 
         masApps = {
           "TestFlight" = 899247664;
+          "Keynote" = 361285480;
+          "Numbers" = 361304891;
+          "Pages" = 361309726;
           "Xcode" = 497799835;
         };
 
@@ -96,6 +110,8 @@
         brews = [
           "ollama"
           "vercel-cli"
+          "whisper-cpp" # расшифровка голосовых Telegram (whisper-cli + Metal). Объявлено,
+          # чтобы cleanup=zap не сносил при ребилде. Модель: ~/models/whisper/ggml-small.bin (загружается отдельно).
         ];
 
         casks = [

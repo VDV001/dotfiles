@@ -75,12 +75,39 @@
       };
 
       # ── Claude Code (all-in-one config) ────────────────────────
+      # ── Auto-rotate stale HM backup of settings.json ────────────
+      # Claude Code rewrites ~/.claude/settings.json at runtime, so on every
+      # `switch` home-manager backs it up to settings.json.backup. With a
+      # static backupFileExtension that filename collides on the next run and
+      # aborts activation. Rotate any existing backup into ~/.claude/.hm-backups/
+      # (timestamped) BEFORE the checkLinkTargets phase so a switch never fails
+      # on it again. Moves, never deletes.
+      home.activation.rotateClaudeSettingsBackup =
+        lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
+          bak="$HOME/.claude/settings.json.backup"
+          if [ -e "$bak" ]; then
+            run mkdir -p "$HOME/.claude/.hm-backups"
+            run mv "$bak" \
+              "$HOME/.claude/.hm-backups/settings.json.$(date +%Y%m%d-%H%M%S).backup"
+          fi
+          # prune rotated backups older than 7 days
+          if [ -d "$HOME/.claude/.hm-backups" ]; then
+            run ${pkgs.findutils}/bin/find "$HOME/.claude/.hm-backups" \
+              -type f -name 'settings.json.*.backup' -mtime +7 -delete
+          fi
+        '';
+
       programs.claude-code = {
         enable = true;
         package = pkgs-master.claude-code;
 
         # ── Settings → ~/.claude/settings.json ───────────────────
         settings = {
+          # UI / model preferences (persisted from runtime so rebuilds don't revert them)
+          model = "opus";
+          tui = "fullscreen";
+          skipWorkflowUsageWarning = true;
+
           # Preserve marketplace plugins across rebuilds
           enabledPlugins = {
             "typescript-lsp@claude-plugins-official" = true;
@@ -197,6 +224,10 @@
           - Детерминированные задачи (тесты, линтер, форматирование) — через shell-скрипты, не через модель
           - При дебаге: факты из кода/логов → трассировка → гипотезы → что отбросили
           - Не подтверждать свою работу самому — нужен независимый запуск/проверка
+
+          ## Go — modern-go guidelines (всегда)
+          - При написании/правке любого Go-кода — современный синтаксис по версии проекта (из go.mod): `any` вместо `interface{}`, пакеты `slices`/`maps`/`cmp`, `errors.Is`/`errors.As`, `strings.Cut`, типобезопасные атомики, `min`/`max`, `for range N`. Не использовать устаревшие паттерны при наличии современной замены; не использовать фичи новее целевой версии. (Плагин `modern-go-guidelines:use-modern-go` установлен глобально; при сомнении вызвать скилл — он читает версию из go.mod.)
+          - Гейт (манифест #7): скилл = промпт-уровень; детерминированная проверка — линтер `modernize` в golangci-lint v2 (включён в `.golangci.yml` проектов kb-engine/deal-sense/floq). Правило живёт в CI, не в памяти агента.
 
           ## TDD + DDD + Clean Architecture — механические гейты
 
@@ -913,6 +944,16 @@
       home.file.".claude/skills/codebase-to-course/README.md".text = builtins.readFile ./claude-skills/codebase-to-course/README.md;
       home.file.".claude/skills/codebase-to-course/references/design-system.md".text = builtins.readFile ./claude-skills/codebase-to-course/references/design-system.md;
       home.file.".claude/skills/codebase-to-course/references/interactive-elements.md".text = builtins.readFile ./claude-skills/codebase-to-course/references/interactive-elements.md;
+
+      # Watch skill (Claude смотрит видео: yt-dlp + ffmpeg + whisper)
+      home.file.".claude/skills/watch/SKILL.md".text = builtins.readFile ./claude-skills/watch/SKILL.md;
+
+      # yt-dlp: script-режим PO-token провайдера (bgutil) по умолчанию — чтобы YouTube-скачивание
+      # не давало 403. server_home указывает на бандл node-сервера внутри nix-пакета bgutil.
+      # extractor-arg именно youtube-специфичный → на не-YouTube игнорируется. Проверено 2026-07-03.
+      home.file.".config/yt-dlp/config".text = ''
+        --extractor-args "youtubepot-bgutilscript:server_home=${pkgs.python3Packages.bgutil-ytdlp-pot-provider}/share/bgutil-ytdlp-pot-provider"
+      '';
 
       # ── Profile sync: symlink shared config into work/personal profiles ──
       home.activation.claudeProfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
