@@ -753,6 +753,19 @@
               return None
 
 
+          def find_memory_index():
+              """Search: project memory/MEMORY.md → auto-memory MEMORY.md."""
+              cwd = Path.cwd()
+              for parent in [cwd] + list(cwd.parents):
+                  candidate = parent / "memory" / "MEMORY.md"
+                  if candidate.exists():
+                      return candidate
+              auto = get_auto_memory_dir() / "MEMORY.md"
+              if auto.exists():
+                  return auto
+              return None
+
+
           def find_project_claude_md():
               """Find CLAUDE.md in project root."""
               cwd = Path.cwd()
@@ -778,12 +791,11 @@
                   )
 
               # MEMORY.md index
-              memory_index = auto_memory / "MEMORY.md"
-              if not memory_index.exists():
+              if not find_memory_index():
                   missing.append(
                       "MEMORY.md (индекс памяти) не найден. "
                       "Начни вести память проекта:\n"
-                      f"  Путь: {memory_index}\n"
+                      f"  Путь: {auto_memory / 'MEMORY.md'}\n"
                       "  Содержание: ссылки на memory-файлы (feedback, decisions, progress)"
                   )
 

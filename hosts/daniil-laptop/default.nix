@@ -131,7 +131,7 @@
           "telegram-desktop"
           "termius"
           "visual-studio-code"
-          "utm"
+          "zed" # готовый бинарь Zed (настройки/расширения декларативно через programs.zed-editor)
         ];
       };
     };

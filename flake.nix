@@ -10,7 +10,12 @@
     };
 
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/master";
+      # Временно на fix-коммит PR #1819 (p42software:manual-toc-depth). Это ровно текущий
+      # master (a1fa429) + одна строка: в doc/manual/default.nix `--toc-depth 1` заменён на
+      # `--sidebar-depth 1`. Апстрим-master ещё шлёт флаг --toc-depth, который nixpkgs-unstable
+      # убрал из nixos-render-docs, из-за чего падала деривация darwin-manual-html -> вся сборка.
+      # Вернуть на "github:LnL7/nix-darwin/master", когда PR #1819 смержат (см. issue #1817).
+      url = "github:p42software/nix-darwin/ebaac1f1e5cbb10ea5e9815bb1f69e53164f8b9b";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

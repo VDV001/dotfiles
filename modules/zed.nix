@@ -5,6 +5,11 @@
     {
       programs.zed-editor = {
         enable = true;
+        # Бинарь Zed берём готовым из Homebrew-cask "zed", а не собираем из nixpkgs:
+        # для aarch64-darwin zed-editor нет в бинарном кэше -> компиляция из исходников ~2ч.
+        # package = null отключает сборку/установку пакета, но настройки, расширения и
+        # keymaps ниже остаются декларативными (HM пишет ~/.config/zed/*, cask-бинарь их читает).
+        package = null;
         extensions = [
           "catppuccin"
 
