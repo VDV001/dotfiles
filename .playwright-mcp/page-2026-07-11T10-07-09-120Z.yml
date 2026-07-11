@@ -1,0 +1,233 @@
+- generic [active] [ref=f18e1]:
+  - navigation [ref=f18e2]:
+    - generic [ref=f18e3]:
+      - link [ref=f18e4] [cursor=pointer]:
+        - /url: https://hydra.nixos.org/
+        - img "Hydra Logo" [ref=f18e5]
+      - generic [ref=f18e6]:
+        - list [ref=f18e7]:
+          - listitem [ref=f18e8]:
+            - link "Status" [ref=f18e9] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f18e10]:
+            - link "Project" [ref=f18e11] [cursor=pointer]:
+              - /url: "#"
+        - textbox "Search" [ref=f18e13]
+        - list [ref=f18e14]:
+          - listitem [ref=f18e15]:
+            - link "Sign in" [ref=f18e16] [cursor=pointer]:
+              - /url: "#"
+  - generic [ref=f18e17]:
+    - generic [ref=f18e18]: Project nixpkgs
+    - list [ref=f18e19]:
+      - listitem [ref=f18e20]:
+        - link "Jobsets" [ref=f18e21] [cursor=pointer]:
+          - /url: "#tabs-project"
+      - listitem [ref=f18e22]:
+        - link "Configuration" [ref=f18e23] [cursor=pointer]:
+          - /url: "#tabs-configuration"
+    - generic [ref=f18e25]:
+      - generic [ref=f18e26]:
+        - generic [ref=f18e27]: "This project has the following jobsets:"
+        - generic [ref=f18e28]: Show disabled jobsets
+      - table [ref=f18e30]:
+        - rowgroup [ref=f18e31]:
+          - row [ref=f18e32]:
+            - columnheader [ref=f18e33]
+            - columnheader "Name" [ref=f18e34]
+            - columnheader "Description" [ref=f18e35]
+            - columnheader "Last evaluated" [ref=f18e36]
+            - columnheader "Jobs" [ref=f18e37]
+            - columnheader [ref=f18e38]:
+              - img "Succeeded" [ref=f18e39]
+            - columnheader [ref=f18e40]:
+              - img "Failed" [ref=f18e41]
+            - columnheader [ref=f18e42]:
+              - img "Queued" [ref=f18e43]
+        - rowgroup [ref=f18e44]:
+          - row [ref=f18e45] [cursor=pointer]:
+            - cell [ref=f18e46]:
+              - img "Scheduled" [ref=f18e47]
+            - cell [ref=f18e48]:
+              - link "cross-trunk" [ref=f18e50]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/cross-trunk
+            - cell "master branch cross builds" [ref=f18e51]
+            - cell "2026-07-11 10:04:43 Error" [ref=f18e52]:
+              - time [ref=f18e53]: 2026-07-11 10:04:43
+              - generic [ref=f18e54]: Error
+            - cell "78%" [ref=f18e55]
+            - cell "2222" [ref=f18e57]
+            - cell "493" [ref=f18e59]
+            - cell "133" [ref=f18e61]
+          - row [ref=f18e63] [cursor=pointer]:
+            - cell [ref=f18e64]:
+              - img "Some Failed" [ref=f18e65]
+            - cell [ref=f18e66]:
+              - link "gnome" [ref=f18e68]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/gnome
+            - cell "gnome-related updates" [ref=f18e69]
+            - cell "2024-10-09 11:45:43 Error" [ref=f18e70]:
+              - time [ref=f18e71]: 2024-10-09 11:45:43
+              - generic [ref=f18e72]: Error
+            - cell "97%" [ref=f18e73]
+            - cell "73125" [ref=f18e75]
+            - cell "2175" [ref=f18e77]
+            - cell [ref=f18e79]
+          - row [ref=f18e80] [cursor=pointer]:
+            - cell [ref=f18e81]:
+              - img "Some Failed" [ref=f18e82]
+            - cell [ref=f18e83]:
+              - link "haskell-updates" [ref=f18e85]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/haskell-updates
+            - cell "Testing ground for Haskell packages in Nix" [ref=f18e86]
+            - cell "2026-07-02 13:46:42 Error" [ref=f18e87]:
+              - time [ref=f18e88]: 2026-07-02 13:46:42
+              - generic [ref=f18e89]: Error
+            - cell "92%" [ref=f18e90]
+            - cell "7368" [ref=f18e92]
+            - cell "617" [ref=f18e94]
+            - cell [ref=f18e96]
+          - row [ref=f18e97] [cursor=pointer]:
+            - cell [ref=f18e98]:
+              - img "Some Failed" [ref=f18e99]
+            - cell [ref=f18e100]:
+              - link "nixpkgs-26.05-darwin" [ref=f18e102]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/nixpkgs-26.05-darwin
+            - cell "Darwin builds for the NixOS 26.05 release." [ref=f18e103]
+            - cell "2026-07-11 00:06:47 Error" [ref=f18e104]:
+              - time [ref=f18e105]: 2026-07-11 00:06:47
+              - generic [ref=f18e106]: Error
+            - cell "98%" [ref=f18e107]
+            - cell "125257" [ref=f18e109]
+            - cell "2502" [ref=f18e111]
+            - cell [ref=f18e113]
+          - row [ref=f18e114] [cursor=pointer]:
+            - cell [ref=f18e115]:
+              - img "Some Failed" [ref=f18e116]
+            - cell [ref=f18e117]:
+              - link "perl-updates" [ref=f18e119]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/perl-updates
+            - cell "Testing ground for updates to the Perl package set" [ref=f18e120]
+            - cell "2025-11-04 22:54:13 Error" [ref=f18e121]:
+              - time [ref=f18e122]: 2025-11-04 22:54:13
+              - generic [ref=f18e123]: Error
+            - cell "98%" [ref=f18e124]
+            - cell "3759" [ref=f18e126]
+            - cell "49" [ref=f18e128]
+            - cell [ref=f18e130]
+          - row [ref=f18e131] [cursor=pointer]:
+            - cell [ref=f18e132]:
+              - img "Some Failed" [ref=f18e133]
+            - cell [ref=f18e134]:
+              - link "pr-502924-glibc-2.43" [ref=f18e136]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/pr-502924-glibc-2.43
+            - 'cell "Testing PR #502924: glibc: 2.42 -> 2.43" [ref=f18e137]'
+            - cell "2026-04-03 01:22:23 Error" [ref=f18e138]:
+              - time [ref=f18e139]: 2026-04-03 01:22:23
+              - generic [ref=f18e140]: Error
+            - cell "36%" [ref=f18e141]
+            - cell "28384" [ref=f18e143]
+            - cell "50055" [ref=f18e145]
+            - cell [ref=f18e147]
+          - row [ref=f18e148] [cursor=pointer]:
+            - cell [ref=f18e149]:
+              - img "Some Failed" [ref=f18e150]
+            - cell [ref=f18e151]:
+              - link "python-updates" [ref=f18e153]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/python-updates
+            - cell "Staging ground for large updates to the python package set" [ref=f18e154]
+            - cell "2024-08-03 19:26:58 Error" [ref=f18e155]:
+              - time [ref=f18e156]: 2024-08-03 19:26:58
+              - generic [ref=f18e157]: Error
+            - cell "79%" [ref=f18e158]
+            - cell "15477" [ref=f18e160]
+            - cell "4000" [ref=f18e162]
+            - cell [ref=f18e164]
+          - row [ref=f18e165] [cursor=pointer]:
+            - cell [ref=f18e166]:
+              - img "Some Failed" [ref=f18e167]
+            - cell [ref=f18e168]:
+              - link "r-updates" [ref=f18e170]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/r-updates
+            - cell "Testing ground for updates to the R package set" [ref=f18e171]
+            - cell "2024-10-25 07:13:14 Error" [ref=f18e172]:
+              - time [ref=f18e173]: 2024-10-25 07:13:14
+              - generic [ref=f18e174]: Error
+            - cell "97%" [ref=f18e175]
+            - cell "45215" [ref=f18e177]
+            - cell "1378" [ref=f18e179]
+            - cell [ref=f18e181]
+          - row [ref=f18e182] [cursor=pointer]:
+            - cell [ref=f18e183]:
+              - img "Succeeded" [ref=f18e184]
+            - cell [ref=f18e185]:
+              - link "staging" [ref=f18e187]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/staging
+            - cell "staging branch" [ref=f18e188]
+            - cell [ref=f18e189]:
+              - time [ref=f18e190]: 2026-07-11 14:51:06
+            - cell "100%" [ref=f18e191]
+            - cell "3" [ref=f18e193]
+            - cell [ref=f18e195]
+            - cell [ref=f18e196]
+          - row [ref=f18e197] [cursor=pointer]:
+            - cell [ref=f18e198]:
+              - img "Succeeded" [ref=f18e199]
+            - cell [ref=f18e200]:
+              - link "staging-26.05" [ref=f18e202]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/staging-26.05
+            - cell "staging-26.05 branch" [ref=f18e203]
+            - cell [ref=f18e204]:
+              - time [ref=f18e205]: 2026-07-11 14:52:07
+            - cell "100%" [ref=f18e206]
+            - cell "4" [ref=f18e208]
+            - cell [ref=f18e210]
+            - cell [ref=f18e211]
+          - row [ref=f18e212] [cursor=pointer]:
+            - cell [ref=f18e213]:
+              - img "Some Failed" [ref=f18e214]
+            - cell [ref=f18e215]:
+              - link "staging-next" [ref=f18e217]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/staging-next
+            - cell "staging-next branch" [ref=f18e218]
+            - cell "2026-07-08 15:31:16 Error" [ref=f18e219]:
+              - time [ref=f18e220]: 2026-07-08 15:31:16
+              - generic [ref=f18e221]: Error
+            - cell "96%" [ref=f18e222]
+            - cell "218166" [ref=f18e224]
+            - cell "7573" [ref=f18e226]
+            - cell [ref=f18e228]
+          - row [ref=f18e229] [cursor=pointer]:
+            - cell [ref=f18e230]:
+              - img "Scheduled" [ref=f18e231]
+            - cell [ref=f18e232]:
+              - link "staging-next-26.05" [ref=f18e234]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/staging-next-26.05
+            - cell "staging-next-26.05 branch" [ref=f18e235]
+            - cell "2026-07-10 19:14:15 Error" [ref=f18e236]:
+              - time [ref=f18e237]: 2026-07-10 19:14:15
+              - generic [ref=f18e238]: Error
+            - cell "45%" [ref=f18e239]
+            - cell "128831" [ref=f18e241]
+            - cell "7310" [ref=f18e243]
+            - cell "147912" [ref=f18e245]
+          - row [ref=f18e247] [cursor=pointer]:
+            - cell [ref=f18e248]:
+              - img "Scheduled" [ref=f18e249]
+            - cell [ref=f18e250]:
+              - link "unstable" [ref=f18e252]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/unstable
+            - cell "master branch" [ref=f18e253]
+            - cell "2026-07-11 12:51:09 Error" [ref=f18e254]:
+              - time [ref=f18e255]: 2026-07-11 12:51:09
+              - generic [ref=f18e256]: Error
+            - cell "96%" [ref=f18e257]
+            - cell "203330" [ref=f18e259]
+            - cell "6371" [ref=f18e261]
+            - cell "699" [ref=f18e263]
+    - contentinfo [ref=f18e265]:
+      - separator
+      - emphasis [ref=f18e267]:
+        - link "Hydra" [ref=f18e268] [cursor=pointer]:
+          - /url: http://nixos.org/hydra
+        - text: 0.1.20260708.ae831ac (using nix-2.34.8 and nix-eval-jobs-2.34.1).

@@ -1,0 +1,413 @@
+- generic [active] [ref=f34e1]:
+  - navigation [ref=f34e2]:
+    - generic [ref=f34e3]:
+      - link [ref=f34e4] [cursor=pointer]:
+        - /url: https://hydra.nixos.org/
+        - img "Hydra Logo" [ref=f34e5]
+      - generic [ref=f34e6]:
+        - list [ref=f34e7]:
+          - listitem [ref=f34e8]:
+            - link "Status" [ref=f34e9] [cursor=pointer]:
+              - /url: "#"
+        - textbox "Search" [ref=f34e11]: starship
+        - list [ref=f34e12]:
+          - listitem [ref=f34e13]:
+            - link "Sign in" [ref=f34e14] [cursor=pointer]:
+              - /url: "#"
+  - generic [ref=f34e15]:
+    - generic [ref=f34e16]: Search results
+    - paragraph [ref=f34e17]: "The following jobs match your query: (first 10 results only)"
+    - table [ref=f34e18]:
+      - rowgroup [ref=f34e19]:
+        - row [ref=f34e20]:
+          - columnheader "Job" [ref=f34e21]
+      - rowgroup [ref=f34e22]:
+        - row [ref=f34e23] [cursor=pointer]:
+          - cell [ref=f34e24]:
+            - generic [ref=f34e26]:
+              - link "nixos" [ref=f34e27]:
+                - /url: https://hydra.nixos.org/project/nixos
+              - text: ":"
+              - link "disable-nix-in-nixos-tests" [ref=f34e28]:
+                - /url: https://hydra.nixos.org/jobset/nixos/disable-nix-in-nixos-tests
+              - text: ":"
+              - link "nixos.tests.allDrivers.starship.aarch64-linux" [ref=f34e29]:
+                - /url: https://hydra.nixos.org/job/nixos/disable-nix-in-nixos-tests/nixos.tests.allDrivers.starship.aarch64-linux
+        - row [ref=f34e30] [cursor=pointer]:
+          - cell [ref=f34e31]:
+            - generic [ref=f34e33]:
+              - link "nixos" [ref=f34e34]:
+                - /url: https://hydra.nixos.org/project/nixos
+              - text: ":"
+              - link "disable-nix-in-nixos-tests" [ref=f34e35]:
+                - /url: https://hydra.nixos.org/jobset/nixos/disable-nix-in-nixos-tests
+              - text: ":"
+              - link "nixos.tests.allDrivers.starship.x86_64-linux" [ref=f34e36]:
+                - /url: https://hydra.nixos.org/job/nixos/disable-nix-in-nixos-tests/nixos.tests.allDrivers.starship.x86_64-linux
+        - row [ref=f34e37] [cursor=pointer]:
+          - cell [ref=f34e38]:
+            - generic [ref=f34e40]:
+              - link "nixos" [ref=f34e41]:
+                - /url: https://hydra.nixos.org/project/nixos
+              - text: ":"
+              - link "disable-nix-in-nixos-tests" [ref=f34e42]:
+                - /url: https://hydra.nixos.org/jobset/nixos/disable-nix-in-nixos-tests
+              - text: ":"
+              - link "nixos.tests.starship.aarch64-linux" [ref=f34e43]:
+                - /url: https://hydra.nixos.org/job/nixos/disable-nix-in-nixos-tests/nixos.tests.starship.aarch64-linux
+        - row [ref=f34e44] [cursor=pointer]:
+          - cell [ref=f34e45]:
+            - generic [ref=f34e47]:
+              - link "nixos" [ref=f34e48]:
+                - /url: https://hydra.nixos.org/project/nixos
+              - text: ":"
+              - link "disable-nix-in-nixos-tests" [ref=f34e49]:
+                - /url: https://hydra.nixos.org/jobset/nixos/disable-nix-in-nixos-tests
+              - text: ":"
+              - link "nixos.tests.starship.x86_64-linux" [ref=f34e50]:
+                - /url: https://hydra.nixos.org/job/nixos/disable-nix-in-nixos-tests/nixos.tests.starship.x86_64-linux
+        - row [ref=f34e51] [cursor=pointer]:
+          - cell [ref=f34e52]:
+            - generic [ref=f34e54]:
+              - link "nixos" [ref=f34e55]:
+                - /url: https://hydra.nixos.org/project/nixos
+              - text: ":"
+              - link "disable-nix-in-nixos-tests" [ref=f34e56]:
+                - /url: https://hydra.nixos.org/jobset/nixos/disable-nix-in-nixos-tests
+              - text: ":"
+              - link "nixpkgs.jj-starship.aarch64-linux" [ref=f34e57]:
+                - /url: https://hydra.nixos.org/job/nixos/disable-nix-in-nixos-tests/nixpkgs.jj-starship.aarch64-linux
+        - row [ref=f34e58] [cursor=pointer]:
+          - cell [ref=f34e59]:
+            - generic [ref=f34e61]:
+              - link "nixos" [ref=f34e62]:
+                - /url: https://hydra.nixos.org/project/nixos
+              - text: ":"
+              - link "disable-nix-in-nixos-tests" [ref=f34e63]:
+                - /url: https://hydra.nixos.org/jobset/nixos/disable-nix-in-nixos-tests
+              - text: ":"
+              - link "nixpkgs.jj-starship.x86_64-linux" [ref=f34e64]:
+                - /url: https://hydra.nixos.org/job/nixos/disable-nix-in-nixos-tests/nixpkgs.jj-starship.x86_64-linux
+        - row [ref=f34e65] [cursor=pointer]:
+          - cell [ref=f34e66]:
+            - generic [ref=f34e68]:
+              - link "nixos" [ref=f34e69]:
+                - /url: https://hydra.nixos.org/project/nixos
+              - text: ":"
+              - link "disable-nix-in-nixos-tests" [ref=f34e70]:
+                - /url: https://hydra.nixos.org/jobset/nixos/disable-nix-in-nixos-tests
+              - text: ":"
+              - link "nixpkgs.starship.aarch64-linux" [ref=f34e71]:
+                - /url: https://hydra.nixos.org/job/nixos/disable-nix-in-nixos-tests/nixpkgs.starship.aarch64-linux
+        - row [ref=f34e72] [cursor=pointer]:
+          - cell [ref=f34e73]:
+            - generic [ref=f34e75]:
+              - link "nixos" [ref=f34e76]:
+                - /url: https://hydra.nixos.org/project/nixos
+              - text: ":"
+              - link "disable-nix-in-nixos-tests" [ref=f34e77]:
+                - /url: https://hydra.nixos.org/jobset/nixos/disable-nix-in-nixos-tests
+              - text: ":"
+              - link "nixpkgs.starship-jj.aarch64-linux" [ref=f34e78]:
+                - /url: https://hydra.nixos.org/job/nixos/disable-nix-in-nixos-tests/nixpkgs.starship-jj.aarch64-linux
+        - row [ref=f34e79] [cursor=pointer]:
+          - cell [ref=f34e80]:
+            - generic [ref=f34e82]:
+              - link "nixos" [ref=f34e83]:
+                - /url: https://hydra.nixos.org/project/nixos
+              - text: ":"
+              - link "disable-nix-in-nixos-tests" [ref=f34e84]:
+                - /url: https://hydra.nixos.org/jobset/nixos/disable-nix-in-nixos-tests
+              - text: ":"
+              - link "nixpkgs.starship-jj.x86_64-linux" [ref=f34e85]:
+                - /url: https://hydra.nixos.org/job/nixos/disable-nix-in-nixos-tests/nixpkgs.starship-jj.x86_64-linux
+        - row [ref=f34e86] [cursor=pointer]:
+          - cell [ref=f34e87]:
+            - generic [ref=f34e89]:
+              - link "nixos" [ref=f34e90]:
+                - /url: https://hydra.nixos.org/project/nixos
+              - text: ":"
+              - link "disable-nix-in-nixos-tests" [ref=f34e91]:
+                - /url: https://hydra.nixos.org/jobset/nixos/disable-nix-in-nixos-tests
+              - text: ":"
+              - link "nixpkgs.starship.x86_64-linux" [ref=f34e92]:
+                - /url: https://hydra.nixos.org/job/nixos/disable-nix-in-nixos-tests/nixpkgs.starship.x86_64-linux
+        - row [ref=f34e93] [cursor=pointer]:
+          - cell [ref=f34e94]:
+            - generic [ref=f34e96]:
+              - link "nixos" [ref=f34e97]:
+                - /url: https://hydra.nixos.org/project/nixos
+              - text: ":"
+              - link "disable-nix-in-nixos-tests" [ref=f34e98]:
+                - /url: https://hydra.nixos.org/jobset/nixos/disable-nix-in-nixos-tests
+              - text: ":"
+              - link "nixpkgs.yaziPlugins.starship.aarch64-linux" [ref=f34e99]:
+                - /url: https://hydra.nixos.org/job/nixos/disable-nix-in-nixos-tests/nixpkgs.yaziPlugins.starship.aarch64-linux
+    - paragraph [ref=f34e100]: "The following builds match your query:"
+    - table [ref=f34e101]:
+      - rowgroup [ref=f34e102]:
+        - row [ref=f34e103]:
+          - columnheader [ref=f34e104]
+          - columnheader "#" [ref=f34e105]
+          - columnheader "Job" [ref=f34e106]
+          - columnheader "Finished at" [ref=f34e107]
+          - columnheader "Package/release name" [ref=f34e108]
+          - columnheader "System" [ref=f34e109]
+      - rowgroup [ref=f34e110]:
+        - row [ref=f34e111] [cursor=pointer]:
+          - cell [ref=f34e112]:
+            - img "Queued" [ref=f34e113]
+          - cell [ref=f34e114]:
+            - link "337275440" [ref=f34e115]:
+              - /url: https://hydra.nixos.org/build/337275440
+          - cell [ref=f34e116]:
+            - link "nixpkgs:staging-next-26.05:starship-jj.aarch64-linux" [ref=f34e117]:
+              - /url: https://hydra.nixos.org/build/337275440
+          - cell "-" [ref=f34e118]
+          - cell "starship-jj-0.7.0" [ref=f34e119]
+          - cell "aarch64-linux" [ref=f34e120]
+        - row [ref=f34e121] [cursor=pointer]:
+          - cell [ref=f34e122]:
+            - img "Queued" [ref=f34e123]
+          - cell [ref=f34e124]:
+            - link "337275417" [ref=f34e125]:
+              - /url: https://hydra.nixos.org/build/337275417
+          - cell [ref=f34e126]:
+            - link "nixpkgs:staging-next-26.05:starship.x86_64-linux" [ref=f34e127]:
+              - /url: https://hydra.nixos.org/build/337275417
+          - cell "-" [ref=f34e128]
+          - cell "starship-1.25.1" [ref=f34e129]
+          - cell "x86_64-linux" [ref=f34e130]
+        - row [ref=f34e131] [cursor=pointer]:
+          - cell [ref=f34e132]:
+            - img "Queued" [ref=f34e133]
+          - cell [ref=f34e134]:
+            - link "337275416" [ref=f34e135]:
+              - /url: https://hydra.nixos.org/build/337275416
+          - cell [ref=f34e136]:
+            - link "nixpkgs:staging-next-26.05:starship-jj.x86_64-linux" [ref=f34e137]:
+              - /url: https://hydra.nixos.org/build/337275416
+          - cell "-" [ref=f34e138]
+          - cell "starship-jj-0.7.0" [ref=f34e139]
+          - cell "x86_64-linux" [ref=f34e140]
+        - row [ref=f34e141] [cursor=pointer]:
+          - cell [ref=f34e142]:
+            - img "Queued" [ref=f34e143]
+          - cell [ref=f34e144]:
+            - link "337275408" [ref=f34e145]:
+              - /url: https://hydra.nixos.org/build/337275408
+          - cell [ref=f34e146]:
+            - link "nixpkgs:staging-next-26.05:starship.aarch64-linux" [ref=f34e147]:
+              - /url: https://hydra.nixos.org/build/337275408
+          - cell "-" [ref=f34e148]
+          - cell "starship-1.25.1" [ref=f34e149]
+          - cell "aarch64-linux" [ref=f34e150]
+        - row [ref=f34e151] [cursor=pointer]:
+          - cell [ref=f34e152]:
+            - img "Queued" [ref=f34e153]
+          - cell [ref=f34e154]:
+            - link "337275405" [ref=f34e155]:
+              - /url: https://hydra.nixos.org/build/337275405
+          - cell [ref=f34e156]:
+            - link "nixpkgs:staging-next-26.05:starship-jj.x86_64-darwin" [ref=f34e157]:
+              - /url: https://hydra.nixos.org/build/337275405
+          - cell "-" [ref=f34e158]
+          - cell "starship-jj-0.7.0" [ref=f34e159]
+          - cell "x86_64-darwin" [ref=f34e160]
+        - row [ref=f34e161] [cursor=pointer]:
+          - cell [ref=f34e162]:
+            - img "Queued" [ref=f34e163]
+          - cell [ref=f34e164]:
+            - link "337275403" [ref=f34e165]:
+              - /url: https://hydra.nixos.org/build/337275403
+          - cell [ref=f34e166]:
+            - link "nixpkgs:staging-next-26.05:starship.x86_64-darwin" [ref=f34e167]:
+              - /url: https://hydra.nixos.org/build/337275403
+          - cell "-" [ref=f34e168]
+          - cell "starship-1.25.1" [ref=f34e169]
+          - cell "x86_64-darwin" [ref=f34e170]
+        - row [ref=f34e171] [cursor=pointer]:
+          - cell [ref=f34e172]:
+            - img "Queued" [ref=f34e173]
+          - cell [ref=f34e174]:
+            - link "337275401" [ref=f34e175]:
+              - /url: https://hydra.nixos.org/build/337275401
+          - cell [ref=f34e176]:
+            - link "nixpkgs:staging-next-26.05:starship.aarch64-darwin" [ref=f34e177]:
+              - /url: https://hydra.nixos.org/build/337275401
+          - cell "-" [ref=f34e178]
+          - cell "starship-1.25.1" [ref=f34e179]
+          - cell "aarch64-darwin" [ref=f34e180]
+        - row [ref=f34e181] [cursor=pointer]:
+          - cell [ref=f34e182]:
+            - img "Queued" [ref=f34e183]
+          - cell [ref=f34e184]:
+            - link "337275400" [ref=f34e185]:
+              - /url: https://hydra.nixos.org/build/337275400
+          - cell [ref=f34e186]:
+            - link "nixpkgs:staging-next-26.05:starship-jj.aarch64-darwin" [ref=f34e187]:
+              - /url: https://hydra.nixos.org/build/337275400
+          - cell "-" [ref=f34e188]
+          - cell "starship-jj-0.7.0" [ref=f34e189]
+          - cell "aarch64-darwin" [ref=f34e190]
+        - row [ref=f34e191] [cursor=pointer]:
+          - cell [ref=f34e192]:
+            - img "Queued" [ref=f34e193]
+          - cell [ref=f34e194]:
+            - link "337165090" [ref=f34e195]:
+              - /url: https://hydra.nixos.org/build/337165090
+          - cell [ref=f34e196]:
+            - link "nixpkgs:staging-next-26.05:jj-starship.aarch64-linux" [ref=f34e197]:
+              - /url: https://hydra.nixos.org/build/337165090
+          - cell "-" [ref=f34e198]
+          - cell "jj-starship-0.7.1" [ref=f34e199]
+          - cell "aarch64-linux" [ref=f34e200]
+        - row [ref=f34e201] [cursor=pointer]:
+          - cell [ref=f34e202]:
+            - img "Queued" [ref=f34e203]
+          - cell [ref=f34e204]:
+            - link "337165081" [ref=f34e205]:
+              - /url: https://hydra.nixos.org/build/337165081
+          - cell [ref=f34e206]:
+            - link "nixpkgs:staging-next-26.05:jj-starship.x86_64-darwin" [ref=f34e207]:
+              - /url: https://hydra.nixos.org/build/337165081
+          - cell "-" [ref=f34e208]
+          - cell "jj-starship-0.7.1" [ref=f34e209]
+          - cell "x86_64-darwin" [ref=f34e210]
+    - paragraph [ref=f34e211]: "The following builds match your query:"
+    - table [ref=f34e212]:
+      - rowgroup [ref=f34e213]:
+        - row [ref=f34e214]:
+          - columnheader [ref=f34e215]
+          - columnheader "#" [ref=f34e216]
+          - columnheader "Job" [ref=f34e217]
+          - columnheader "Finished at" [ref=f34e218]
+          - columnheader "Package/release name" [ref=f34e219]
+          - columnheader "System" [ref=f34e220]
+      - rowgroup [ref=f34e221]:
+        - row [ref=f34e222] [cursor=pointer]:
+          - cell [ref=f34e223]:
+            - img "Queued" [ref=f34e224]
+          - cell [ref=f34e225]:
+            - link "337275440" [ref=f34e226]:
+              - /url: https://hydra.nixos.org/build/337275440
+          - cell [ref=f34e227]:
+            - link "nixpkgs:staging-next-26.05:starship-jj.aarch64-linux" [ref=f34e228]:
+              - /url: https://hydra.nixos.org/build/337275440
+          - cell "-" [ref=f34e229]
+          - cell "starship-jj-0.7.0" [ref=f34e230]
+          - cell "aarch64-linux" [ref=f34e231]
+        - row [ref=f34e232] [cursor=pointer]:
+          - cell [ref=f34e233]:
+            - img "Queued" [ref=f34e234]
+          - cell [ref=f34e235]:
+            - link "337275417" [ref=f34e236]:
+              - /url: https://hydra.nixos.org/build/337275417
+          - cell [ref=f34e237]:
+            - link "nixpkgs:staging-next-26.05:starship.x86_64-linux" [ref=f34e238]:
+              - /url: https://hydra.nixos.org/build/337275417
+          - cell "-" [ref=f34e239]
+          - cell "starship-1.25.1" [ref=f34e240]
+          - cell "x86_64-linux" [ref=f34e241]
+        - row [ref=f34e242] [cursor=pointer]:
+          - cell [ref=f34e243]:
+            - img "Queued" [ref=f34e244]
+          - cell [ref=f34e245]:
+            - link "337275416" [ref=f34e246]:
+              - /url: https://hydra.nixos.org/build/337275416
+          - cell [ref=f34e247]:
+            - link "nixpkgs:staging-next-26.05:starship-jj.x86_64-linux" [ref=f34e248]:
+              - /url: https://hydra.nixos.org/build/337275416
+          - cell "-" [ref=f34e249]
+          - cell "starship-jj-0.7.0" [ref=f34e250]
+          - cell "x86_64-linux" [ref=f34e251]
+        - row [ref=f34e252] [cursor=pointer]:
+          - cell [ref=f34e253]:
+            - img "Queued" [ref=f34e254]
+          - cell [ref=f34e255]:
+            - link "337275408" [ref=f34e256]:
+              - /url: https://hydra.nixos.org/build/337275408
+          - cell [ref=f34e257]:
+            - link "nixpkgs:staging-next-26.05:starship.aarch64-linux" [ref=f34e258]:
+              - /url: https://hydra.nixos.org/build/337275408
+          - cell "-" [ref=f34e259]
+          - cell "starship-1.25.1" [ref=f34e260]
+          - cell "aarch64-linux" [ref=f34e261]
+        - row [ref=f34e262] [cursor=pointer]:
+          - cell [ref=f34e263]:
+            - img "Queued" [ref=f34e264]
+          - cell [ref=f34e265]:
+            - link "337275405" [ref=f34e266]:
+              - /url: https://hydra.nixos.org/build/337275405
+          - cell [ref=f34e267]:
+            - link "nixpkgs:staging-next-26.05:starship-jj.x86_64-darwin" [ref=f34e268]:
+              - /url: https://hydra.nixos.org/build/337275405
+          - cell "-" [ref=f34e269]
+          - cell "starship-jj-0.7.0" [ref=f34e270]
+          - cell "x86_64-darwin" [ref=f34e271]
+        - row [ref=f34e272] [cursor=pointer]:
+          - cell [ref=f34e273]:
+            - img "Queued" [ref=f34e274]
+          - cell [ref=f34e275]:
+            - link "337275403" [ref=f34e276]:
+              - /url: https://hydra.nixos.org/build/337275403
+          - cell [ref=f34e277]:
+            - link "nixpkgs:staging-next-26.05:starship.x86_64-darwin" [ref=f34e278]:
+              - /url: https://hydra.nixos.org/build/337275403
+          - cell "-" [ref=f34e279]
+          - cell "starship-1.25.1" [ref=f34e280]
+          - cell "x86_64-darwin" [ref=f34e281]
+        - row [ref=f34e282] [cursor=pointer]:
+          - cell [ref=f34e283]:
+            - img "Queued" [ref=f34e284]
+          - cell [ref=f34e285]:
+            - link "337275401" [ref=f34e286]:
+              - /url: https://hydra.nixos.org/build/337275401
+          - cell [ref=f34e287]:
+            - link "nixpkgs:staging-next-26.05:starship.aarch64-darwin" [ref=f34e288]:
+              - /url: https://hydra.nixos.org/build/337275401
+          - cell "-" [ref=f34e289]
+          - cell "starship-1.25.1" [ref=f34e290]
+          - cell "aarch64-darwin" [ref=f34e291]
+        - row [ref=f34e292] [cursor=pointer]:
+          - cell [ref=f34e293]:
+            - img "Queued" [ref=f34e294]
+          - cell [ref=f34e295]:
+            - link "337275400" [ref=f34e296]:
+              - /url: https://hydra.nixos.org/build/337275400
+          - cell [ref=f34e297]:
+            - link "nixpkgs:staging-next-26.05:starship-jj.aarch64-darwin" [ref=f34e298]:
+              - /url: https://hydra.nixos.org/build/337275400
+          - cell "-" [ref=f34e299]
+          - cell "starship-jj-0.7.0" [ref=f34e300]
+          - cell "aarch64-darwin" [ref=f34e301]
+        - row [ref=f34e302] [cursor=pointer]:
+          - cell [ref=f34e303]:
+            - img "Queued" [ref=f34e304]
+          - cell [ref=f34e305]:
+            - link "337165090" [ref=f34e306]:
+              - /url: https://hydra.nixos.org/build/337165090
+          - cell [ref=f34e307]:
+            - link "nixpkgs:staging-next-26.05:jj-starship.aarch64-linux" [ref=f34e308]:
+              - /url: https://hydra.nixos.org/build/337165090
+          - cell "-" [ref=f34e309]
+          - cell "jj-starship-0.7.1" [ref=f34e310]
+          - cell "aarch64-linux" [ref=f34e311]
+        - row [ref=f34e312] [cursor=pointer]:
+          - cell [ref=f34e313]:
+            - img "Queued" [ref=f34e314]
+          - cell [ref=f34e315]:
+            - link "337165081" [ref=f34e316]:
+              - /url: https://hydra.nixos.org/build/337165081
+          - cell [ref=f34e317]:
+            - link "nixpkgs:staging-next-26.05:jj-starship.x86_64-darwin" [ref=f34e318]:
+              - /url: https://hydra.nixos.org/build/337165081
+          - cell "-" [ref=f34e319]
+          - cell "jj-starship-0.7.1" [ref=f34e320]
+          - cell "x86_64-darwin" [ref=f34e321]
+    - contentinfo [ref=f34e322]:
+      - separator
+      - emphasis [ref=f34e324]:
+        - link "Hydra" [ref=f34e325] [cursor=pointer]:
+          - /url: http://nixos.org/hydra
+        - text: 0.1.20260708.ae831ac (using nix-2.34.8 and nix-eval-jobs-2.34.1).

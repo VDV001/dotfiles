@@ -1,0 +1,165 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link [ref=e4] [cursor=pointer]:
+        - /url: https://hydra.nixos.org/
+        - img "Hydra Logo" [ref=e5]
+      - generic [ref=e6]:
+        - list [ref=e7]:
+          - listitem [ref=e8]:
+            - link "Status" [ref=e9] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e10]:
+            - link "Project" [ref=e11] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e12]:
+            - link "Jobset" [ref=e13] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=e14]:
+            - link "Job" [ref=e15] [cursor=pointer]:
+              - /url: "#"
+        - textbox "Search" [ref=e17]
+        - list [ref=e18]:
+          - listitem [ref=e19]:
+            - link "Sign in" [ref=e20] [cursor=pointer]:
+              - /url: "#"
+  - generic [ref=e21]:
+    - generic [ref=e23]:
+      - link "nixpkgs" [ref=e24] [cursor=pointer]:
+        - /url: https://hydra.nixos.org/project/nixpkgs
+      - text: ":"
+      - link "unstable" [ref=e25] [cursor=pointer]:
+        - /url: https://hydra.nixos.org/jobset/nixpkgs/unstable
+      - text: :starship.aarch64-darwin
+    - list [ref=e26]:
+      - listitem [ref=e27]:
+        - link "Status" [ref=e28] [cursor=pointer]:
+          - /url: "#tabs-status"
+      - listitem [ref=e29]:
+        - link "Charts" [ref=e30] [cursor=pointer]:
+          - /url: "#tabs-charts"
+      - listitem [ref=e31]:
+        - link "Links" [ref=e32] [cursor=pointer]:
+          - /url: "#tabs-links"
+    - generic [ref=e34]:
+      - heading "Latest builds" [level=3] [ref=e35]
+      - table [ref=e36]:
+        - rowgroup [ref=e37]:
+          - row [ref=e38]:
+            - columnheader [ref=e39]
+            - columnheader "#" [ref=e40]
+            - columnheader "Finished at" [ref=e41]
+            - columnheader "Package/release name" [ref=e42]
+            - columnheader "System" [ref=e43]
+        - rowgroup [ref=e44]:
+          - row [ref=e45] [cursor=pointer]:
+            - cell [ref=e46]:
+              - img "Failed" [ref=e47]
+            - cell [ref=e48]:
+              - link "337059800" [ref=e49]:
+                - /url: https://hydra.nixos.org/build/337059800
+            - cell [ref=e50]:
+              - time [ref=e51]: 2d ago
+            - cell "starship-1.26.0" [ref=e52]
+            - cell "aarch64-darwin" [ref=e53]
+          - row [ref=e54] [cursor=pointer]:
+            - cell [ref=e55]:
+              - img "Succeeded" [ref=e56]
+            - cell [ref=e57]:
+              - link "333653335" [ref=e58]:
+                - /url: https://hydra.nixos.org/build/333653335
+            - cell [ref=e59]:
+              - time [ref=e60]: 2026-07-01
+            - cell "starship-1.26.0" [ref=e61]
+            - cell "aarch64-darwin" [ref=e62]
+          - row [ref=e63] [cursor=pointer]:
+            - cell [ref=e64]:
+              - img "Succeeded" [ref=e65]
+            - cell [ref=e66]:
+              - link "333158385" [ref=e67]:
+                - /url: https://hydra.nixos.org/build/333158385
+            - cell [ref=e68]:
+              - time [ref=e69]: 2026-06-26
+            - cell "starship-1.25.1" [ref=e70]
+            - cell "aarch64-darwin" [ref=e71]
+          - row [ref=e72] [cursor=pointer]:
+            - cell [ref=e73]:
+              - img "Succeeded" [ref=e74]
+            - cell [ref=e75]:
+              - link "329488517" [ref=e76]:
+                - /url: https://hydra.nixos.org/build/329488517
+            - cell [ref=e77]:
+              - time [ref=e78]: 2026-06-17
+            - cell "starship-1.25.1" [ref=e79]
+            - cell "aarch64-darwin" [ref=e80]
+          - row [ref=e81] [cursor=pointer]:
+            - cell [ref=e82]:
+              - img "Succeeded" [ref=e83]
+            - cell [ref=e84]:
+              - link "327834278" [ref=e85]:
+                - /url: https://hydra.nixos.org/build/327834278
+            - cell [ref=e86]:
+              - time [ref=e87]: 2026-05-01
+            - cell "starship-1.25.1" [ref=e88]
+            - cell "aarch64-darwin" [ref=e89]
+          - row [ref=e90] [cursor=pointer]:
+            - cell [ref=e91]:
+              - img "Succeeded" [ref=e92]
+            - cell [ref=e93]:
+              - link "327778019" [ref=e94]:
+                - /url: https://hydra.nixos.org/build/327778019
+            - cell [ref=e95]:
+              - time [ref=e96]: 2026-04-29
+            - cell "starship-1.25.0" [ref=e97]
+            - cell "aarch64-darwin" [ref=e98]
+          - row [ref=e99] [cursor=pointer]:
+            - cell [ref=e100]:
+              - img "Succeeded" [ref=e101]
+            - cell [ref=e102]:
+              - link "327185676" [ref=e103]:
+                - /url: https://hydra.nixos.org/build/327185676
+            - cell [ref=e104]:
+              - time [ref=e105]: 2026-04-23
+            - cell "starship-1.24.2" [ref=e106]
+            - cell "aarch64-darwin" [ref=e107]
+          - row [ref=e108] [cursor=pointer]:
+            - cell [ref=e109]:
+              - img "Succeeded" [ref=e110]
+            - cell [ref=e111]:
+              - link "324676565" [ref=e112]:
+                - /url: https://hydra.nixos.org/build/324676565
+            - cell [ref=e113]:
+              - time [ref=e114]: 2026-03-21
+            - cell "starship-1.24.2" [ref=e115]
+            - cell "aarch64-darwin" [ref=e116]
+          - row [ref=e117] [cursor=pointer]:
+            - cell [ref=e118]:
+              - img "Succeeded" [ref=e119]
+            - cell [ref=e120]:
+              - link "322496175" [ref=e121]:
+                - /url: https://hydra.nixos.org/build/322496175
+            - cell [ref=e122]:
+              - time [ref=e123]: 2026-02-24
+            - cell "starship-1.24.2" [ref=e124]
+            - cell "aarch64-darwin" [ref=e125]
+          - row [ref=e126] [cursor=pointer]:
+            - cell [ref=e127]:
+              - img "Succeeded" [ref=e128]
+            - cell [ref=e129]:
+              - link "320107802" [ref=e130]:
+                - /url: https://hydra.nixos.org/build/320107802
+            - cell [ref=e131]:
+              - time [ref=e132]: 2026-01-23
+            - cell "starship-1.24.2" [ref=e133]
+            - cell "aarch64-darwin" [ref=e134]
+          - row [ref=e135] [cursor=pointer]:
+            - cell [ref=e136]:
+              - link [ref=e137]:
+                - /url: https://hydra.nixos.org/job/nixpkgs/unstable/starship.aarch64-darwin/all
+                - emphasis [ref=e138]: More...
+    - contentinfo [ref=e139]:
+      - separator
+      - emphasis [ref=e141]:
+        - link "Hydra" [ref=e142] [cursor=pointer]:
+          - /url: http://nixos.org/hydra
+        - text: 0.1.20260708.ae831ac (using nix-2.34.8 and nix-eval-jobs-2.34.1).

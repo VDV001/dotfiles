@@ -75,6 +75,9 @@
         sshpass
         bun
         xh
+        bandwhich # TUI сетевых соединений по процессам (кто/куда/сколько) в реальном времени. Запуск: sudo bandwhich
+        trippy # современный traceroute+ping TUI (замена mtr): маршрут до хоста, GeoIP, ICMP/UDP/TCP. Бинарь: sudo trip <host>
+        doggo # современный DNS-клиент (замена dig): резолв домена/IP, DoH/DoT/DoQ, JSON. Запуск: doggo example.com
 
         # GUI
         bruno

@@ -108,6 +108,16 @@
           tui = "fullscreen";
           skipWorkflowUsageWarning = true;
 
+          # Commit/PR attribution. `includeCoAuthoredBy` is deprecated; the
+          # `attribution` object replaces it. Use the emerging "Assisted-by"
+          # trailer (adopted by Apache SF, Fedora, Linux kernel, LLVM,
+          # OpenTelemetry, Rocky) instead of "Co-Authored-By"; empty `pr`
+          # keeps attribution out of PR bodies.
+          attribution = {
+            commit = "Assisted-by: Claude Code <noreply@anthropic.com>";
+            pr = "";
+          };
+
           # Preserve marketplace plugins across rebuilds
           enabledPlugins = {
             "typescript-lsp@claude-plugins-official" = true;

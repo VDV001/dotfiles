@@ -1,0 +1,7 @@
+[     506ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://hydra.nixos.org/build/337059800:0
+[  157792ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://hydra.nixos.org/build:0
+[  157932ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://hydra.nixos.org/build:0
+[  161472ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://hydra.nixos.org/:0
+[  167337ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://hydra.nixos.org/project/hydra:0
+[  178228ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://hydra.nixos.org/jobset/hydra/master:0
+[  192292ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://hydra.nixos.org/:0

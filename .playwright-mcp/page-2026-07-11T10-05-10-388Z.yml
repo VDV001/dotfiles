@@ -1,0 +1,128 @@
+- generic [active] [ref=f14e1]:
+  - navigation [ref=f14e2]:
+    - generic [ref=f14e3]:
+      - link [ref=f14e4] [cursor=pointer]:
+        - /url: https://hydra.nixos.org/
+        - img "Hydra Logo" [ref=f14e5]
+      - generic [ref=f14e6]:
+        - list [ref=f14e7]:
+          - listitem [ref=f14e8]:
+            - link "Status" [ref=f14e9] [cursor=pointer]:
+              - /url: "#"
+        - textbox "Search" [ref=f14e11]
+        - list [ref=f14e12]:
+          - listitem [ref=f14e13]:
+            - link "Sign in" [ref=f14e14] [cursor=pointer]:
+              - /url: "#"
+  - generic [ref=f14e15]:
+    - generic [ref=f14e16]:
+      - generic [ref=f14e17]:
+        - heading [level=4] [ref=f14e18]:
+          - time [ref=f14e19]: 2025-01-05 07:53:27
+          - text: by Martin Weinelt
+        - text: Please set a proper User-Agent when scraping hydra.nixos.org, so we can reach out to you, when you are overloading the machine!
+      - generic [ref=f14e20]:
+        - heading [level=4] [ref=f14e21]:
+          - time [ref=f14e22]: 2021-02-16 20:05:02
+          - text: by Graham Christensen
+        - text: "Status resources:"
+        - link "Grafana" [ref=f14e23] [cursor=pointer]:
+          - /url: https://monitoring.nixos.org/grafana/dashboards/f/vMqEtUEGz/hydra
+        - text: ","
+        - link "status.nixos.org" [ref=f14e24] [cursor=pointer]:
+          - /url: https://status.nixos.org/
+        - text: ", and"
+        - link "the queue runner status" [ref=f14e25] [cursor=pointer]:
+          - /url: https://hydra.nixos.org/queue-runner-status
+        - text: .
+    - generic [ref=f14e26]: Projects
+    - paragraph [ref=f14e27]:
+      - text: "The following projects are hosted on this server:"
+      - generic [ref=f14e28]: Show disabled projects
+    - table [ref=f14e29]:
+      - rowgroup [ref=f14e30]:
+        - row [ref=f14e31]:
+          - columnheader "Id" [ref=f14e32]
+          - columnheader "Name" [ref=f14e33]
+          - columnheader "Description" [ref=f14e34]
+      - rowgroup [ref=f14e35]:
+        - row [ref=f14e36] [cursor=pointer]:
+          - cell [ref=f14e37]:
+            - link "dwarffs" [ref=f14e39]:
+              - /url: https://hydra.nixos.org/project/dwarffs
+          - cell "DwarfFS" [ref=f14e40]
+          - cell [ref=f14e41]:
+            - link:
+              - /url: https://github.com/edolstra/dwarffs
+        - row [ref=f14e42] [cursor=pointer]:
+          - cell [ref=f14e43]:
+            - link "flakes" [ref=f14e45]:
+              - /url: https://hydra.nixos.org/project/flakes
+          - cell "Flakes" [ref=f14e46]
+          - cell [ref=f14e47]
+        - row [ref=f14e48] [cursor=pointer]:
+          - cell [ref=f14e49]:
+            - link "hydra" [ref=f14e51]:
+              - /url: https://hydra.nixos.org/project/hydra
+          - cell "Hydra" [ref=f14e52]
+          - cell "Hydra, the Nix-based continuous build system" [ref=f14e53]
+        - row [ref=f14e54] [cursor=pointer]:
+          - cell [ref=f14e55]:
+            - link "nix" [ref=f14e57]:
+              - /url: https://hydra.nixos.org/project/nix
+          - cell "Nix" [ref=f14e58]
+          - cell "Nix, the purely functional package manager" [ref=f14e59]
+        - row [ref=f14e60] [cursor=pointer]:
+          - cell [ref=f14e61]:
+            - link "nix-installer" [ref=f14e63]:
+              - /url: https://hydra.nixos.org/project/nix-installer
+          - cell "Nix Installer" [ref=f14e64]
+          - cell [ref=f14e65]:
+            - link "A fork of the Determinate Nix Installer (https://github.com/determinateSystems/nix-installer)" [ref=f14e66]:
+              - /url: https://github.com/NixOS/nix-installer
+        - row [ref=f14e67] [cursor=pointer]:
+          - cell [ref=f14e68]:
+            - link "nixos" [ref=f14e70]:
+              - /url: https://hydra.nixos.org/project/nixos
+          - cell "NixOS" [ref=f14e71]
+          - cell [ref=f14e72]:
+            - link "NixOS, the purely functional Linux distribution" [ref=f14e73]:
+              - /url: http://nixos.org/nixos
+        - row [ref=f14e74] [cursor=pointer]:
+          - cell [ref=f14e75]:
+            - link "nixos-infra" [ref=f14e77]:
+              - /url: https://hydra.nixos.org/project/nixos-infra
+          - cell "NixOS infra" [ref=f14e78]
+          - cell [ref=f14e79]:
+            - link "build infra and services" [ref=f14e80]:
+              - /url: https://github.com/NixOS/infra/
+        - row [ref=f14e81] [cursor=pointer]:
+          - cell [ref=f14e82]:
+            - link "nixpkgs" [ref=f14e84]:
+              - /url: https://hydra.nixos.org/project/nixpkgs
+          - cell "Nixpkgs" [ref=f14e85]
+          - cell [ref=f14e86]:
+            - link "Nix Packages collection" [ref=f14e87]:
+              - /url: http://nixos.org/nixpkgs
+        - row [ref=f14e88] [cursor=pointer]:
+          - cell [ref=f14e89]:
+            - link "ofborg" [ref=f14e91]:
+              - /url: https://hydra.nixos.org/project/ofborg
+          - cell "ofborg" [ref=f14e92]
+          - cell [ref=f14e93]:
+            - link "OfBorg automation" [ref=f14e94]:
+              - /url: https://github.com/NiXOS/ofborg
+        - row [ref=f14e95] [cursor=pointer]:
+          - cell [ref=f14e96]:
+            - link "patchelf" [ref=f14e98]:
+              - /url: https://hydra.nixos.org/project/patchelf
+          - cell "PatchELF" [ref=f14e99]
+          - cell [ref=f14e100]:
+            - link "A tool for modifying ELF binaries" [ref=f14e101]:
+              - /url: http://nixos.org/patchelf.html
+    - contentinfo [ref=f14e102]:
+      - separator
+      - emphasis [ref=f14e104]:
+        - link "Hydra" [ref=f14e105] [cursor=pointer]:
+          - /url: http://nixos.org/hydra
+        - text: 0.1.20260708.ae831ac (using nix-2.34.8 and nix-eval-jobs-2.34.1).

@@ -1,0 +1,245 @@
+- generic [active] [ref=f26e1]:
+  - navigation [ref=f26e2]:
+    - generic [ref=f26e3]:
+      - link [ref=f26e4] [cursor=pointer]:
+        - /url: https://hydra.nixos.org/
+        - img "Hydra Logo" [ref=f26e5]
+      - generic [ref=f26e6]:
+        - list [ref=f26e7]:
+          - listitem [ref=f26e8]:
+            - link "Status" [ref=f26e9] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f26e10]:
+            - link "Project" [ref=f26e11] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f26e12]:
+            - link "Jobset" [ref=f26e13] [cursor=pointer]:
+              - /url: "#"
+        - textbox "Search" [ref=f26e15]
+        - list [ref=f26e16]:
+          - listitem [ref=f26e17]:
+            - link "Sign in" [ref=f26e18] [cursor=pointer]:
+              - /url: "#"
+  - generic [ref=f26e19]:
+    - generic [ref=f26e20]:
+      - link "nixpkgs" [ref=f26e21] [cursor=pointer]:
+        - /url: https://hydra.nixos.org/project/nixpkgs
+      - text: :unstable
+    - list [ref=f26e22]:
+      - listitem [ref=f26e23]:
+        - link "Evaluations" [ref=f26e24] [cursor=pointer]:
+          - /url: "#tabs-evaluations"
+      - listitem [ref=f26e25]:
+        - link "Evaluation Errors" [ref=f26e26] [cursor=pointer]:
+          - /url: "#tabs-errors"
+      - listitem [ref=f26e27]:
+        - link "Jobs" [ref=f26e28] [cursor=pointer]:
+          - /url: "#tabs-jobs"
+      - listitem [ref=f26e29]:
+        - link "Configuration" [ref=f26e30] [cursor=pointer]:
+          - /url: "#tabs-configuration"
+      - listitem [ref=f26e31]:
+        - link "Links" [ref=f26e32] [cursor=pointer]:
+          - /url: "#tabs-links"
+      - listitem [ref=f26e33]:
+        - link "Channels" [ref=f26e34] [cursor=pointer]:
+          - /url: "#tabs-channels"
+    - generic [ref=f26e36]:
+      - table [ref=f26e37]:
+        - rowgroup [ref=f26e38]:
+          - row [ref=f26e39]:
+            - rowheader "Last checked:" [ref=f26e40]
+            - cell [ref=f26e41]:
+              - time [ref=f26e42]: 2026-07-11 12:51:09
+              - text: ","
+              - emphasis [ref=f26e43]: with errors!
+          - row [ref=f26e44]:
+            - rowheader "Last evaluation:" [ref=f26e45]
+            - cell [ref=f26e46]:
+              - time [ref=f26e47]: 2026-07-11 12:38:57
+              - text: (took 16 minutes, 5 seconds)
+      - table [ref=f26e48]:
+        - rowgroup [ref=f26e49]:
+          - row [ref=f26e50]:
+            - columnheader "#" [ref=f26e51]
+            - columnheader "Date" [ref=f26e52]
+            - columnheader "Input changes" [ref=f26e53]
+            - columnheader "Jobs" [ref=f26e54]
+          - row [ref=f26e55]:
+            - columnheader [ref=f26e56]:
+              - img "Succeeded" [ref=f26e57]
+            - columnheader [ref=f26e58]:
+              - img "Failed" [ref=f26e59]
+            - columnheader [ref=f26e60]:
+              - img "Queued" [ref=f26e61]
+            - columnheader [ref=f26e62]:
+              - img "Delta" [ref=f26e63]
+        - rowgroup [ref=f26e64]:
+          - row [ref=f26e65] [cursor=pointer]:
+            - cell [ref=f26e66]:
+              - link "1827045" [ref=f26e67]:
+                - /url: https://hydra.nixos.org/eval/1827045
+            - cell [ref=f26e68]:
+              - time [ref=f26e69]: 2h ago
+            - cell "nixpkgs → 770b9bbb8401 Eval Errors" [ref=f26e70]:
+              - text: nixpkgs →
+              - link "770b9bbb8401" [ref=f26e71]:
+                - /url: javascript:void(0)
+              - generic [ref=f26e72]: Eval Errors
+            - cell "203346" [ref=f26e73]
+            - cell "6371" [ref=f26e75]
+            - cell "683" [ref=f26e77]
+            - cell [ref=f26e79]
+          - row [ref=f26e80] [cursor=pointer]:
+            - cell [ref=f26e81]:
+              - link "1827038" [ref=f26e82]:
+                - /url: https://hydra.nixos.org/eval/1827038
+            - cell [ref=f26e83]:
+              - time [ref=f26e84]: 10h ago
+            - cell "nixpkgs → 6044dd1313d5 Eval Errors" [ref=f26e85]:
+              - text: nixpkgs →
+              - link "6044dd1313d5" [ref=f26e86]:
+                - /url: javascript:void(0)
+              - generic [ref=f26e87]: Eval Errors
+            - cell "203776" [ref=f26e88]
+            - cell "6442" [ref=f26e90]
+            - cell "170" [ref=f26e92]
+            - cell [ref=f26e94]:
+              - strong [ref=f26e96]: "+26"
+          - row [ref=f26e97] [cursor=pointer]:
+            - cell [ref=f26e98]:
+              - link "1827031" [ref=f26e99]:
+                - /url: https://hydra.nixos.org/eval/1827031
+            - cell [ref=f26e100]:
+              - time [ref=f26e101]: 19h ago
+            - cell "nixpkgs → dc29ee8fa098 Eval Errors" [ref=f26e102]:
+              - text: nixpkgs →
+              - link "dc29ee8fa098" [ref=f26e103]:
+                - /url: javascript:void(0)
+              - generic [ref=f26e104]: Eval Errors
+            - cell "203750" [ref=f26e105]
+            - cell "6464" [ref=f26e107]
+            - cell "162" [ref=f26e109]
+            - cell [ref=f26e111]:
+              - strong [ref=f26e113]: "+130"
+          - row [ref=f26e114] [cursor=pointer]:
+            - cell [ref=f26e115]:
+              - link "1827024" [ref=f26e116]:
+                - /url: https://hydra.nixos.org/eval/1827024
+            - cell [ref=f26e117]:
+              - time [ref=f26e118]: 1d ago
+            - cell "nixpkgs → 721b20665efd Eval Errors" [ref=f26e119]:
+              - text: nixpkgs →
+              - link "721b20665efd" [ref=f26e120]:
+                - /url: javascript:void(0)
+              - generic [ref=f26e121]: Eval Errors
+            - cell "203620" [ref=f26e122]
+            - cell "6593" [ref=f26e124]
+            - cell "158" [ref=f26e126]
+            - cell [ref=f26e128]
+          - row [ref=f26e129] [cursor=pointer]:
+            - cell [ref=f26e130]:
+              - link "1827016" [ref=f26e131]:
+                - /url: https://hydra.nixos.org/eval/1827016
+            - cell [ref=f26e132]:
+              - time [ref=f26e133]: 1d ago
+            - cell "nixpkgs → ae643c27532f Eval Errors" [ref=f26e134]:
+              - text: nixpkgs →
+              - link "ae643c27532f" [ref=f26e135]:
+                - /url: javascript:void(0)
+              - generic [ref=f26e136]: Eval Errors
+            - cell "203746" [ref=f26e137]
+            - cell "6607" [ref=f26e139]
+            - cell "18" [ref=f26e141]
+            - cell [ref=f26e143]
+          - row [ref=f26e144] [cursor=pointer]:
+            - cell [ref=f26e145]:
+              - link "1827007" [ref=f26e146]:
+                - /url: https://hydra.nixos.org/eval/1827007
+            - cell [ref=f26e147]:
+              - time [ref=f26e148]: 1d ago
+            - cell "nixpkgs → 767b0d3ec98a Eval Errors" [ref=f26e149]:
+              - text: nixpkgs →
+              - link "767b0d3ec98a" [ref=f26e150]:
+                - /url: javascript:void(0)
+              - generic [ref=f26e151]: Eval Errors
+            - cell "219110" [ref=f26e152]
+            - cell "6743" [ref=f26e154]
+            - cell [ref=f26e156]
+            - cell [ref=f26e157]:
+              - strong [ref=f26e159]: "+29"
+          - row [ref=f26e160] [cursor=pointer]:
+            - cell [ref=f26e161]:
+              - link "1826997" [ref=f26e162]:
+                - /url: https://hydra.nixos.org/eval/1826997
+            - cell [ref=f26e163]:
+              - time [ref=f26e164]: 2d ago
+            - cell "nixpkgs → 80bd90efcad2 Eval Errors" [ref=f26e165]:
+              - text: nixpkgs →
+              - link "80bd90efcad2" [ref=f26e166]:
+                - /url: javascript:void(0)
+              - generic [ref=f26e167]: Eval Errors
+            - cell "219081" [ref=f26e168]
+            - cell "6719" [ref=f26e170]
+            - cell [ref=f26e172]
+            - cell [ref=f26e173]:
+              - strong [ref=f26e175]: "+12"
+          - row [ref=f26e176] [cursor=pointer]:
+            - cell [ref=f26e177]:
+              - link "1826982" [ref=f26e178]:
+                - /url: https://hydra.nixos.org/eval/1826982
+            - cell [ref=f26e179]:
+              - time [ref=f26e180]: 2d ago
+            - cell "nixpkgs → 389ed85304b2 Eval Errors" [ref=f26e181]:
+              - text: nixpkgs →
+              - link "389ed85304b2" [ref=f26e182]:
+                - /url: javascript:void(0)
+              - generic [ref=f26e183]: Eval Errors
+            - cell "219069" [ref=f26e184]
+            - cell "6731" [ref=f26e186]
+            - cell [ref=f26e188]
+            - cell [ref=f26e189]:
+              - strong [ref=f26e191]: "+21"
+          - row [ref=f26e192] [cursor=pointer]:
+            - cell [ref=f26e193]:
+              - link "1826981" [ref=f26e194]:
+                - /url: https://hydra.nixos.org/eval/1826981
+            - cell [ref=f26e195]:
+              - time [ref=f26e196]: 2d ago
+            - cell "nixpkgs → 31220fd49441 Eval Errors" [ref=f26e197]:
+              - text: nixpkgs →
+              - link "31220fd49441" [ref=f26e198]:
+                - /url: javascript:void(0)
+              - generic [ref=f26e199]: Eval Errors
+            - cell "219048" [ref=f26e200]
+            - cell "6722" [ref=f26e202]
+            - cell [ref=f26e204]
+            - cell [ref=f26e205]:
+              - strong [ref=f26e207]: "-61609"
+          - row [ref=f26e208] [cursor=pointer]:
+            - cell [ref=f26e209]:
+              - link "1826973" [ref=f26e210]:
+                - /url: https://hydra.nixos.org/eval/1826973
+            - cell [ref=f26e211]:
+              - time [ref=f26e212]: 2d ago
+            - cell "nixpkgs → 999488783490 Eval Errors" [ref=f26e213]:
+              - text: nixpkgs →
+              - link "999488783490" [ref=f26e214]:
+                - /url: javascript:void(0)
+              - generic [ref=f26e215]: Eval Errors
+            - cell "280657" [ref=f26e216]
+            - cell "8157" [ref=f26e218]
+            - cell [ref=f26e220]
+            - cell [ref=f26e221]:
+              - strong [ref=f26e223]: "-2898"
+          - row [ref=f26e224] [cursor=pointer]:
+            - cell [ref=f26e225]:
+              - link [ref=f26e226]:
+                - /url: https://hydra.nixos.org/jobset/nixpkgs/unstable/evals
+                - emphasis [ref=f26e227]: More...
+    - contentinfo [ref=f26e228]:
+      - separator
+      - emphasis [ref=f26e230]:
+        - link "Hydra" [ref=f26e231] [cursor=pointer]:
+          - /url: http://nixos.org/hydra
+        - text: 0.1.20260708.ae831ac (using nix-2.34.8 and nix-eval-jobs-2.34.1).

@@ -1,0 +1,3 @@
+[    3157ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://hydra.nixos.org/jobset/nixpkgs/unstable:0
+[   10236ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://hydra.nixos.org/project/nixpkgs:0
+[   19175ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://hydra.nixos.org/jobset/nixpkgs/unstable:0

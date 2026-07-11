@@ -1,0 +1,1472 @@
+- generic [active] [ref=f36e1]:
+  - navigation [ref=f36e2]:
+    - generic [ref=f36e3]:
+      - link [ref=f36e4] [cursor=pointer]:
+        - /url: https://hydra.nixos.org/
+        - img "Hydra Logo" [ref=f36e5]
+      - generic [ref=f36e6]:
+        - list [ref=f36e7]:
+          - listitem [ref=f36e8]:
+            - link "Status" [ref=f36e9] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f36e10]:
+            - link "Project" [ref=f36e11] [cursor=pointer]:
+              - /url: "#"
+          - listitem [ref=f36e12]:
+            - link "Jobset" [ref=f36e13] [cursor=pointer]:
+              - /url: "#"
+        - textbox "Search" [ref=f36e15]
+        - list [ref=f36e16]:
+          - listitem [ref=f36e17]:
+            - link "Sign in" [ref=f36e18] [cursor=pointer]:
+              - /url: "#"
+  - generic [ref=f36e19]:
+    - generic [ref=f36e20]:
+      - text: Evaluation 1827045 of jobset
+      - link "nixpkgs" [ref=f36e21] [cursor=pointer]:
+        - /url: https://hydra.nixos.org/project/nixpkgs
+      - text: ":"
+      - link "unstable" [ref=f36e22] [cursor=pointer]:
+        - /url: https://hydra.nixos.org/jobset/nixpkgs/unstable
+    - button " Compare to..." [ref=f36e23] [cursor=pointer]:
+      - generic [ref=f36e24]: 
+      - text: Compare to...
+    - paragraph [ref=f36e25]:
+      - text: This evaluation was performed on
+      - time [ref=f36e26]: 2026-07-11 12:38:57
+      - text: . Fetching the dependencies took 29s and evaluation took 936s.
+    - paragraph [ref=f36e27]:
+      - text: Comparisons are relative to
+      - generic [ref=f36e28]:
+        - link "nixpkgs" [ref=f36e29] [cursor=pointer]:
+          - /url: https://hydra.nixos.org/project/nixpkgs
+        - text: ":"
+        - link "unstable" [ref=f36e30] [cursor=pointer]:
+          - /url: https://hydra.nixos.org/jobset/nixpkgs/unstable
+      - text: evaluation
+      - link "1827038" [ref=f36e31] [cursor=pointer]:
+        - /url: https://hydra.nixos.org/eval/1827038
+      - text: .
+    - textbox "Search jobs by name..." [ref=f36e34]
+    - list [ref=f36e35]:
+      - listitem [ref=f36e36]:
+        - link "Aborted / Timed out Jobs (106)" [ref=f36e37] [cursor=pointer]:
+          - /url: "#tabs-aborted"
+      - listitem [ref=f36e38]:
+        - link "Newly Failing Jobs (27)" [ref=f36e39] [cursor=pointer]:
+          - /url: "#tabs-now-fail"
+      - listitem [ref=f36e40]:
+        - link "Newly Succeeding Jobs (89)" [ref=f36e41] [cursor=pointer]:
+          - /url: "#tabs-now-succeed"
+      - listitem [ref=f36e42]:
+        - link "New Jobs (12)" [ref=f36e43] [cursor=pointer]:
+          - /url: "#tabs-new"
+      - listitem [ref=f36e44]:
+        - link "Still Failing Jobs (6239)" [ref=f36e45] [cursor=pointer]:
+          - /url: "#tabs-still-fail"
+      - listitem [ref=f36e46]:
+        - link "Still Succeeding Jobs (203265)" [ref=f36e47] [cursor=pointer]:
+          - /url: "#tabs-still-succeed"
+      - listitem [ref=f36e48]:
+        - link "Queued Jobs (662)" [ref=f36e49] [cursor=pointer]:
+          - /url: "#tabs-unfinished"
+      - listitem [ref=f36e50]:
+        - link "Inputs" [ref=f36e51] [cursor=pointer]:
+          - /url: "#tabs-inputs"
+      - listitem [ref=f36e52]:
+        - link "Evaluation Errors" [ref=f36e53] [cursor=pointer]:
+          - /url: "#tabs-errors"
+    - table [ref=f36e56]:
+      - rowgroup [ref=f36e57]:
+        - row [ref=f36e58]:
+          - columnheader [ref=f36e59]
+          - columnheader "#" [ref=f36e60]
+          - columnheader "Job" [ref=f36e61]
+          - columnheader "Finished at" [ref=f36e62]
+          - columnheader "Package/release name" [ref=f36e63]
+          - columnheader "System" [ref=f36e64]
+      - rowgroup [ref=f36e65]:
+        - row [ref=f36e66] [cursor=pointer]:
+          - cell [ref=f36e67]:
+            - img "Aborted" [ref=f36e68]
+          - cell [ref=f36e69]:
+            - link "336870436" [ref=f36e70]:
+              - /url: https://hydra.nixos.org/build/336870436
+          - cell [ref=f36e71]:
+            - link "SDL2_mixer.aarch64-darwin" [ref=f36e72]:
+              - /url: https://hydra.nixos.org/build/336870436
+          - cell [ref=f36e73]:
+            - time [ref=f36e74]: 2d ago
+          - cell "SDL2_mixer-2.8.2" [ref=f36e75]
+          - cell "aarch64-darwin" [ref=f36e76]
+        - row [ref=f36e77] [cursor=pointer]:
+          - cell [ref=f36e78]:
+            - img "Aborted" [ref=f36e79]
+          - cell [ref=f36e80]:
+            - link "336870485" [ref=f36e81]:
+              - /url: https://hydra.nixos.org/build/336870485
+          - cell [ref=f36e82]:
+            - link "_20kly.aarch64-darwin" [ref=f36e83]:
+              - /url: https://hydra.nixos.org/build/336870485
+          - cell [ref=f36e84]:
+            - time [ref=f36e85]: 2d ago
+          - cell "20kly-1.5.2" [ref=f36e86]
+          - cell "aarch64-darwin" [ref=f36e87]
+        - row [ref=f36e88] [cursor=pointer]:
+          - cell [ref=f36e89]:
+            - img "Aborted" [ref=f36e90]
+          - cell [ref=f36e91]:
+            - link "336870550" [ref=f36e92]:
+              - /url: https://hydra.nixos.org/build/336870550
+          - cell [ref=f36e93]:
+            - link "abbaye-des-morts.aarch64-darwin" [ref=f36e94]:
+              - /url: https://hydra.nixos.org/build/336870550
+          - cell [ref=f36e95]:
+            - time [ref=f36e96]: 2d ago
+          - cell "abbaye-des-morts-2.0.5" [ref=f36e97]
+          - cell "aarch64-darwin" [ref=f36e98]
+        - row [ref=f36e99] [cursor=pointer]:
+          - cell [ref=f36e100]:
+            - img "Timed out" [ref=f36e101]
+          - cell [ref=f36e102]:
+            - link "336873709" [ref=f36e103]:
+              - /url: https://hydra.nixos.org/build/336873709
+          - cell [ref=f36e104]:
+            - link "asn1c.aarch64-darwin" [ref=f36e105]:
+              - /url: https://hydra.nixos.org/build/336873709
+          - cell [ref=f36e106]:
+            - time [ref=f36e107]: 2d ago
+          - cell "asn1c-0.9.29" [ref=f36e108]
+          - cell "aarch64-darwin" [ref=f36e109]
+        - row [ref=f36e110] [cursor=pointer]:
+          - cell [ref=f36e111]:
+            - img "Aborted" [ref=f36e112]
+          - cell [ref=f36e113]:
+            - link "336874313" [ref=f36e114]:
+              - /url: https://hydra.nixos.org/build/336874313
+          - cell [ref=f36e115]:
+            - link "augustus.aarch64-darwin" [ref=f36e116]:
+              - /url: https://hydra.nixos.org/build/336874313
+          - cell [ref=f36e117]:
+            - time [ref=f36e118]: 2d ago
+          - cell "augustus-4.0.0" [ref=f36e119]
+          - cell "aarch64-darwin" [ref=f36e120]
+        - row [ref=f36e121] [cursor=pointer]:
+          - cell [ref=f36e122]:
+            - img "Cancelled" [ref=f36e123]
+          - cell [ref=f36e124]:
+            - link "336876544" [ref=f36e125]:
+              - /url: https://hydra.nixos.org/build/336876544
+          - cell [ref=f36e126]:
+            - link "bend.x86_64-linux" [ref=f36e127]:
+              - /url: https://hydra.nixos.org/build/336876544
+          - cell [ref=f36e128]:
+            - time [ref=f36e129]: 11h ago
+          - cell "Bend-0.2.37" [ref=f36e130]
+          - cell "x86_64-linux" [ref=f36e131]
+        - row [ref=f36e132] [cursor=pointer]:
+          - cell [ref=f36e133]:
+            - img "Aborted" [ref=f36e134]
+          - cell [ref=f36e135]:
+            - link "336876829" [ref=f36e136]:
+              - /url: https://hydra.nixos.org/build/336876829
+          - cell [ref=f36e137]:
+            - link "biplanes-revival.aarch64-darwin" [ref=f36e138]:
+              - /url: https://hydra.nixos.org/build/336876829
+          - cell [ref=f36e139]:
+            - time [ref=f36e140]: 2d ago
+          - cell "biplanes-revival-1.2.1" [ref=f36e141]
+          - cell "aarch64-darwin" [ref=f36e142]
+        - row [ref=f36e143] [cursor=pointer]:
+          - cell [ref=f36e144]:
+            - img "Aborted" [ref=f36e145]
+          - cell [ref=f36e146]:
+            - link "336877085" [ref=f36e147]:
+              - /url: https://hydra.nixos.org/build/336877085
+          - cell [ref=f36e148]:
+            - link "blobwars.aarch64-darwin" [ref=f36e149]:
+              - /url: https://hydra.nixos.org/build/336877085
+          - cell [ref=f36e150]:
+            - time [ref=f36e151]: 2d ago
+          - cell "blobwars-2.00" [ref=f36e152]
+          - cell "aarch64-darwin" [ref=f36e153]
+        - row [ref=f36e154] [cursor=pointer]:
+          - cell [ref=f36e155]:
+            - img "Aborted" [ref=f36e156]
+          - cell [ref=f36e157]:
+            - link "336879061" [ref=f36e158]:
+              - /url: https://hydra.nixos.org/build/336879061
+          - cell [ref=f36e159]:
+            - link "cataclysm-dda-git.aarch64-darwin" [ref=f36e160]:
+              - /url: https://hydra.nixos.org/build/336879061
+          - cell [ref=f36e161]:
+            - time [ref=f36e162]: 2d ago
+          - cell "cataclysm-dda-git-2024-12-11" [ref=f36e163]
+          - cell "aarch64-darwin" [ref=f36e164]
+        - row [ref=f36e165] [cursor=pointer]:
+          - cell [ref=f36e166]:
+            - img "Aborted" [ref=f36e167]
+          - cell [ref=f36e168]:
+            - link "336879059" [ref=f36e169]:
+              - /url: https://hydra.nixos.org/build/336879059
+          - cell [ref=f36e170]:
+            - link "cataclysm-dda.aarch64-darwin" [ref=f36e171]:
+              - /url: https://hydra.nixos.org/build/336879059
+          - cell [ref=f36e172]:
+            - time [ref=f36e173]: 2d ago
+          - cell "cataclysm-dda-0.H-2025-07-10-0402" [ref=f36e174]
+          - cell "aarch64-darwin" [ref=f36e175]
+        - row [ref=f36e176] [cursor=pointer]:
+          - cell [ref=f36e177]:
+            - img "Aborted" [ref=f36e178]
+          - cell [ref=f36e179]:
+            - link "336881731" [ref=f36e180]:
+              - /url: https://hydra.nixos.org/build/336881731
+          - cell [ref=f36e181]:
+            - link "chocolate-doom.aarch64-darwin" [ref=f36e182]:
+              - /url: https://hydra.nixos.org/build/336881731
+          - cell [ref=f36e183]:
+            - time [ref=f36e184]: 2d ago
+          - cell "chocolate-doom-3.1.1" [ref=f36e185]
+          - cell "aarch64-darwin" [ref=f36e186]
+        - row [ref=f36e187] [cursor=pointer]:
+          - cell [ref=f36e188]:
+            - img "Aborted" [ref=f36e189]
+          - cell [ref=f36e190]:
+            - link "336883769" [ref=f36e191]:
+              - /url: https://hydra.nixos.org/build/336883769
+          - cell [ref=f36e192]:
+            - link "corsix-th.aarch64-darwin" [ref=f36e193]:
+              - /url: https://hydra.nixos.org/build/336883769
+          - cell [ref=f36e194]:
+            - time [ref=f36e195]: 2d ago
+          - cell "corsix-th-0.69.2" [ref=f36e196]
+          - cell "aarch64-darwin" [ref=f36e197]
+        - row [ref=f36e198] [cursor=pointer]:
+          - cell [ref=f36e199]:
+            - img "Aborted" [ref=f36e200]
+          - cell [ref=f36e201]:
+            - link "336884060" [ref=f36e202]:
+              - /url: https://hydra.nixos.org/build/336884060
+          - cell [ref=f36e203]:
+            - link "craftos-pc.aarch64-darwin" [ref=f36e204]:
+              - /url: https://hydra.nixos.org/build/336884060
+          - cell [ref=f36e205]:
+            - time [ref=f36e206]: 2d ago
+          - cell "craftos-pc-2.8.3" [ref=f36e207]
+          - cell "aarch64-darwin" [ref=f36e208]
+        - row [ref=f36e209] [cursor=pointer]:
+          - cell [ref=f36e210]:
+            - img "Aborted" [ref=f36e211]
+          - cell [ref=f36e212]:
+            - link "336884093" [ref=f36e213]:
+              - /url: https://hydra.nixos.org/build/336884093
+          - cell [ref=f36e214]:
+            - link "crawlTiles.aarch64-darwin" [ref=f36e215]:
+              - /url: https://hydra.nixos.org/build/336884093
+          - cell [ref=f36e216]:
+            - time [ref=f36e217]: 2d ago
+          - cell "crawl-tiles-0.34.1" [ref=f36e218]
+          - cell "aarch64-darwin" [ref=f36e219]
+        - row [ref=f36e220] [cursor=pointer]:
+          - cell [ref=f36e221]:
+            - img "Aborted" [ref=f36e222]
+          - cell [ref=f36e223]:
+            - link "336884154" [ref=f36e224]:
+              - /url: https://hydra.nixos.org/build/336884154
+          - cell [ref=f36e225]:
+            - link "crispy-doom.aarch64-darwin" [ref=f36e226]:
+              - /url: https://hydra.nixos.org/build/336884154
+          - cell [ref=f36e227]:
+            - time [ref=f36e228]: 2d ago
+          - cell "crispy-doom-7.1" [ref=f36e229]
+          - cell "aarch64-darwin" [ref=f36e230]
+        - row [ref=f36e231] [cursor=pointer]:
+          - cell [ref=f36e232]:
+            - img "Aborted" [ref=f36e233]
+          - cell [ref=f36e234]:
+            - link "336886685" [ref=f36e235]:
+              - /url: https://hydra.nixos.org/build/336886685
+          - cell [ref=f36e236]:
+            - link "doomretro.aarch64-darwin" [ref=f36e237]:
+              - /url: https://hydra.nixos.org/build/336886685
+          - cell [ref=f36e238]:
+            - time [ref=f36e239]: 2d ago
+          - cell "doomretro-5.8.2" [ref=f36e240]
+          - cell "aarch64-darwin" [ref=f36e241]
+        - row [ref=f36e242] [cursor=pointer]:
+          - cell [ref=f36e243]:
+            - img "Aborted" [ref=f36e244]
+          - cell [ref=f36e245]:
+            - link "336888122" [ref=f36e246]:
+              - /url: https://hydra.nixos.org/build/336888122
+          - cell [ref=f36e247]:
+            - link "ecwolf.aarch64-darwin" [ref=f36e248]:
+              - /url: https://hydra.nixos.org/build/336888122
+          - cell [ref=f36e249]:
+            - time [ref=f36e250]: 2d ago
+          - cell "ecwolf-1.4.2" [ref=f36e251]
+          - cell "aarch64-darwin" [ref=f36e252]
+        - row [ref=f36e253] [cursor=pointer]:
+          - cell [ref=f36e254]:
+            - img "Aborted" [ref=f36e255]
+          - cell [ref=f36e256]:
+            - link "336888181" [ref=f36e257]:
+              - /url: https://hydra.nixos.org/build/336888181
+          - cell [ref=f36e258]:
+            - link "eduke32.aarch64-darwin" [ref=f36e259]:
+              - /url: https://hydra.nixos.org/build/336888181
+          - cell [ref=f36e260]:
+            - time [ref=f36e261]: 2d ago
+          - cell "eduke32-0-unstable-2026-02-03" [ref=f36e262]
+          - cell "aarch64-darwin" [ref=f36e263]
+        - row [ref=f36e264] [cursor=pointer]:
+          - cell [ref=f36e265]:
+            - img "Aborted" [ref=f36e266]
+          - cell [ref=f36e267]:
+            - link "336888789" [ref=f36e268]:
+              - /url: https://hydra.nixos.org/build/336888789
+          - cell [ref=f36e269]:
+            - link "endgame-singularity.aarch64-darwin" [ref=f36e270]:
+              - /url: https://hydra.nixos.org/build/336888789
+          - cell [ref=f36e271]:
+            - time [ref=f36e272]: 2d ago
+          - cell "endgame-singularity-1.1" [ref=f36e273]
+          - cell "aarch64-darwin" [ref=f36e274]
+        - row [ref=f36e275] [cursor=pointer]:
+          - cell [ref=f36e276]:
+            - img "Aborted" [ref=f36e277]
+          - cell [ref=f36e278]:
+            - link "336889308" [ref=f36e279]:
+              - /url: https://hydra.nixos.org/build/336889308
+          - cell [ref=f36e280]:
+            - link "execline.aarch64-darwin" [ref=f36e281]:
+              - /url: https://hydra.nixos.org/build/336889308
+          - cell [ref=f36e282]:
+            - time [ref=f36e283]: 2d ago
+          - cell "execline-2.9.9.1" [ref=f36e284]
+          - cell "aarch64-darwin" [ref=f36e285]
+        - row [ref=f36e286] [cursor=pointer]:
+          - cell [ref=f36e287]:
+            - img "Aborted" [ref=f36e288]
+          - cell [ref=f36e289]:
+            - link "336890269" [ref=f36e290]:
+              - /url: https://hydra.nixos.org/build/336890269
+          - cell [ref=f36e291]:
+            - link "fheroes2.aarch64-darwin" [ref=f36e292]:
+              - /url: https://hydra.nixos.org/build/336890269
+          - cell [ref=f36e293]:
+            - time [ref=f36e294]: 2d ago
+          - cell "fheroes2-1.1.16" [ref=f36e295]
+          - cell "aarch64-darwin" [ref=f36e296]
+        - row [ref=f36e297] [cursor=pointer]:
+          - cell [ref=f36e298]:
+            - img "Aborted" [ref=f36e299]
+          - cell [ref=f36e300]:
+            - link "336890775" [ref=f36e301]:
+              - /url: https://hydra.nixos.org/build/336890775
+          - cell [ref=f36e302]:
+            - link "flare.aarch64-darwin" [ref=f36e303]:
+              - /url: https://hydra.nixos.org/build/336890775
+          - cell [ref=f36e304]:
+            - time [ref=f36e305]: 2d ago
+          - cell "flare-1.15" [ref=f36e306]
+          - cell "aarch64-darwin" [ref=f36e307]
+        - row [ref=f36e308] [cursor=pointer]:
+          - cell [ref=f36e309]:
+            - img "Aborted" [ref=f36e310]
+          - cell [ref=f36e311]:
+            - link "336891596" [ref=f36e312]:
+              - /url: https://hydra.nixos.org/build/336891596
+          - cell [ref=f36e313]:
+            - link "freedink.aarch64-darwin" [ref=f36e314]:
+              - /url: https://hydra.nixos.org/build/336891596
+          - cell [ref=f36e315]:
+            - time [ref=f36e316]: 2d ago
+          - cell "freedink-109.6" [ref=f36e317]
+          - cell "aarch64-darwin" [ref=f36e318]
+        - row [ref=f36e319] [cursor=pointer]:
+          - cell [ref=f36e320]:
+            - img "Aborted" [ref=f36e321]
+          - cell [ref=f36e322]:
+            - link "336892301" [ref=f36e323]:
+              - /url: https://hydra.nixos.org/build/336892301
+          - cell [ref=f36e324]:
+            - link "gavin-bc.aarch64-darwin" [ref=f36e325]:
+              - /url: https://hydra.nixos.org/build/336892301
+          - cell [ref=f36e326]:
+            - time [ref=f36e327]: 2d ago
+          - cell "gavin-bc-7.1.0" [ref=f36e328]
+          - cell "aarch64-darwin" [ref=f36e329]
+        - row [ref=f36e330] [cursor=pointer]:
+          - cell [ref=f36e331]:
+            - img "Aborted" [ref=f36e332]
+          - cell [ref=f36e333]:
+            - link "336899575" [ref=f36e334]:
+              - /url: https://hydra.nixos.org/build/336899575
+          - cell [ref=f36e335]:
+            - link "guile-sdl2.aarch64-darwin" [ref=f36e336]:
+              - /url: https://hydra.nixos.org/build/336899575
+          - cell [ref=f36e337]:
+            - time [ref=f36e338]: 2d ago
+          - cell "guile-sdl2-0.8.0" [ref=f36e339]
+          - cell "aarch64-darwin" [ref=f36e340]
+        - row [ref=f36e341] [cursor=pointer]:
+          - cell [ref=f36e342]:
+            - img "Timed out" [ref=f36e343]
+          - cell [ref=f36e344]:
+            - link "336899826" [ref=f36e345]:
+              - /url: https://hydra.nixos.org/build/336899826
+          - cell [ref=f36e346]:
+            - link "hackneyed.aarch64-darwin" [ref=f36e347]:
+              - /url: https://hydra.nixos.org/build/336899826
+          - cell [ref=f36e348]:
+            - time [ref=f36e349]: 2d ago
+          - cell "hackneyed-0.9.3" [ref=f36e350]
+          - cell "aarch64-darwin" [ref=f36e351]
+        - row [ref=f36e352] [cursor=pointer]:
+          - cell [ref=f36e353]:
+            - img "Timed out" [ref=f36e354]
+          - cell [ref=f36e355]:
+            - link "336901116" [ref=f36e356]:
+              - /url: https://hydra.nixos.org/build/336901116
+          - cell [ref=f36e357]:
+            - link "haskellPackages.THSH.aarch64-darwin" [ref=f36e358]:
+              - /url: https://hydra.nixos.org/build/336901116
+          - cell [ref=f36e359]:
+            - time [ref=f36e360]: 2d ago
+          - cell "THSH-0.0.0.5" [ref=f36e361]
+          - cell "aarch64-darwin" [ref=f36e362]
+        - row [ref=f36e363] [cursor=pointer]:
+          - cell [ref=f36e364]:
+            - img "Aborted" [ref=f36e365]
+          - cell [ref=f36e366]:
+            - link "336917692" [ref=f36e367]:
+              - /url: https://hydra.nixos.org/build/336917692
+          - cell [ref=f36e368]:
+            - link "haskellPackages.sdl2-mixer.aarch64-darwin" [ref=f36e369]:
+              - /url: https://hydra.nixos.org/build/336917692
+          - cell [ref=f36e370]:
+            - time [ref=f36e371]: 2d ago
+          - cell "sdl2-mixer-1.2.0.0" [ref=f36e372]
+          - cell "aarch64-darwin" [ref=f36e373]
+        - row [ref=f36e374] [cursor=pointer]:
+          - cell [ref=f36e375]:
+            - img "Aborted" [ref=f36e376]
+          - cell [ref=f36e377]:
+            - link "336925146" [ref=f36e378]:
+              - /url: https://hydra.nixos.org/build/336925146
+          - cell [ref=f36e379]:
+            - link "hypseus-singe.aarch64-darwin" [ref=f36e380]:
+              - /url: https://hydra.nixos.org/build/336925146
+          - cell [ref=f36e381]:
+            - time [ref=f36e382]: 2d ago
+          - cell "hypseus-singe-2.12.0" [ref=f36e383]
+          - cell "aarch64-darwin" [ref=f36e384]
+        - row [ref=f36e385] [cursor=pointer]:
+          - cell [ref=f36e386]:
+            - img "Aborted" [ref=f36e387]
+          - cell [ref=f36e388]:
+            - link "336928087" [ref=f36e389]:
+              - /url: https://hydra.nixos.org/build/336928087
+          - cell [ref=f36e390]:
+            - link "julius.aarch64-darwin" [ref=f36e391]:
+              - /url: https://hydra.nixos.org/build/336928087
+          - cell [ref=f36e392]:
+            - time [ref=f36e393]: 2d ago
+          - cell "julius-1.8.0" [ref=f36e394]
+          - cell "aarch64-darwin" [ref=f36e395]
+        - row [ref=f36e396] [cursor=pointer]:
+          - cell [ref=f36e397]:
+            - img "Aborted" [ref=f36e398]
+          - cell [ref=f36e399]:
+            - link "336928092" [ref=f36e400]:
+              - /url: https://hydra.nixos.org/build/336928092
+          - cell [ref=f36e401]:
+            - link "jumpnbump.aarch64-darwin" [ref=f36e402]:
+              - /url: https://hydra.nixos.org/build/336928092
+          - cell [ref=f36e403]:
+            - time [ref=f36e404]: 2d ago
+          - cell "jumpnbump-1.70-dev" [ref=f36e405]
+          - cell "aarch64-darwin" [ref=f36e406]
+        - row [ref=f36e407] [cursor=pointer]:
+          - cell [ref=f36e408]:
+            - img "Aborted" [ref=f36e409]
+          - cell [ref=f36e410]:
+            - link "336930045" [ref=f36e411]:
+              - /url: https://hydra.nixos.org/build/336930045
+          - cell [ref=f36e412]:
+            - link "kilo.aarch64-darwin" [ref=f36e413]:
+              - /url: https://hydra.nixos.org/build/336930045
+          - cell [ref=f36e414]:
+            - time [ref=f36e415]: 2d ago
+          - cell "kilo-7.3.40" [ref=f36e416]
+          - cell "aarch64-darwin" [ref=f36e417]
+        - row [ref=f36e418] [cursor=pointer]:
+          - cell [ref=f36e419]:
+            - img "Aborted" [ref=f36e420]
+          - cell [ref=f36e421]:
+            - link "336930676" [ref=f36e422]:
+              - /url: https://hydra.nixos.org/build/336930676
+          - cell [ref=f36e423]:
+            - link "kopuz.aarch64-darwin" [ref=f36e424]:
+              - /url: https://hydra.nixos.org/build/336930676
+          - cell [ref=f36e425]:
+            - time [ref=f36e426]: 2d ago
+          - cell "kopuz-0.9.0" [ref=f36e427]
+          - cell "aarch64-darwin" [ref=f36e428]
+        - row [ref=f36e429] [cursor=pointer]:
+          - cell [ref=f36e430]:
+            - img "Aborted" [ref=f36e431]
+          - cell [ref=f36e432]:
+            - link "336931445" [ref=f36e433]:
+              - /url: https://hydra.nixos.org/build/336931445
+          - cell [ref=f36e434]:
+            - link "lbreakouthd.aarch64-darwin" [ref=f36e435]:
+              - /url: https://hydra.nixos.org/build/336931445
+          - cell [ref=f36e436]:
+            - time [ref=f36e437]: 2d ago
+          - cell "lbreakouthd-1.2.2" [ref=f36e438]
+          - cell "aarch64-darwin" [ref=f36e439]
+        - row [ref=f36e440] [cursor=pointer]:
+          - cell [ref=f36e441]:
+            - img "Aborted" [ref=f36e442]
+          - cell [ref=f36e443]:
+            - link "336932490" [ref=f36e444]:
+              - /url: https://hydra.nixos.org/build/336932490
+          - cell [ref=f36e445]:
+            - link "liberal-crime-squad.aarch64-darwin" [ref=f36e446]:
+              - /url: https://hydra.nixos.org/build/336932490
+          - cell [ref=f36e447]:
+            - time [ref=f36e448]: 2d ago
+          - cell "liberal-crime-squad-2016-07-06" [ref=f36e449]
+          - cell "aarch64-darwin" [ref=f36e450]
+        - row [ref=f36e451] [cursor=pointer]:
+          - cell [ref=f36e452]:
+            - img "Aborted" [ref=f36e453]
+          - cell [ref=f36e454]:
+            - link "336945402" [ref=f36e455]:
+              - /url: https://hydra.nixos.org/build/336945402
+          - cell [ref=f36e456]:
+            - link "mar1d.aarch64-darwin" [ref=f36e457]:
+              - /url: https://hydra.nixos.org/build/336945402
+          - cell [ref=f36e458]:
+            - time [ref=f36e459]: 2d ago
+          - cell "MAR1D-unstable-2023-02-02" [ref=f36e460]
+          - cell "aarch64-darwin" [ref=f36e461]
+        - row [ref=f36e462] [cursor=pointer]:
+          - cell [ref=f36e463]:
+            - img "Aborted" [ref=f36e464]
+          - cell [ref=f36e465]:
+            - link "336946812" [ref=f36e466]:
+              - /url: https://hydra.nixos.org/build/336946812
+          - cell [ref=f36e467]:
+            - link "minesector.aarch64-darwin" [ref=f36e468]:
+              - /url: https://hydra.nixos.org/build/336946812
+          - cell [ref=f36e469]:
+            - time [ref=f36e470]: 2d ago
+          - cell "minesector-1.1.5" [ref=f36e471]
+          - cell "aarch64-darwin" [ref=f36e472]
+        - row [ref=f36e473] [cursor=pointer]:
+          - cell [ref=f36e474]:
+            - img "Aborted" [ref=f36e475]
+          - cell [ref=f36e476]:
+            - link "336947432" [ref=f36e477]:
+              - /url: https://hydra.nixos.org/build/336947432
+          - cell [ref=f36e478]:
+            - link "moc.aarch64-darwin" [ref=f36e479]:
+              - /url: https://hydra.nixos.org/build/336947432
+          - cell [ref=f36e480]:
+            - time [ref=f36e481]: 2d ago
+          - cell "moc-2.6-alpha3-unstable-2019-09-14" [ref=f36e482]
+          - cell "aarch64-darwin" [ref=f36e483]
+        - row [ref=f36e484] [cursor=pointer]:
+          - cell [ref=f36e485]:
+            - img "Aborted" [ref=f36e486]
+          - cell [ref=f36e487]:
+            - link "336949063" [ref=f36e488]:
+              - /url: https://hydra.nixos.org/build/336949063
+          - cell [ref=f36e489]:
+            - link "narsil.aarch64-darwin" [ref=f36e490]:
+              - /url: https://hydra.nixos.org/build/336949063
+          - cell [ref=f36e491]:
+            - time [ref=f36e492]: 2d ago
+          - cell "narsil-1.4.0-143-g086e3b6af" [ref=f36e493]
+          - cell "aarch64-darwin" [ref=f36e494]
+        - row [ref=f36e495] [cursor=pointer]:
+          - cell [ref=f36e496]:
+            - img "Aborted" [ref=f36e497]
+          - cell [ref=f36e498]:
+            - link "336951336" [ref=f36e499]:
+              - /url: https://hydra.nixos.org/build/336951336
+          - cell [ref=f36e500]:
+            - link "nodezator.aarch64-darwin" [ref=f36e501]:
+              - /url: https://hydra.nixos.org/build/336951336
+          - cell [ref=f36e502]:
+            - time [ref=f36e503]: 2d ago
+          - cell "nodezator-1.5.5" [ref=f36e504]
+          - cell "aarch64-darwin" [ref=f36e505]
+        - row [ref=f36e506] [cursor=pointer]:
+          - cell [ref=f36e507]:
+            - img "Aborted" [ref=f36e508]
+          - cell [ref=f36e509]:
+            - link "336956025" [ref=f36e510]:
+              - /url: https://hydra.nixos.org/build/336956025
+          - cell [ref=f36e511]:
+            - link "ocamlPackages.tsdl-mixer.aarch64-darwin" [ref=f36e512]:
+              - /url: https://hydra.nixos.org/build/336956025
+          - cell [ref=f36e513]:
+            - time [ref=f36e514]: 2d ago
+          - cell "ocaml5.4.1-tsdl-mixer-0.6" [ref=f36e515]
+          - cell "aarch64-darwin" [ref=f36e516]
+        - row [ref=f36e517] [cursor=pointer]:
+          - cell [ref=f36e518]:
+            - img "Aborted" [ref=f36e519]
+          - cell [ref=f36e520]:
+            - link "337376269" [ref=f36e521]:
+              - /url: https://hydra.nixos.org/build/337376269
+          - cell [ref=f36e522]:
+            - link "odamex.aarch64-darwin" [ref=f36e523]:
+              - /url: https://hydra.nixos.org/build/337376269
+          - cell [ref=f36e524]:
+            - time [ref=f36e525]: 9h ago
+          - cell "odamex-12.2.0" [ref=f36e526]
+          - cell "aarch64-darwin" [ref=f36e527]
+        - row [ref=f36e528] [cursor=pointer]:
+          - cell [ref=f36e529]:
+            - img "Aborted" [ref=f36e530]
+          - cell [ref=f36e531]:
+            - link "337296547" [ref=f36e532]:
+              - /url: https://hydra.nixos.org/build/337296547
+          - cell [ref=f36e533]:
+            - link "openomf.aarch64-darwin" [ref=f36e534]:
+              - /url: https://hydra.nixos.org/build/337296547
+          - cell [ref=f36e535]:
+            - time [ref=f36e536]: 11h ago
+          - cell "openomf-0.8.6" [ref=f36e537]
+          - cell "aarch64-darwin" [ref=f36e538]
+        - row [ref=f36e539] [cursor=pointer]:
+          - cell [ref=f36e540]:
+            - img "Aborted" [ref=f36e541]
+          - cell [ref=f36e542]:
+            - link "336961544" [ref=f36e543]:
+              - /url: https://hydra.nixos.org/build/336961544
+          - cell [ref=f36e544]:
+            - link "opensupaplex.aarch64-darwin" [ref=f36e545]:
+              - /url: https://hydra.nixos.org/build/336961544
+          - cell [ref=f36e546]:
+            - time [ref=f36e547]: 2d ago
+          - cell "opensupaplex-7.1.2" [ref=f36e548]
+          - cell "aarch64-darwin" [ref=f36e549]
+        - row [ref=f36e550] [cursor=pointer]:
+          - cell [ref=f36e551]:
+            - img "Aborted" [ref=f36e552]
+          - cell [ref=f36e553]:
+            - link "337376342" [ref=f36e554]:
+              - /url: https://hydra.nixos.org/build/337376342
+          - cell [ref=f36e555]:
+            - link "pandora-launcher-unwrapped.aarch64-darwin" [ref=f36e556]:
+              - /url: https://hydra.nixos.org/build/337376342
+          - cell [ref=f36e557]:
+            - time [ref=f36e558]: 9h ago
+          - cell "pandora-launcher-unwrapped-5.3.0" [ref=f36e559]
+          - cell "aarch64-darwin" [ref=f36e560]
+        - row [ref=f36e561] [cursor=pointer]:
+          - cell [ref=f36e562]:
+            - img "Aborted" [ref=f36e563]
+          - cell [ref=f36e564]:
+            - link "337376343" [ref=f36e565]:
+              - /url: https://hydra.nixos.org/build/337376343
+          - cell [ref=f36e566]:
+            - link "pandora-launcher.aarch64-darwin" [ref=f36e567]:
+              - /url: https://hydra.nixos.org/build/337376343
+          - cell [ref=f36e568]:
+            - time [ref=f36e569]: 9h ago
+          - cell "pandora-launcher-5.3.0" [ref=f36e570]
+          - cell "aarch64-darwin" [ref=f36e571]
+        - row [ref=f36e572] [cursor=pointer]:
+          - cell [ref=f36e573]:
+            - img "Timed out" [ref=f36e574]
+          - cell [ref=f36e575]:
+            - link "336963206" [ref=f36e576]:
+              - /url: https://hydra.nixos.org/build/336963206
+          - cell [ref=f36e577]:
+            - link "pdf-oxide.aarch64-linux" [ref=f36e578]:
+              - /url: https://hydra.nixos.org/build/336963206
+          - cell [ref=f36e579]:
+            - time [ref=f36e580]: 2d ago
+          - cell "pdf-oxide-0.3.47" [ref=f36e581]
+          - cell "aarch64-linux" [ref=f36e582]
+        - row [ref=f36e583] [cursor=pointer]:
+          - cell [ref=f36e584]:
+            - img "Timed out" [ref=f36e585]
+          - cell [ref=f36e586]:
+            - link "336963207" [ref=f36e587]:
+              - /url: https://hydra.nixos.org/build/336963207
+          - cell [ref=f36e588]:
+            - link "pdf-oxide.x86_64-linux" [ref=f36e589]:
+              - /url: https://hydra.nixos.org/build/336963207
+          - cell [ref=f36e590]:
+            - time [ref=f36e591]: 2d ago
+          - cell "pdf-oxide-0.3.47" [ref=f36e592]
+          - cell "x86_64-linux" [ref=f36e593]
+        - row [ref=f36e594] [cursor=pointer]:
+          - cell [ref=f36e595]:
+            - img "Timed out" [ref=f36e596]
+          - cell [ref=f36e597]:
+            - link "336977949" [ref=f36e598]:
+              - /url: https://hydra.nixos.org/build/336977949
+          - cell [ref=f36e599]:
+            - link "pkgsRocm.python3Packages.tensordict.x86_64-linux" [ref=f36e600]:
+              - /url: https://hydra.nixos.org/build/336977949
+          - cell [ref=f36e601]:
+            - time [ref=f36e602]: 1d ago
+          - cell "python3.14-tensordict-0.13.0" [ref=f36e603]
+          - cell "x86_64-linux" [ref=f36e604]
+        - row [ref=f36e605] [cursor=pointer]:
+          - cell [ref=f36e606]:
+            - img "Aborted" [ref=f36e607]
+          - cell [ref=f36e608]:
+            - link "337376545" [ref=f36e609]:
+              - /url: https://hydra.nixos.org/build/337376545
+          - cell [ref=f36e610]:
+            - link "plausible.aarch64-darwin" [ref=f36e611]:
+              - /url: https://hydra.nixos.org/build/337376545
+          - cell [ref=f36e612]:
+            - time [ref=f36e613]: 9h ago
+          - cell "plausible-3.2.1" [ref=f36e614]
+          - cell "aarch64-darwin" [ref=f36e615]
+        - row [ref=f36e616] [cursor=pointer]:
+          - cell [ref=f36e617]:
+            - img "Aborted" [ref=f36e618]
+          - cell [ref=f36e619]:
+            - link "337376557" [ref=f36e620]:
+              - /url: https://hydra.nixos.org/build/337376557
+          - cell [ref=f36e621]:
+            - link "pleroma.aarch64-darwin" [ref=f36e622]:
+              - /url: https://hydra.nixos.org/build/337376557
+          - cell [ref=f36e623]:
+            - time [ref=f36e624]: 9h ago
+          - cell "pleroma-2.10.2" [ref=f36e625]
+          - cell "aarch64-darwin" [ref=f36e626]
+        - row [ref=f36e627] [cursor=pointer]:
+          - cell [ref=f36e628]:
+            - img "Aborted" [ref=f36e629]
+          - cell [ref=f36e630]:
+            - link "336981720" [ref=f36e631]:
+              - /url: https://hydra.nixos.org/build/336981720
+          - cell [ref=f36e632]:
+            - link "pysolfc.aarch64-darwin" [ref=f36e633]:
+              - /url: https://hydra.nixos.org/build/336981720
+          - cell [ref=f36e634]:
+            - time [ref=f36e635]: 2d ago
+          - cell "pysolfc-3.4.1" [ref=f36e636]
+          - cell "aarch64-darwin" [ref=f36e637]
+        - row [ref=f36e638] [cursor=pointer]:
+          - cell [ref=f36e639]:
+            - img "Aborted" [ref=f36e640]
+          - cell [ref=f36e641]:
+            - link "337371897" [ref=f36e642]:
+              - /url: https://hydra.nixos.org/build/337371897
+          - cell [ref=f36e643]:
+            - link "python313Packages.bsuite.aarch64-darwin" [ref=f36e644]:
+              - /url: https://hydra.nixos.org/build/337371897
+          - cell [ref=f36e645]:
+            - time [ref=f36e646]: 11h ago
+          - cell "python3.13-bsuite-0.3.5" [ref=f36e647]
+          - cell "aarch64-darwin" [ref=f36e648]
+        - row [ref=f36e649] [cursor=pointer]:
+          - cell [ref=f36e650]:
+            - img "Aborted" [ref=f36e651]
+          - cell [ref=f36e652]:
+            - link "336991768" [ref=f36e653]:
+              - /url: https://hydra.nixos.org/build/336991768
+          - cell [ref=f36e654]:
+            - link "python313Packages.gym.aarch64-darwin" [ref=f36e655]:
+              - /url: https://hydra.nixos.org/build/336991768
+          - cell [ref=f36e656]:
+            - time [ref=f36e657]: 2d ago
+          - cell "python3.13-gym-0.26.2" [ref=f36e658]
+          - cell "aarch64-darwin" [ref=f36e659]
+        - row [ref=f36e660] [cursor=pointer]:
+          - cell [ref=f36e661]:
+            - img "Aborted" [ref=f36e662]
+          - cell [ref=f36e663]:
+            - link "337000034" [ref=f36e664]:
+              - /url: https://hydra.nixos.org/build/337000034
+          - cell [ref=f36e665]:
+            - link "python313Packages.pettingzoo.aarch64-darwin" [ref=f36e666]:
+              - /url: https://hydra.nixos.org/build/337000034
+          - cell [ref=f36e667]:
+            - time [ref=f36e668]: 2d ago
+          - cell "python3.13-pettingzoo-1.26.1" [ref=f36e669]
+          - cell "aarch64-darwin" [ref=f36e670]
+        - row [ref=f36e671] [cursor=pointer]:
+          - cell [ref=f36e672]:
+            - img "Aborted" [ref=f36e673]
+          - cell [ref=f36e674]:
+            - link "337001765" [ref=f36e675]:
+              - /url: https://hydra.nixos.org/build/337001765
+          - cell [ref=f36e676]:
+            - link "python313Packages.pygame-ce.aarch64-darwin" [ref=f36e677]:
+              - /url: https://hydra.nixos.org/build/337001765
+          - cell [ref=f36e678]:
+            - time [ref=f36e679]: 2d ago
+          - cell "python3.13-pygame-ce-2.5.7" [ref=f36e680]
+          - cell "aarch64-darwin" [ref=f36e681]
+        - row [ref=f36e682] [cursor=pointer]:
+          - cell [ref=f36e683]:
+            - img "Aborted" [ref=f36e684]
+          - cell [ref=f36e685]:
+            - link "337001766" [ref=f36e686]:
+              - /url: https://hydra.nixos.org/build/337001766
+          - cell [ref=f36e687]:
+            - link "python313Packages.pygame-gui.aarch64-darwin" [ref=f36e688]:
+              - /url: https://hydra.nixos.org/build/337001766
+          - cell [ref=f36e689]:
+            - time [ref=f36e690]: 2d ago
+          - cell "python3.13-pygame-gui-0614" [ref=f36e691]
+          - cell "aarch64-darwin" [ref=f36e692]
+        - row [ref=f36e693] [cursor=pointer]:
+          - cell [ref=f36e694]:
+            - img "Aborted" [ref=f36e695]
+          - cell [ref=f36e696]:
+            - link "337001780" [ref=f36e697]:
+              - /url: https://hydra.nixos.org/build/337001780
+          - cell [ref=f36e698]:
+            - link "python313Packages.pygame-original.aarch64-darwin" [ref=f36e699]:
+              - /url: https://hydra.nixos.org/build/337001780
+          - cell [ref=f36e700]:
+            - time [ref=f36e701]: 2d ago
+          - cell "python3.13-pygame-2.6.1" [ref=f36e702]
+          - cell "aarch64-darwin" [ref=f36e703]
+        - row [ref=f36e704] [cursor=pointer]:
+          - cell [ref=f36e705]:
+            - img "Aborted" [ref=f36e706]
+          - cell [ref=f36e707]:
+            - link "337001782" [ref=f36e708]:
+              - /url: https://hydra.nixos.org/build/337001782
+          - cell [ref=f36e709]:
+            - link "python313Packages.pygame-sdl2.aarch64-darwin" [ref=f36e710]:
+              - /url: https://hydra.nixos.org/build/337001782
+          - cell [ref=f36e711]:
+            - time [ref=f36e712]: 2d ago
+          - cell "python3.13-pygame-sdl2-8.5.3.26051504" [ref=f36e713]
+          - cell "aarch64-darwin" [ref=f36e714]
+        - row [ref=f36e715] [cursor=pointer]:
+          - cell [ref=f36e716]:
+            - img "Aborted" [ref=f36e717]
+          - cell [ref=f36e718]:
+            - link "337001788" [ref=f36e719]:
+              - /url: https://hydra.nixos.org/build/337001788
+          - cell [ref=f36e720]:
+            - link "python313Packages.pygame.aarch64-darwin" [ref=f36e721]:
+              - /url: https://hydra.nixos.org/build/337001788
+          - cell [ref=f36e722]:
+            - time [ref=f36e723]: 2d ago
+          - cell "python3.13-pygame-2.6.1" [ref=f36e724]
+          - cell "aarch64-darwin" [ref=f36e725]
+        - row [ref=f36e726] [cursor=pointer]:
+          - cell [ref=f36e727]:
+            - img "Aborted" [ref=f36e728]
+          - cell [ref=f36e729]:
+            - link "337001796" [ref=f36e730]:
+              - /url: https://hydra.nixos.org/build/337001796
+          - cell [ref=f36e731]:
+            - link "python313Packages.pygetwindow.aarch64-darwin" [ref=f36e732]:
+              - /url: https://hydra.nixos.org/build/337001796
+          - cell [ref=f36e733]:
+            - time [ref=f36e734]: 2d ago
+          - cell "python3.13-pygetwindow-0.0.9" [ref=f36e735]
+          - cell "aarch64-darwin" [ref=f36e736]
+        - row [ref=f36e737] [cursor=pointer]:
+          - cell [ref=f36e738]:
+            - img "Aborted" [ref=f36e739]
+          - cell [ref=f36e740]:
+            - link "337003049" [ref=f36e741]:
+              - /url: https://hydra.nixos.org/build/337003049
+          - cell [ref=f36e742]:
+            - link "python313Packages.pyrect.aarch64-darwin" [ref=f36e743]:
+              - /url: https://hydra.nixos.org/build/337003049
+          - cell [ref=f36e744]:
+            - time [ref=f36e745]: 2d ago
+          - cell "python3.13-pyrect-0.2.0" [ref=f36e746]
+          - cell "aarch64-darwin" [ref=f36e747]
+        - row [ref=f36e748] [cursor=pointer]:
+          - cell [ref=f36e749]:
+            - img "Aborted" [ref=f36e750]
+          - cell [ref=f36e751]:
+            - link "337003223" [ref=f36e752]:
+              - /url: https://hydra.nixos.org/build/337003223
+          - cell [ref=f36e753]:
+            - link "python313Packages.pysdl2.aarch64-darwin" [ref=f36e754]:
+              - /url: https://hydra.nixos.org/build/337003223
+          - cell [ref=f36e755]:
+            - time [ref=f36e756]: 2d ago
+          - cell "python3.13-pysdl2-0.9.17-unstable-2025-11-18" [ref=f36e757]
+          - cell "aarch64-darwin" [ref=f36e758]
+        - row [ref=f36e759] [cursor=pointer]:
+          - cell [ref=f36e760]:
+            - img "Timed out" [ref=f36e761]
+          - cell [ref=f36e762]:
+            - link "337295140" [ref=f36e763]:
+              - /url: https://hydra.nixos.org/build/337295140
+          - cell [ref=f36e764]:
+            - link "python313Packages.skyfield.aarch64-darwin" [ref=f36e765]:
+              - /url: https://hydra.nixos.org/build/337295140
+          - cell [ref=f36e766]:
+            - time [ref=f36e767]: 10h ago
+          - cell "python3.13-skyfield-1.54" [ref=f36e768]
+          - cell "aarch64-darwin" [ref=f36e769]
+        - row [ref=f36e770] [cursor=pointer]:
+          - cell [ref=f36e771]:
+            - img "Timed out" [ref=f36e772]
+          - cell [ref=f36e773]:
+            - link "337009218" [ref=f36e774]:
+              - /url: https://hydra.nixos.org/build/337009218
+          - cell [ref=f36e775]:
+            - link "python313Packages.tensordict.aarch64-linux" [ref=f36e776]:
+              - /url: https://hydra.nixos.org/build/337009218
+          - cell [ref=f36e777]:
+            - time [ref=f36e778]: 20h ago
+          - cell "python3.13-tensordict-0.13.0" [ref=f36e779]
+          - cell "aarch64-linux" [ref=f36e780]
+        - row [ref=f36e781] [cursor=pointer]:
+          - cell [ref=f36e782]:
+            - img "Aborted" [ref=f36e783]
+          - cell [ref=f36e784]:
+            - link "337009524" [ref=f36e785]:
+              - /url: https://hydra.nixos.org/build/337009524
+          - cell [ref=f36e786]:
+            - link "python313Packages.tianshou.aarch64-darwin" [ref=f36e787]:
+              - /url: https://hydra.nixos.org/build/337009524
+          - cell [ref=f36e788]:
+            - time [ref=f36e789]: 2d ago
+          - cell "python3.13-tianshou-2.0.0" [ref=f36e790]
+          - cell "aarch64-darwin" [ref=f36e791]
+        - row [ref=f36e792] [cursor=pointer]:
+          - cell [ref=f36e793]:
+            - img "Aborted" [ref=f36e794]
+          - cell [ref=f36e795]:
+            - link "337372238" [ref=f36e796]:
+              - /url: https://hydra.nixos.org/build/337372238
+          - cell [ref=f36e797]:
+            - link "python314Packages.bsuite.aarch64-darwin" [ref=f36e798]:
+              - /url: https://hydra.nixos.org/build/337372238
+          - cell [ref=f36e799]:
+            - time [ref=f36e800]: 11h ago
+          - cell "python3.14-bsuite-0.3.5" [ref=f36e801]
+          - cell "aarch64-darwin" [ref=f36e802]
+        - row [ref=f36e803] [cursor=pointer]:
+          - cell [ref=f36e804]:
+            - img "Aborted" [ref=f36e805]
+          - cell [ref=f36e806]:
+            - link "337023795" [ref=f36e807]:
+              - /url: https://hydra.nixos.org/build/337023795
+          - cell [ref=f36e808]:
+            - link "python314Packages.gym.aarch64-darwin" [ref=f36e809]:
+              - /url: https://hydra.nixos.org/build/337023795
+          - cell [ref=f36e810]:
+            - time [ref=f36e811]: 2d ago
+          - cell "python3.14-gym-0.26.2" [ref=f36e812]
+          - cell "aarch64-darwin" [ref=f36e813]
+        - row [ref=f36e814] [cursor=pointer]:
+          - cell [ref=f36e815]:
+            - img "Aborted" [ref=f36e816]
+          - cell [ref=f36e817]:
+            - link "337031722" [ref=f36e818]:
+              - /url: https://hydra.nixos.org/build/337031722
+          - cell [ref=f36e819]:
+            - link "python314Packages.pettingzoo.aarch64-darwin" [ref=f36e820]:
+              - /url: https://hydra.nixos.org/build/337031722
+          - cell [ref=f36e821]:
+            - time [ref=f36e822]: 2d ago
+          - cell "python3.14-pettingzoo-1.26.1" [ref=f36e823]
+          - cell "aarch64-darwin" [ref=f36e824]
+        - row [ref=f36e825] [cursor=pointer]:
+          - cell [ref=f36e826]:
+            - img "Aborted" [ref=f36e827]
+          - cell [ref=f36e828]:
+            - link "337033738" [ref=f36e829]:
+              - /url: https://hydra.nixos.org/build/337033738
+          - cell [ref=f36e830]:
+            - link "python314Packages.pygame-ce.aarch64-darwin" [ref=f36e831]:
+              - /url: https://hydra.nixos.org/build/337033738
+          - cell [ref=f36e832]:
+            - time [ref=f36e833]: 2d ago
+          - cell "python3.14-pygame-ce-2.5.7" [ref=f36e834]
+          - cell "aarch64-darwin" [ref=f36e835]
+        - row [ref=f36e836] [cursor=pointer]:
+          - cell [ref=f36e837]:
+            - img "Aborted" [ref=f36e838]
+          - cell [ref=f36e839]:
+            - link "337033729" [ref=f36e840]:
+              - /url: https://hydra.nixos.org/build/337033729
+          - cell [ref=f36e841]:
+            - link "python314Packages.pygame-gui.aarch64-darwin" [ref=f36e842]:
+              - /url: https://hydra.nixos.org/build/337033729
+          - cell [ref=f36e843]:
+            - time [ref=f36e844]: 2d ago
+          - cell "python3.14-pygame-gui-0614" [ref=f36e845]
+          - cell "aarch64-darwin" [ref=f36e846]
+        - row [ref=f36e847] [cursor=pointer]:
+          - cell [ref=f36e848]:
+            - img "Aborted" [ref=f36e849]
+          - cell [ref=f36e850]:
+            - link "337033737" [ref=f36e851]:
+              - /url: https://hydra.nixos.org/build/337033737
+          - cell [ref=f36e852]:
+            - link "python314Packages.pygame-sdl2.aarch64-darwin" [ref=f36e853]:
+              - /url: https://hydra.nixos.org/build/337033737
+          - cell [ref=f36e854]:
+            - time [ref=f36e855]: 2d ago
+          - cell "python3.14-pygame-sdl2-8.5.3.26051504" [ref=f36e856]
+          - cell "aarch64-darwin" [ref=f36e857]
+        - row [ref=f36e858] [cursor=pointer]:
+          - cell [ref=f36e859]:
+            - img "Aborted" [ref=f36e860]
+          - cell [ref=f36e861]:
+            - link "337033725" [ref=f36e862]:
+              - /url: https://hydra.nixos.org/build/337033725
+          - cell [ref=f36e863]:
+            - link "python314Packages.pygame.aarch64-darwin" [ref=f36e864]:
+              - /url: https://hydra.nixos.org/build/337033725
+          - cell [ref=f36e865]:
+            - time [ref=f36e866]: 2d ago
+          - cell "python3.14-pygame-ce-2.5.7" [ref=f36e867]
+          - cell "aarch64-darwin" [ref=f36e868]
+        - row [ref=f36e869] [cursor=pointer]:
+          - cell [ref=f36e870]:
+            - img "Aborted" [ref=f36e871]
+          - cell [ref=f36e872]:
+            - link "337033754" [ref=f36e873]:
+              - /url: https://hydra.nixos.org/build/337033754
+          - cell [ref=f36e874]:
+            - link "python314Packages.pygetwindow.aarch64-darwin" [ref=f36e875]:
+              - /url: https://hydra.nixos.org/build/337033754
+          - cell [ref=f36e876]:
+            - time [ref=f36e877]: 2d ago
+          - cell "python3.14-pygetwindow-0.0.9" [ref=f36e878]
+          - cell "aarch64-darwin" [ref=f36e879]
+        - row [ref=f36e880] [cursor=pointer]:
+          - cell [ref=f36e881]:
+            - img "Aborted" [ref=f36e882]
+          - cell [ref=f36e883]:
+            - link "337372413" [ref=f36e884]:
+              - /url: https://hydra.nixos.org/build/337372413
+          - cell [ref=f36e885]:
+            - link "python314Packages.pypasser.aarch64-darwin" [ref=f36e886]:
+              - /url: https://hydra.nixos.org/build/337372413
+          - cell [ref=f36e887]:
+            - time [ref=f36e888]: 10h ago
+          - cell "python3.14-pypasser-0.0.5" [ref=f36e889]
+          - cell "aarch64-darwin" [ref=f36e890]
+        - row [ref=f36e891] [cursor=pointer]:
+          - cell [ref=f36e892]:
+            - img "Aborted" [ref=f36e893]
+          - cell [ref=f36e894]:
+            - link "337035011" [ref=f36e895]:
+              - /url: https://hydra.nixos.org/build/337035011
+          - cell [ref=f36e896]:
+            - link "python314Packages.pyrect.aarch64-darwin" [ref=f36e897]:
+              - /url: https://hydra.nixos.org/build/337035011
+          - cell [ref=f36e898]:
+            - time [ref=f36e899]: 2d ago
+          - cell "python3.14-pyrect-0.2.0" [ref=f36e900]
+          - cell "aarch64-darwin" [ref=f36e901]
+        - row [ref=f36e902] [cursor=pointer]:
+          - cell [ref=f36e903]:
+            - img "Aborted" [ref=f36e904]
+          - cell [ref=f36e905]:
+            - link "337035143" [ref=f36e906]:
+              - /url: https://hydra.nixos.org/build/337035143
+          - cell [ref=f36e907]:
+            - link "python314Packages.pysdl2.aarch64-darwin" [ref=f36e908]:
+              - /url: https://hydra.nixos.org/build/337035143
+          - cell [ref=f36e909]:
+            - time [ref=f36e910]: 2d ago
+          - cell "python3.14-pysdl2-0.9.17-unstable-2025-11-18" [ref=f36e911]
+          - cell "aarch64-darwin" [ref=f36e912]
+        - row [ref=f36e913] [cursor=pointer]:
+          - cell [ref=f36e914]:
+            - img "Aborted" [ref=f36e915]
+          - cell [ref=f36e916]:
+            - link "337372443" [ref=f36e917]:
+              - /url: https://hydra.nixos.org/build/337372443
+          - cell [ref=f36e918]:
+            - link "python314Packages.speechrecognition.aarch64-darwin" [ref=f36e919]:
+              - /url: https://hydra.nixos.org/build/337372443
+          - cell [ref=f36e920]:
+            - time [ref=f36e921]: 10h ago
+          - cell "python3.14-speechrecognition-3.17.0" [ref=f36e922]
+          - cell "aarch64-darwin" [ref=f36e923]
+        - row [ref=f36e924] [cursor=pointer]:
+          - cell [ref=f36e925]:
+            - img "Aborted" [ref=f36e926]
+          - cell [ref=f36e927]:
+            - link "337372449" [ref=f36e928]:
+              - /url: https://hydra.nixos.org/build/337372449
+          - cell [ref=f36e929]:
+            - link "python314Packages.tami4edgeapi.aarch64-darwin" [ref=f36e930]:
+              - /url: https://hydra.nixos.org/build/337372449
+          - cell [ref=f36e931]:
+            - time [ref=f36e932]: 10h ago
+          - cell "python3.14-tami4edgeapi-3.0" [ref=f36e933]
+          - cell "aarch64-darwin" [ref=f36e934]
+        - row [ref=f36e935] [cursor=pointer]:
+          - cell [ref=f36e936]:
+            - img "Aborted" [ref=f36e937]
+          - cell [ref=f36e938]:
+            - link "337041249" [ref=f36e939]:
+              - /url: https://hydra.nixos.org/build/337041249
+          - cell [ref=f36e940]:
+            - link "python314Packages.tianshou.aarch64-darwin" [ref=f36e941]:
+              - /url: https://hydra.nixos.org/build/337041249
+          - cell [ref=f36e942]:
+            - time [ref=f36e943]: 2d ago
+          - cell "python3.14-tianshou-2.0.0" [ref=f36e944]
+          - cell "aarch64-darwin" [ref=f36e945]
+        - row [ref=f36e946] [cursor=pointer]:
+          - cell [ref=f36e947]:
+            - img "Timed out" [ref=f36e948]
+          - cell [ref=f36e949]:
+            - link "337048107" [ref=f36e950]:
+              - /url: https://hydra.nixos.org/build/337048107
+          - cell [ref=f36e951]:
+            - link "rift-wm.aarch64-darwin" [ref=f36e952]:
+              - /url: https://hydra.nixos.org/build/337048107
+          - cell [ref=f36e953]:
+            - time [ref=f36e954]: 2d ago
+          - cell "rift-wm-0.4.3" [ref=f36e955]
+          - cell "aarch64-darwin" [ref=f36e956]
+        - row [ref=f36e957] [cursor=pointer]:
+          - cell [ref=f36e958]:
+            - img "Aborted" [ref=f36e959]
+          - cell [ref=f36e960]:
+            - link "337048113" [ref=f36e961]:
+              - /url: https://hydra.nixos.org/build/337048113
+          - cell [ref=f36e962]:
+            - link "rigel-engine.aarch64-darwin" [ref=f36e963]:
+              - /url: https://hydra.nixos.org/build/337048113
+          - cell [ref=f36e964]:
+            - time [ref=f36e965]: 2d ago
+          - cell "rigel-engine-0-unstable-2024-05-26" [ref=f36e966]
+          - cell "aarch64-darwin" [ref=f36e967]
+        - row [ref=f36e968] [cursor=pointer]:
+          - cell [ref=f36e969]:
+            - img "Aborted" [ref=f36e970]
+          - cell [ref=f36e971]:
+            - link "337048164" [ref=f36e972]:
+              - /url: https://hydra.nixos.org/build/337048164
+          - cell [ref=f36e973]:
+            - link "rimgo.aarch64-darwin" [ref=f36e974]:
+              - /url: https://hydra.nixos.org/build/337048164
+          - cell [ref=f36e975]:
+            - time [ref=f36e976]: 2d ago
+          - cell "rimgo-1.4.2" [ref=f36e977]
+          - cell "aarch64-darwin" [ref=f36e978]
+        - row [ref=f36e979] [cursor=pointer]:
+          - cell [ref=f36e980]:
+            - img "Aborted" [ref=f36e981]
+          - cell [ref=f36e982]:
+            - link "337048154" [ref=f36e983]:
+              - /url: https://hydra.nixos.org/build/337048154
+          - cell [ref=f36e984]:
+            - link "ringracers.aarch64-darwin" [ref=f36e985]:
+              - /url: https://hydra.nixos.org/build/337048154
+          - cell [ref=f36e986]:
+            - time [ref=f36e987]: 2d ago
+          - cell "ringracers-2.4" [ref=f36e988]
+          - cell "aarch64-darwin" [ref=f36e989]
+        - row [ref=f36e990] [cursor=pointer]:
+          - cell [ref=f36e991]:
+            - img "Aborted" [ref=f36e992]
+          - cell [ref=f36e993]:
+            - link "337054814" [ref=f36e994]:
+              - /url: https://hydra.nixos.org/build/337054814
+          - cell [ref=f36e995]:
+            - link "ryubing.aarch64-darwin" [ref=f36e996]:
+              - /url: https://hydra.nixos.org/build/337054814
+          - cell [ref=f36e997]:
+            - time [ref=f36e998]: 2d ago
+          - cell "ryubing-1.3.3" [ref=f36e999]
+          - cell "aarch64-darwin" [ref=f36e1000]
+        - row [ref=f36e1001] [cursor=pointer]:
+          - cell [ref=f36e1002]:
+            - img "Aborted" [ref=f36e1003]
+          - cell [ref=f36e1004]:
+            - link "337054705" [ref=f36e1005]:
+              - /url: https://hydra.nixos.org/build/337054705
+          - cell [ref=f36e1006]:
+            - link "s6-networking.aarch64-darwin" [ref=f36e1007]:
+              - /url: https://hydra.nixos.org/build/337054705
+          - cell [ref=f36e1008]:
+            - time [ref=f36e1009]: 2d ago
+          - cell "s6-networking-2.8.0.0" [ref=f36e1010]
+          - cell "aarch64-darwin" [ref=f36e1011]
+        - row [ref=f36e1012] [cursor=pointer]:
+          - cell [ref=f36e1013]:
+            - img "Aborted" [ref=f36e1014]
+          - cell [ref=f36e1015]:
+            - link "337054706" [ref=f36e1016]:
+              - /url: https://hydra.nixos.org/build/337054706
+          - cell [ref=f36e1017]:
+            - link "s6-rc.aarch64-darwin" [ref=f36e1018]:
+              - /url: https://hydra.nixos.org/build/337054706
+          - cell [ref=f36e1019]:
+            - time [ref=f36e1020]: 2d ago
+          - cell "s6-rc-0.6.1.1" [ref=f36e1021]
+          - cell "aarch64-darwin" [ref=f36e1022]
+        - row [ref=f36e1023] [cursor=pointer]:
+          - cell [ref=f36e1024]:
+            - img "Aborted" [ref=f36e1025]
+          - cell [ref=f36e1026]:
+            - link "337054690" [ref=f36e1027]:
+              - /url: https://hydra.nixos.org/build/337054690
+          - cell [ref=f36e1028]:
+            - link "s6.aarch64-darwin" [ref=f36e1029]:
+              - /url: https://hydra.nixos.org/build/337054690
+          - cell [ref=f36e1030]:
+            - time [ref=f36e1031]: 2d ago
+          - cell "s6-2.15.0.0" [ref=f36e1032]
+          - cell "aarch64-darwin" [ref=f36e1033]
+        - row [ref=f36e1034] [cursor=pointer]:
+          - cell [ref=f36e1035]:
+            - img "Aborted" [ref=f36e1036]
+          - cell [ref=f36e1037]:
+            - link "337056705" [ref=f36e1038]:
+              - /url: https://hydra.nixos.org/build/337056705
+          - cell [ref=f36e1039]:
+            - link "sdl3-mixer.aarch64-darwin" [ref=f36e1040]:
+              - /url: https://hydra.nixos.org/build/337056705
+          - cell [ref=f36e1041]:
+            - time [ref=f36e1042]: 2d ago
+          - cell "sdl3-mixer-3.2.4" [ref=f36e1043]
+          - cell "aarch64-darwin" [ref=f36e1044]
+        - row [ref=f36e1045] [cursor=pointer]:
+          - cell [ref=f36e1046]:
+            - img "Aborted" [ref=f36e1047]
+          - cell [ref=f36e1048]:
+            - link "337056996" [ref=f36e1049]:
+              - /url: https://hydra.nixos.org/build/337056996
+          - cell [ref=f36e1050]:
+            - link "sequoia-chameleon-gnupg.aarch64-darwin" [ref=f36e1051]:
+              - /url: https://hydra.nixos.org/build/337056996
+          - cell [ref=f36e1052]:
+            - time [ref=f36e1053]: 2d ago
+          - cell "sequoia-chameleon-gnupg-0.13.1" [ref=f36e1054]
+          - cell "aarch64-darwin" [ref=f36e1055]
+        - row [ref=f36e1056] [cursor=pointer]:
+          - cell [ref=f36e1057]:
+            - img "Aborted" [ref=f36e1058]
+          - cell [ref=f36e1059]:
+            - link "337057145" [ref=f36e1060]:
+              - /url: https://hydra.nixos.org/build/337057145
+          - cell [ref=f36e1061]:
+            - link "sfrotz.aarch64-darwin" [ref=f36e1062]:
+              - /url: https://hydra.nixos.org/build/337057145
+          - cell [ref=f36e1063]:
+            - time [ref=f36e1064]: 2d ago
+          - cell "sfrotz-2.55" [ref=f36e1065]
+          - cell "aarch64-darwin" [ref=f36e1066]
+        - row [ref=f36e1067] [cursor=pointer]:
+          - cell [ref=f36e1068]:
+            - img "Aborted" [ref=f36e1069]
+          - cell [ref=f36e1070]:
+            - link "337057850" [ref=f36e1071]:
+              - /url: https://hydra.nixos.org/build/337057850
+          - cell [ref=f36e1072]:
+            - link "skawarePackages.execline.aarch64-darwin" [ref=f36e1073]:
+              - /url: https://hydra.nixos.org/build/337057850
+          - cell [ref=f36e1074]:
+            - time [ref=f36e1075]: 2d ago
+          - cell "execline-2.9.9.1" [ref=f36e1076]
+          - cell "aarch64-darwin" [ref=f36e1077]
+        - row [ref=f36e1078] [cursor=pointer]:
+          - cell [ref=f36e1079]:
+            - img "Aborted" [ref=f36e1080]
+          - cell [ref=f36e1081]:
+            - link "337057884" [ref=f36e1082]:
+              - /url: https://hydra.nixos.org/build/337057884
+          - cell [ref=f36e1083]:
+            - link "skawarePackages.s6-networking.aarch64-darwin" [ref=f36e1084]:
+              - /url: https://hydra.nixos.org/build/337057884
+          - cell [ref=f36e1085]:
+            - time [ref=f36e1086]: 2d ago
+          - cell "s6-networking-2.8.0.0" [ref=f36e1087]
+          - cell "aarch64-darwin" [ref=f36e1088]
+        - row [ref=f36e1089] [cursor=pointer]:
+          - cell [ref=f36e1090]:
+            - img "Aborted" [ref=f36e1091]
+          - cell [ref=f36e1092]:
+            - link "337057886" [ref=f36e1093]:
+              - /url: https://hydra.nixos.org/build/337057886
+          - cell [ref=f36e1094]:
+            - link "skawarePackages.s6-rc.aarch64-darwin" [ref=f36e1095]:
+              - /url: https://hydra.nixos.org/build/337057886
+          - cell [ref=f36e1096]:
+            - time [ref=f36e1097]: 2d ago
+          - cell "s6-rc-0.6.1.1" [ref=f36e1098]
+          - cell "aarch64-darwin" [ref=f36e1099]
+        - row [ref=f36e1100] [cursor=pointer]:
+          - cell [ref=f36e1101]:
+            - img "Aborted" [ref=f36e1102]
+          - cell [ref=f36e1103]:
+            - link "337057861" [ref=f36e1104]:
+              - /url: https://hydra.nixos.org/build/337057861
+          - cell [ref=f36e1105]:
+            - link "skawarePackages.s6.aarch64-darwin" [ref=f36e1106]:
+              - /url: https://hydra.nixos.org/build/337057861
+          - cell [ref=f36e1107]:
+            - time [ref=f36e1108]: 2d ago
+          - cell "s6-2.15.0.0" [ref=f36e1109]
+          - cell "aarch64-darwin" [ref=f36e1110]
+        - row [ref=f36e1111] [cursor=pointer]:
+          - cell [ref=f36e1112]:
+            - img "Timed out" [ref=f36e1113]
+          - cell [ref=f36e1114]:
+            - link "337059737" [ref=f36e1115]:
+              - /url: https://hydra.nixos.org/build/337059737
+          - cell [ref=f36e1116]:
+            - link "stalwart_0_16.aarch64-linux" [ref=f36e1117]:
+              - /url: https://hydra.nixos.org/build/337059737
+          - cell [ref=f36e1118]:
+            - time [ref=f36e1119]: 2d ago
+          - cell "stalwart-0.16.12" [ref=f36e1120]
+          - cell "aarch64-linux" [ref=f36e1121]
+        - row [ref=f36e1122] [cursor=pointer]:
+          - cell [ref=f36e1123]:
+            - img "Aborted" [ref=f36e1124]
+          - cell [ref=f36e1125]:
+            - link "337061213" [ref=f36e1126]:
+              - /url: https://hydra.nixos.org/build/337061213
+          - cell [ref=f36e1127]:
+            - link "tailwindcss_4.aarch64-darwin" [ref=f36e1128]:
+              - /url: https://hydra.nixos.org/build/337061213
+          - cell [ref=f36e1129]:
+            - time [ref=f36e1130]: 2d ago
+          - cell "tailwindcss_4-4.3.2" [ref=f36e1131]
+          - cell "aarch64-darwin" [ref=f36e1132]
+        - row [ref=f36e1133] [cursor=pointer]:
+          - cell [ref=f36e1134]:
+            - img "Aborted" [ref=f36e1135]
+          - cell [ref=f36e1136]:
+            - link "337061345" [ref=f36e1137]:
+              - /url: https://hydra.nixos.org/build/337061345
+          - cell [ref=f36e1138]:
+            - link "taradino.aarch64-darwin" [ref=f36e1139]:
+              - /url: https://hydra.nixos.org/build/337061345
+          - cell [ref=f36e1140]:
+            - time [ref=f36e1141]: 2d ago
+          - cell "taradino-20251222" [ref=f36e1142]
+          - cell "aarch64-darwin" [ref=f36e1143]
+        - row [ref=f36e1144] [cursor=pointer]:
+          - cell [ref=f36e1145]:
+            - img "Aborted" [ref=f36e1146]
+          - cell [ref=f36e1147]:
+            - link "337068317" [ref=f36e1148]:
+              - /url: https://hydra.nixos.org/build/337068317
+          - cell [ref=f36e1149]:
+            - link "timidity.aarch64-darwin" [ref=f36e1150]:
+              - /url: https://hydra.nixos.org/build/337068317
+          - cell [ref=f36e1151]:
+            - time [ref=f36e1152]: 2d ago
+          - cell "timidity-2.15.0" [ref=f36e1153]
+          - cell "aarch64-darwin" [ref=f36e1154]
+        - row [ref=f36e1155] [cursor=pointer]:
+          - cell [ref=f36e1156]:
+            - img "Aborted" [ref=f36e1157]
+          - cell [ref=f36e1158]:
+            - link "337087933" [ref=f36e1159]:
+              - /url: https://hydra.nixos.org/build/337087933
+          - cell [ref=f36e1160]:
+            - link "vectoroids.aarch64-darwin" [ref=f36e1161]:
+              - /url: https://hydra.nixos.org/build/337087933
+          - cell [ref=f36e1162]:
+            - time [ref=f36e1163]: 2d ago
+          - cell "vectoroids-1.1.2" [ref=f36e1164]
+          - cell "aarch64-darwin" [ref=f36e1165]
+        - row [ref=f36e1166] [cursor=pointer]:
+          - cell [ref=f36e1167]:
+            - img "Aborted" [ref=f36e1168]
+          - cell [ref=f36e1169]:
+            - link "337378011" [ref=f36e1170]:
+              - /url: https://hydra.nixos.org/build/337378011
+          - cell [ref=f36e1171]:
+            - link "vengi-tools.aarch64-darwin" [ref=f36e1172]:
+              - /url: https://hydra.nixos.org/build/337378011
+          - cell [ref=f36e1173]:
+            - time [ref=f36e1174]: 9h ago
+          - cell "vengi-tools-0.4.0" [ref=f36e1175]
+          - cell "aarch64-darwin" [ref=f36e1176]
+        - row [ref=f36e1177] [cursor=pointer]:
+          - cell [ref=f36e1178]:
+            - img "Aborted" [ref=f36e1179]
+          - cell [ref=f36e1180]:
+            - link "337090438" [ref=f36e1181]:
+              - /url: https://hydra.nixos.org/build/337090438
+          - cell [ref=f36e1182]:
+            - link "vscode-extensions.jackmacwindows.craftos-pc.aarch64-darwin" [ref=f36e1183]:
+              - /url: https://hydra.nixos.org/build/337090438
+          - cell [ref=f36e1184]:
+            - time [ref=f36e1185]: 2d ago
+          - cell "vscode-extension-jackmacwindows-craftos-pc-1.2.3" [ref=f36e1186]
+          - cell "aarch64-darwin" [ref=f36e1187]
+        - row [ref=f36e1188] [cursor=pointer]:
+          - cell [ref=f36e1189]:
+            - img "Aborted" [ref=f36e1190]
+          - cell [ref=f36e1191]:
+            - link "337092031" [ref=f36e1192]:
+              - /url: https://hydra.nixos.org/build/337092031
+          - cell [ref=f36e1193]:
+            - link "wesnoth-devel.aarch64-darwin" [ref=f36e1194]:
+              - /url: https://hydra.nixos.org/build/337092031
+          - cell [ref=f36e1195]:
+            - time [ref=f36e1196]: 2d ago
+          - cell "wesnoth-devel-1.19.24" [ref=f36e1197]
+          - cell "aarch64-darwin" [ref=f36e1198]
+        - row [ref=f36e1199] [cursor=pointer]:
+          - cell [ref=f36e1200]:
+            - img "Aborted" [ref=f36e1201]
+          - cell [ref=f36e1202]:
+            - link "337092032" [ref=f36e1203]:
+              - /url: https://hydra.nixos.org/build/337092032
+          - cell [ref=f36e1204]:
+            - link "wesnoth.aarch64-darwin" [ref=f36e1205]:
+              - /url: https://hydra.nixos.org/build/337092032
+          - cell [ref=f36e1206]:
+            - time [ref=f36e1207]: 2d ago
+          - cell "wesnoth-1.18.7" [ref=f36e1208]
+          - cell "aarch64-darwin" [ref=f36e1209]
+        - row [ref=f36e1210] [cursor=pointer]:
+          - cell [ref=f36e1211]:
+            - img "Timed out" [ref=f36e1212]
+          - cell [ref=f36e1213]:
+            - link "337093968" [ref=f36e1214]:
+              - /url: https://hydra.nixos.org/build/337093968
+          - cell [ref=f36e1215]:
+            - link "xla.x86_64-linux" [ref=f36e1216]:
+              - /url: https://hydra.nixos.org/build/337093968
+          - cell [ref=f36e1217]:
+            - time [ref=f36e1218]: 1d ago
+          - cell "xla-0-unstable-2026-02-21" [ref=f36e1219]
+          - cell "x86_64-linux" [ref=f36e1220]
+        - row [ref=f36e1221] [cursor=pointer]:
+          - cell [ref=f36e1222]:
+            - img "Aborted" [ref=f36e1223]
+          - cell [ref=f36e1224]:
+            - link "337093942" [ref=f36e1225]:
+              - /url: https://hydra.nixos.org/build/337093942
+          - cell [ref=f36e1226]:
+            - link "xmoto.aarch64-darwin" [ref=f36e1227]:
+              - /url: https://hydra.nixos.org/build/337093942
+          - cell [ref=f36e1228]:
+            - time [ref=f36e1229]: 2d ago
+          - cell "xmoto-0.6.3" [ref=f36e1230]
+          - cell "aarch64-darwin" [ref=f36e1231]
+    - contentinfo [ref=f36e1232]:
+      - separator
+      - emphasis [ref=f36e1234]:
+        - link "Hydra" [ref=f36e1235] [cursor=pointer]:
+          - /url: http://nixos.org/hydra
+        - text: 0.1.20260708.ae831ac (using nix-2.34.8 and nix-eval-jobs-2.34.1).
