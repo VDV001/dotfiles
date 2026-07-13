@@ -151,26 +151,26 @@
           # Docker-контекст (когда не default / рядом с docker-файлами)
           docker_context = {
             symbol = "󰡨 ";
-            format = "[ $symbol$context]($style)";
+            format = "[ $symbol$context ]($style)";
             style = "fg:blue";
           };
           # Kubernetes: контекст · namespace (в директориях с k8s-файлами)
           kubernetes = {
             disabled = false;
             symbol = "⎈ ";
-            format = "[ $symbol$context( · $namespace)]($style)";
+            format = "[ $symbol$context( · $namespace) ]($style)";
             style = "fg:cyan";
           };
           # AWS: профиль · регион (когда задан AWS_PROFILE/креды)
           aws = {
             symbol = "󰸏 ";
-            format = "[ $symbol$profile( · $region)]($style)";
+            format = "[ $symbol$profile( · $region) ]($style)";
             style = "fg:208";
           };
           # GCloud: аккаунт · проект (когда есть активная конфигурация)
           gcloud = {
             symbol = "󱇶 ";
-            format = "[ $symbol$account( · $project)]($style)";
+            format = "[ $symbol$account( · $project) ]($style)";
             style = "fg:blue";
           };
           # Время запуска команды (правый край)

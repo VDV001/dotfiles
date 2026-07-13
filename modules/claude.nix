@@ -162,6 +162,18 @@
                 ];
               }
             ];
+            # Ponytail lens reminder on every `git commit`
+            PreToolUse = [
+              {
+                matcher = "Bash";
+                hooks = [
+                  {
+                    type = "command";
+                    command = "python3 ~/.claude/hooks/ponytail_commit.py";
+                  }
+                ];
+              }
+            ];
           };
 
           # Statusline — model, git, cost, context, VPS monitoring
@@ -234,6 +246,23 @@
           - Детерминированные задачи (тесты, линтер, форматирование) — через shell-скрипты, не через модель
           - При дебаге: факты из кода/логов → трассировка → гипотезы → что отбросили
           - Не подтверждать свою работу самому — нужен независимый запуск/проверка
+
+          ## Ponytail — ленивый senior (эффективно, не небрежно)
+
+          Лучший код — тот, что не написан. Перед НЕТРИВИАЛЬНЫМ кодом: сначала прочитать и протрассировать flow, затем пройти лестницу и остановиться на первой подходящей ступени:
+          1. Это вообще надо строить? (YAGNI — часто ответ «нет»)
+          2. Это уже есть в кодовой базе? → переиспользуй
+          3. Стандартная библиотека умеет? → используй
+          4. Нативная фича платформы/языка покрывает? → используй
+          5. Уже установленная зависимость решает? → используй
+          6. Можно в одну строку? → сделай в одну
+          7. Только теперь — минимальный работающий код
+
+          **НЕ лениться (лестница сюда НЕ применяется):** понимание задачи, валидация на trust boundaries, обработка ошибок, безопасность, тесты. Bug fix = root cause (грепнуть всех вызывающих), не симптом. Нетривиальная логика оставляет ОДИН запускаемый чек.
+
+          **Намеренный срез угла** (global lock, O(n²), наивная эвристика) — помечать комментарием `ponytail:` с названием потолка и путём апгрейда, чтобы «потом» не сгнило (тот же honest qualifier + «не оставлять мёртвый код на будущее»).
+
+          Ложится ПОВЕРХ TDD+DDD+Clean, не вместо. Токен-экономия — от поведения (пишем меньше), а не от прогона команд: правила «всегда» дёшевы, команды — по ситуации. Линзу «что выкинуть» (delete/stdlib/native/yagni/shrink) добавлять как ОСЬ в независимое ревью перед PR, а не отдельным прогоном.
 
           ## Go — modern-go guidelines (всегда)
           - При написании/правке любого Go-кода — современный синтаксис по версии проекта (из go.mod): `any` вместо `interface{}`, пакеты `slices`/`maps`/`cmp`, `errors.Is`/`errors.As`, `strings.Cut`, типобезопасные атомики, `min`/`max`, `for range N`. Не использовать устаревшие паттерны при наличии современной замены; не использовать фичи новее целевой версии. (Плагин `modern-go-guidelines:use-modern-go` установлен глобально; при сомнении вызвать скилл — он читает версию из go.mod.)
@@ -949,6 +978,42 @@
 
           if __name__ == "__main__":
               main()
+        '';
+      };
+
+      # Ponytail lens reminder — fires on every `git commit`, injects a one-line
+      # nudge to scan the staged diff for overengineering. Non-blocking.
+      home.file.".claude/hooks/ponytail_commit.py" = {
+        executable = true;
+        text = ''
+          #!/usr/bin/env python3
+          import json
+          import sys
+
+          try:
+              data = json.load(sys.stdin)
+          except Exception:
+              sys.exit(0)
+
+          cmd = (data.get("tool_input") or {}).get("command", "")
+          if "git commit" not in cmd:
+              sys.exit(0)
+
+          reminder = (
+              "Ponytail lens before this commit — scan the staged diff for "
+              "overengineering: anything to delete outright, replace with stdlib or a "
+              "native feature, inline to one line, or drop as YAGNI? Flag any "
+              "deliberate shortcut with a `ponytail:` comment (ceiling + upgrade path). "
+              "Do NOT trim: understanding, boundary validation, error handling, "
+              "security, tests."
+          )
+          print(json.dumps({
+              "hookSpecificOutput": {
+                  "hookEventName": "PreToolUse",
+                  "additionalContext": reminder,
+              }
+          }))
+          sys.exit(0)
         '';
       };
 
