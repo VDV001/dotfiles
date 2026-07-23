@@ -79,6 +79,10 @@
         trippy # современный traceroute+ping TUI (замена mtr): маршрут до хоста, GeoIP, ICMP/UDP/TCP. Бинарь: sudo trip <host>
         doggo # современный DNS-клиент (замена dig): резолв домена/IP, DoH/DoT/DoQ, JSON. Запуск: doggo example.com
 
+        # TUI для баз данных (ставить на dev/локальный Postgres, НЕ write на prod - оба в beta/активной разработке)
+        rainfrog # 🦀 Rust TUI для БД (Postgres tier-1): vim-навигация, редактор запросов с подсветкой, история. Запуск: rainfrog --url "postgres://user:pass@localhost:5432/db"
+        lazysql # Go TUI для БД в стиле lazygit (панели + hjkl, знакомый lazy-UX): Postgres/MySQL/SQLite. Запуск: lazysql
+
         # GUI
         bruno
         iina
@@ -128,7 +132,6 @@
           "logseq"
           "maccy"
           "orbstack"
-          "outline-manager"
           "parallels"
           "tailscale-app"
           "telegram-desktop"
