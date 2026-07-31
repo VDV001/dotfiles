@@ -1,7 +1,7 @@
 ---
 name: finance-log
 description: >
-  Log financial transactions to Учёт_финансов.xlsx and update bank balances.
+  Log financial transactions via kbengine (ledger + xlsx stay in step) and update bank balances.
   Triggers on: "добавь расход", "потратил", "купил", "сходил в магазин",
   "добавь доход", "получил", "зарплата", "стипендия",
   "обнови баланс", "на счёте стало", "на карте стало",
@@ -10,12 +10,22 @@ description: >
 
 # Finance Log Skill
 
-Логирует финансовые операции в xlsx и пересобирает dashboard.
+Логирует финансовые операции через движок kb-engine и пересобирает dashboard.
 
 ## Пути
 
-- xlsx: `~/claude-cowork/finances/Учёт_финансов.xlsx`
+- ledger (истина для транзакций): `~/claude-cowork/finances/transactions.jsonl`
+- xlsx (витрина + балансы счетов): `~/claude-cowork/finances/Учёт_финансов.xlsx`
 - build: `~/claude-cowork/knowledge-base/_tools/build_dashboard.py`
+
+## Главное правило
+
+**Транзакции НЕ писать в xlsx напрямую.** Запись идёт в ledger через `kbengine fin add`,
+затем `kbengine fin sync` переносит её в книгу с сохранением стилей и проставляет `id`.
+Прямая запись openpyxl создаёт строку без `id`, движок видит расхождение,
+и ledger отстаёт от книги до следующей ручной синхронизации (так уже случалось: 14 строк за 29-30.07).
+
+Исключение — **балансы счетов** (лист «Счета»): движок их только читает, туда пишем openpyxl (шаг 3в).
 
 ## Алгоритм
 
@@ -35,48 +45,48 @@ description: >
 Нужно для **дохода**: сумма, источник.
 Нужно для **счёта**: банк + новый баланс (или дельта).
 
-### 3. Записать в xlsx через Python + openpyxl
+### 3. Записать операцию
 
-#### Расход (лист "Расходы", колонки: Дата | Категория | Подкатегория | Место | Описание | Сумма | Источник):
+Пути короче держать в переменных:
+
+```bash
+LEDGER=~/claude-cowork/finances/transactions.jsonl
+BOOK=~/claude-cowork/finances/Учёт_финансов.xlsx
+```
+
+#### 3а. Расход
+
+```bash
+kbengine fin add --ledger "$LEDGER" \
+  --kind expense --date 2026-07-31 \
+  --cat 'Еда' --sub 'Продукты' --place 'Магнит' \
+  --amount '129,98' --source 'Сбербанк' --note 'описание, если есть'
+```
+
+`--amount` понимает и `129.98`, и `129,98`, и `1 500`. `--date` по умолчанию сегодня.
+`--place`, `--note`, `--sub` опциональны. `id` движок генерирует сам.
+
+#### 3б. Доход
+
+То же самое с `--kind income`; категория не требуется, `--source` обязателен по смыслу
+(«Зарплата», «Стипендия», «Перевод от мамы», «Кешбэк»).
+
+```bash
+kbengine fin add --ledger "$LEDGER" --kind income --date 2026-07-31 \
+  --amount '90000' --source 'Зарплата' --note 'за июль'
+```
+
+#### 3в. Обновить баланс счёта (лист «Счета», строки: 3=Сбербанк, 4=Альфа-Банк, 5=Т-Банк)
+
+Единственное место, где пишем в книгу напрямую — движок балансы только читает.
+Это не транзакция, конфликта с sync нет.
+
 ```python
-import openpyxl
+import openpyxl, os
 from datetime import datetime
 
 path = os.path.expanduser('~/claude-cowork/finances/Учёт_финансов.xlsx')
-wb = openpyxl.load_workbook(path)
-ws = wb['Расходы']
-
-row = 3
-while ws.cell(row, 1).value is not None or ws.cell(row, 2).value is not None:
-    row += 1
-
-ws.cell(row, 1, datetime(YYYY, M, D)); ws.cell(row, 1).number_format = 'DD.MM.YYYY'
-ws.cell(row, 2, 'КАТЕГОРИЯ')
-ws.cell(row, 3, 'ПОДКАТЕГОРИЯ')
-ws.cell(row, 4, 'МЕСТО')       # '' если нет
-ws.cell(row, 5, 'ОПИСАНИЕ')    # '' если нет
-ws.cell(row, 6, СУММА)         # float
-ws.cell(row, 7, 'Чек')
-
-wb.save(path)
-```
-
-#### Доход (лист "Доходы", колонки: Дата | Источник | Описание | Сумма):
-```python
-ws2 = wb['Доходы']
-row2 = 3
-while ws2.cell(row2, 1).value is not None or ws2.cell(row2, 2).value is not None:
-    row2 += 1
-
-ws2.cell(row2, 1, datetime(YYYY, M, D)); ws2.cell(row2, 1).number_format = 'DD.MM.YYYY'
-ws2.cell(row2, 2, 'ИСТОЧНИК')
-ws2.cell(row2, 3, 'ОПИСАНИЕ')  # '' если нет
-ws2.cell(row2, 4, СУММА)
-wb.save(path)
-```
-
-#### Обновить счёт (лист "Счета", строки: 3=Сбербанк, 4=Альфа-Банк, 5=Т-Банк):
-```python
+wb = openpyxl.load_workbook(path)   # без data_only — иначе формулы в книге умрут
 ws3 = wb['Счета']
 bank_rows = {'Сбербанк': 3, 'Альфа-Банк': 4, 'Т-Банк': 5}
 r = bank_rows['ИМЯ_БАНКА']
@@ -85,13 +95,27 @@ ws3.cell(r, 3, datetime.today()); ws3.cell(r, 3).number_format = 'DD.MM.YYYY'
 wb.save(path)
 ```
 
-### 4. Пересобрать dashboard
+### 4. Синхронизировать книгу с ledger
 
 ```bash
-cd ~/claude-cowork/knowledge-base/_tools && python3 build_dashboard.py
+kbengine fin sync --from "$BOOK" --ledger "$LEDGER"
 ```
 
-### 5. Ответить кратко
+Ожидаемый вывод — `ledger → workbook` с числом добавленных строк.
+Если сомневаешься, что произойдёт, сначала `--dry-run`: он ничего не меняет.
+Если вывод показал `modified` или `removed`, которых ты не делал — **остановись и покажи владельцу**,
+это признак, что книгу правили ещё где-то.
+
+### 5. Пересобрать dashboard
+
+```bash
+cd ~/claude-cowork/knowledge-base && ./.venv/bin/python _tools/build_dashboard.py
+```
+
+**Только через `./.venv/bin/python`.** Системный `python3` не видит openpyxl и молча собирает
+дашборд с нулями вместо финансов вместо того, чтобы упасть.
+
+### 6. Ответить кратко
 
 > Записал: **Еда → Продукты · Магазин · 60 ₽** (29.03.2026)
 > Альфа-Банк: 1 507,12 → **1 447,12 ₽** · Баланс: **1 788 ₽**
