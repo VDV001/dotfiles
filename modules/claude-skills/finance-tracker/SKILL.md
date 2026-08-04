@@ -1,15 +1,22 @@
 ---
 name: finance-tracker
-description: "Personal finance tracker (учёт финансов) for income and expense management. Use this skill whenever the user sends a photo of a receipt or bank notification screenshot, mentions spending or earning money, asks about their budget or finances, wants to add an expense or income entry, or asks for a financial summary or report. Triggers on Russian: 'потратил', 'заработал', 'чек', 'расход', 'доход', 'баланс', 'сколько потратил', 'добавь трату', 'запиши расход', 'финансы', 'бюджет', 'учёт финансов', 'сводка'. Triggers on English: receipt, expense, income, transaction, finance tracker, budget, spending, salary, balance. Also triggers on category mentions: groceries, taxi, rent, продукты, такси, аренда, зарплата. MANDATORY: Always use the xlsx skill alongside this skill when modifying the spreadsheet."
+description: "Разбор ФОТО чеков и скриншотов банковских уведомлений в финансовую запись. Use this skill ONLY when the user sends an image: a photo of a receipt, a screenshot of a bank notification, or a photographed statement. Триггеры: приложенное изображение + 'чек', 'скрин из банка', 'вот чек', 'распознай', receipt photo, bank notification screenshot. НЕ использовать для текстовых записей ('потратил 300 на такси', 'добавь расход', 'запиши трату', 'зарплата 90000', 'обнови баланс') — для них есть finance-log. НЕ использовать для вопросов о балансе, сводке и бюджете — там тоже finance-log. Записывает распознанное ТОЛЬКО через kbengine fin add, прямая запись в xlsx запрещена."
 ---
 
 # Finance Tracker
 
-Personal income and expense tracker. The user sends receipts (photos), bank notifications, or simply describes transactions in natural language. Claude parses the data and records it into an Excel spreadsheet.
+Разбор изображений в финансовую запись: фото чека, скриншот банковского
+уведомления, снимок выписки. Claude распознаёт данные и отдаёт их движку.
+
+Текстовые записи («потратил 300 на такси») этот скилл не обслуживает — их
+ведёт `finance-log`. Разделение по способности, а не по теме: перекрывающиеся
+триггеры уже однажды привели к тому, что одна трата записалась дважды.
 
 ## Dependencies
 
-**This skill requires the `xlsx` skill.** Before modifying the spreadsheet, always read and follow the xlsx skill instructions.
+**Записывает движок `kbengine`.** Скилл `xlsx` здесь не нужен и не используется:
+он пишет в книгу напрямую, а прямая запись создаёт строку без `id` — вторую
+копию покупки, которую потом никто не может развести.
 
 ## File Location
 
@@ -134,49 +141,62 @@ When the user sends one or more photos:
 
 ## Adding an Entry (Technical Process)
 
-Always use the **xlsx skill** when working with the spreadsheet. Read the xlsx SKILL.md first.
+**Записывать ТОЛЬКО через движок. В xlsx напрямую не писать — никогда.**
 
-### Steps:
+Этот скилл читает чеки и скриншоты; записывает их движок `kbengine`. Так было
+не всегда, и цена известна: прямая запись openpyxl создаёт строку без `id`,
+движок не может сопоставить её со своей записью, и одна покупка превращается в
+две. Ровно так 2 августа в книге появились две строки по 140 ₽.
 
-1. Mount `~/claude-cowork` via `request_cowork_directory` if not already mounted. Store the returned VM path.
-2. Load the workbook with openpyxl:
-   ```python
-   from openpyxl import load_workbook
-   # Use the VM path returned by request_cowork_directory + /finances/Учёт_финансов.xlsx
-   wb = load_workbook(f'{mounted_path}/finances/Учёт_финансов.xlsx')
-   ```
-3. Select the target sheet (`Расходы` or `Доходы`)
-4. Find the last filled row (iterate from the bottom or use `ws.max_row`)
-5. Write data to the next row, matching the column structure exactly
-6. Save the workbook
-7. Recalculate the Сводка sheet (run `scripts/recalc.py` if it exists, or update formulas manually via openpyxl)
+```bash
+LEDGER=~/claude-cowork/finances/transactions.jsonl
+BOOK=~/claude-cowork/finances/Учёт_финансов.xlsx
+
+kbengine fin add --ledger "$LEDGER" \
+  --kind expense --date 2026-08-02 \
+  --cat 'Еда' --sub 'Продукты' --place 'Магнит' \
+  --amount '129,98' --source 'Чек' --account 'Сбербанк'
+
+kbengine fin sync --from "$BOOK" --ledger "$LEDGER"
+```
+
+`--date` по умолчанию сегодня, `--amount` понимает `129,98`, `1 500` и `418р`.
+`id` движок генерирует сам. Категорию сверять со словарём
+`~/claude-cowork/finances/finance-aliases.json` — тем же, что читает терминал.
+
+### Если движок отказал
+
+- **«такая запись уже есть»** — это защита от повтора, а не ошибка. Показать
+  владельцу, что именно уже записано, и спросить. Повторять с `--force` только
+  по его прямому слову.
+- **«в книге повторов уже записанного»** на синке — в книгу попала строка мимо
+  движка. Назвать её владельцу; убирать самому не надо.
+
+Обходить отказ прямой записью в xlsx запрещено. Отказ — это работающая
+защита, а не препятствие.
 
 ### Date handling
 
-Store dates as `DD.MM.YYYY` strings. If the receipt has a different format, convert it. If no year is present, assume the current year.
+Дату отдавать движку как `YYYY-MM-DD`. Если на чеке другой формат — перевести;
+если года нет — текущий.
 
 ### Amount handling
 
-- Strip currency symbols, spaces, and thousand separators
-- Convert comma decimals to dots if needed for numeric storage
-- Store as a plain number (float or int)
+- Убрать символы валюты и разделители тысяч
+- Запятую в дробной части движок принимает сам, переводить в точку не нужно
 
 ---
 
-## Natural Language Input
+## Текст без картинки — не сюда
 
-The user may skip photos and just type something like:
-- "потратил 300 на такси"
-- "зарплата 150000"
-- "обед в Теремке 450р"
-- "купил кроссовки за 8000"
+Фразы вроде «потратил 300 на такси», «зарплата 150000», «обнови баланс»
+обслуживает `finance-log`. Здесь они не обрабатываются, даже если выглядят
+знакомо.
 
-Parse intent:
-- If it describes spending → add to Расходы
-- If it describes earning → add to Доходы
-- Extract amount, venue/source, and infer category
-- If category is ambiguous, ask
-- Set Источник to `вручную`
+Это не формальность: раньше оба скилла отзывались на одни и те же слова, и
+какой сработает — решал случай. Один из них писал в книгу мимо движка, и так
+одна трата 140 ₽ оказалась записанной дважды. Разделение по способности —
+картинка против текста — единственное, что не зависит от везения.
 
 ---
 
@@ -197,22 +217,29 @@ The user might paste a list of transactions. Parse each line separately and add 
 
 ---
 
-## Reporting and Analysis
+## Отчёты — не сюда
 
-When the user asks "сколько потратил", "покажи сводку", "баланс", or similar:
+«Сколько потратил», «покажи сводку», «баланс» считает движок, и считает один
+раз на все поверхности:
 
-1. Read the Сводка sheet
-2. Present a clean summary in Russian
-3. Optionally offer to create a chart or more detailed breakdown
-4. If the user wants a visual report, consider creating an HTML artifact with charts
+```bash
+kbengine fin report --ledger ~/claude-cowork/finances/transactions.jsonl
+```
+
+Читать лист «Сводка» и пересказывать его — это второй счёт тех же денег.
+Он однажды разойдётся с первым, и понять, какой из двух прав, будет нельзя.
 
 ---
 
 ## Important Rules
 
-- **Always read the xlsx skill** before modifying the spreadsheet. Invoke the `xlsx` skill or read its SKILL.md. This is non-negotiable.
-- **Verify formulas** on the Сводка sheet after every change. If formulas reference row ranges, expand them if needed to include new data.
-- **Consistent naming.** Before adding a venue, search existing entries in column D of Расходы. Reuse existing names exactly.
+- **Никогда не писать в xlsx напрямую.** Запись — только `kbengine fin add`,
+  затем `kbengine fin sync`. Это не стилевое предпочтение: строка без `id`
+  становится второй копией покупки, и развести их потом нельзя.
+- **Отказ движка показывать владельцу, а не обходить.** «Такая запись уже есть»
+  — сработавшая защита. `--force` только по прямому слову владельца.
+- **Consistent naming.** Название места брать из словаря
+  `~/claude-cowork/finances/finance-aliases.json` — его же читает терминал.
 - **Ask when uncertain.** If a receipt is partially unreadable or the category is ambiguous, ask the user rather than guessing wrong.
 - **One transaction = one row.** Never duplicate entries from the same purchase.
 - **Backup awareness.** Before making large batch changes, mention to the user that they might want to keep a backup.

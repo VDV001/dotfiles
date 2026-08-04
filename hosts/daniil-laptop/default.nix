@@ -22,6 +22,7 @@
     helix
     btop
     k8s
+    kbengine
     kitty
     lazydocker
     lazygit
@@ -130,11 +131,11 @@
           "google-chrome"
           "linearmouse"
           "logseq"
+          "telegram"
           "maccy"
           "orbstack"
           "parallels"
           "tailscale-app"
-          "telegram-desktop"
           "termius"
           "visual-studio-code"
           "zed" # готовый бинарь Zed (настройки/расширения декларативно через programs.zed-editor)

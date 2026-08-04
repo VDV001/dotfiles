@@ -37,15 +37,19 @@
             };
 
             # Figma design context
+            # Ключ передаётся через env, а не аргументом командной строки:
+            # аргументы видны в `ps` любому процессу на машине.
             figma-context = {
               type = "stdio";
               command = "npx";
               args = [
                 "-y"
                 "figma-developer-mcp"
-                "--figma-api-key=${config.sops.placeholder.figma_api_key}"
                 "--stdio"
               ];
+              env = {
+                FIGMA_API_KEY = config.sops.placeholder.figma_api_key;
+              };
             };
 
             # Brand asset search (OpenBrand)
@@ -1024,7 +1028,11 @@
 
       # Finance Log skill
       home.file.".claude/skills/finance-log/SKILL.md".text = builtins.readFile ./claude-skills/finance-log/SKILL.md;
-      home.file.".claude/skills/finance-log/finance-log-skill/SKILL.md".text = builtins.readFile ./claude-skills/finance-log/finance-log-skill/SKILL.md;
+      # Вложенная копия finance-log-skill/SKILL.md снята с деплоя 03.08: это была
+      # версия до v0.12.0, учившая писать балансы openpyxl'ом прямо в лист «Счета»
+      # по номерам строк. Второй писатель книги — источник дубля 140 ₽ (02.08).
+      # Исходник оставлен в dotfiles, но в ~/.claude больше не попадает:
+      # процедура должна жить в одном месте, копии расходятся молча.
 
       # Codebase-to-Course skill
       home.file.".claude/skills/codebase-to-course/SKILL.md".text = builtins.readFile ./claude-skills/codebase-to-course/SKILL.md;
