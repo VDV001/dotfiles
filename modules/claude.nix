@@ -763,11 +763,27 @@
           from pathlib import Path
 
 
+          def get_config_dir():
+              """Claude config dir: $CLAUDE_CONFIG_DIR if set, else ~/.claude.
+
+              Profiles (.claude-work / .claude-personal) switch this env var, and the
+              auto-memory lives inside the ACTIVE profile. Hardcoding ~/.claude made the
+              memory check look into an empty directory and report "MEMORY.md не найден"
+              every session while 100+ memory files sat in the other profile.
+              """
+              import os
+
+              configured = os.environ.get("CLAUDE_CONFIG_DIR")
+              if configured:
+                  return Path(configured)
+              return Path.home() / ".claude"
+
+
           def get_auto_memory_dir():
-              """Get the auto-memory dir for current project (~/.claude/projects/<sanitized-cwd>/memory/)."""
+              """Get the auto-memory dir for current project (<config>/projects/<sanitized-cwd>/memory/)."""
               cwd = Path.cwd()
               sanitized = str(cwd).replace("/", "-")
-              return Path.home() / ".claude" / "projects" / sanitized / "memory"
+              return get_config_dir() / "projects" / sanitized / "memory"
 
 
           def find_handoffs_dir():
@@ -856,13 +872,26 @@
           messages = []
 
           # 1. Latest handoff
+          #
+          # Сортировка по ВРЕМЕНИ ПРАВКИ, а не по имени. В один день handoff'ов
+          # бывает несколько, и алфавит тогда решает вместо хронологии: на
+          # 30.07.2026 имя давало релизный (15:44), а написан позже был другой
+          # (22:04). Это же правило стоит в build_session_start.py; до 08.08.2026
+          # они расходились — починку сделали в одном читателе из двух.
           handoffs_dir = find_handoffs_dir()
           if handoffs_dir:
-              handoffs = sorted(handoffs_dir.glob("*.md"))
-              handoffs = [h for h in handoffs if h.name != "TEMPLATE.md"]
+              handoffs = [h for h in handoffs_dir.glob("*.md") if h.name != "TEMPLATE.md"]
+              handoffs.sort(key=lambda h: h.stat().st_mtime)
               if handoffs:
                   latest = handoffs[-1]
-                  messages.append(f"Последний handoff: {latest.name}")
+                  # Возраст называется вслух. Четырёхдневный handoff, поданный
+                  # как «последний», читается как свежий — а зона .claude/handoffs
+                  # пополняется руками владельца и умеет отставать молча.
+                  import time
+
+                  age_days = int((time.time() - latest.stat().st_mtime) // 86400)
+                  stale = f"  ⚠️ ему {age_days} дн." if age_days >= 2 else ""
+                  messages.append(f"Последний handoff: {latest.name}{stale}")
                   messages.append(latest.read_text()[:800])
 
           # 2. Last 5 chronicles
@@ -942,38 +971,58 @@
               except Exception:
                   return 999
 
-          def find_handoffs_dir():
+          def find_handoff_dirs():
+              # Куда смотреть в поисках сегодняшнего handoff. Их может быть два.
+              #
+              # В claude-cowork зона .claude/handoffs объявлена read-only для
+              # агента: туда переносит владелец руками, а драфт кладётся в
+              # outputs/. Пока хук знал только про первую, он требовал того, что
+              # агенту запрещено, — и срабатывал после каждой сессии, что бы тот
+              # ни сделал. Детектор, проверяющий недостижимое, не защищает.
+              #
+              # Первый каталог — куда писать по умолчанию, остальные — где
+              # драфт тоже засчитывается.
               cwd = Path.cwd()
               for parent in [cwd] + list(cwd.parents):
                   candidate = parent / ".claude" / "handoffs"
                   if candidate.exists():
-                      return candidate
+                      dirs = [candidate]
+                      drafts = parent / "outputs"
+                      if drafts.is_dir():
+                          dirs.append(drafts)
+                      return dirs
               home_handoffs = Path.home() / ".claude" / "handoffs"
               home_handoffs.mkdir(parents=True, exist_ok=True)
-              return home_handoffs
+              return [home_handoffs]
 
-          def fresh_handoff_exists(handoffs_dir):
+          def fresh_handoff_exists(dirs):
               today = datetime.now().strftime("%Y-%m-%d")
-              if not handoffs_dir.exists():
-                  return False
-              for f in handoffs_dir.iterdir():
-                  if f.name.startswith(today) and f.suffix == ".md":
-                      return True
+              for d in dirs:
+                  if not d.exists():
+                      continue
+                  for f in d.iterdir():
+                      if f.name.startswith(today) and f.suffix == ".md":
+                          return True
               return False
 
           def main():
               age = session_age_minutes()
               if age < 15:
                   sys.exit(0)
-              handoffs_dir = find_handoffs_dir()
-              if fresh_handoff_exists(handoffs_dir):
+              dirs = find_handoff_dirs()
+              if fresh_handoff_exists(dirs):
                   sys.exit(0)
+              handoffs_dir = dirs[0]
+              also = ""
+              if len(dirs) > 1:
+                  also = f"Драфт в {dirs[1]}/ засчитывается — перенос руками.\n"
               response = {
                   "decision": "block",
                   "reason": (
                       f"Сессия {int(age)} мин — handoff не записан.\n"
                       f"Запиши в {handoffs_dir}/YYYY-MM-DD_тема.md:\n"
                       f"  ## Сделано\n  ## НЕ сработало\n  ## Следующий шаг\n"
+                      f"{also}"
                       f"Используй шаблон: {handoffs_dir}/TEMPLATE.md"
                   )
               }
@@ -1042,6 +1091,13 @@
 
       # Watch skill (Claude смотрит видео: yt-dlp + ffmpeg + whisper)
       home.file.".claude/skills/watch/SKILL.md".text = builtins.readFile ./claude-skills/watch/SKILL.md;
+
+      # Close-session skill: закрытие сессии одной командой — обе памяти,
+      # handoff-драфт в outputs/, промпт следующей сессии, честный список
+      # недоделанного. Заведён 08.08 по просьбе владельца, чтобы не диктовать
+      # эту процедуру заново каждый раз. Промпт на английском намеренно —
+      # артефакты он всё равно пишет по-русски.
+      home.file.".claude/skills/close-session/SKILL.md".text = builtins.readFile ./claude-skills/close-session/SKILL.md;
 
       # yt-dlp: script-режим PO-token провайдера (bgutil) по умолчанию — чтобы YouTube-скачивание
       # не давало 403. server_home указывает на бандл node-сервера внутри nix-пакета bgutil.

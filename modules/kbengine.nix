@@ -58,6 +58,36 @@
         kbset()   { kbengine set   --catalog "$KB_CATALOG" "$@"; }
         kbnew()   { kbengine add   --catalog "$KB_CATALOG" "$@"; }
 
+        # kbdrill — тренажёр объяснения: случайная запись базы, 15 минут
+        # разбора, минута вслух. Сам скрипт живёт в базе, а не здесь: он читает
+        # каталог и пишет рядом с ним, в explanations/.
+        #
+        #   kbdrill            выпадает запись, дальше 15 минут
+        #   kbdrill rec [сек]  записать голос с микрофона и сразу сохранить
+        #   kbdrill save -     то же текстом, если говорить негде
+        #   kbdrill stats      что известно и — отдельно — чего мы не знаем
+        #
+        # Запись НЕ удаляется после расшифровки: whisper слышит не всё, и
+        # переслушать свой же ответ бывает важнее расшифровки. Путь печатается.
+        kbdrill() {
+          local script="$KB_HOME/knowledge-base/_tools/review_drill.py"
+          case "''${1:-pick}" in
+            rec)
+              local secs="''${2:-60}"
+              local f="$KB_HOME/knowledge-base/explanations/rec-$(date +%Y-%m-%dT%H-%M-%S).wav"
+              mkdir -p "$(dirname "$f")"
+              echo "говори — ''${secs} секунд"
+              ffmpeg -hide_banner -loglevel error -f avfoundation -i ":0" \
+                -t "$secs" -y "$f" </dev/null || return 1
+              python3 "$script" save "$f"
+              echo "запись: $f"
+              ;;
+            *)
+              python3 "$script" "$@"
+              ;;
+          esac
+        }
+
         # kbup — обновить исходники и пересобрать движок. Каждый шаг заведён
         # после своей поломки, а не про запас:
         #   pull         — 04.08 дважды вышло «обновил, а фичи нет»: PR в main
