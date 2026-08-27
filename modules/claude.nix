@@ -103,7 +103,19 @@
 
       programs.claude-code = {
         enable = true;
-        package = pkgs-master.claude-code;
+        # ⚠️ ВРЕМЕННО pkgs вместо pkgs-master (26.08.2026): канал раздачи
+        # downloads.claude.ai отдаёт 403 AccessDenied на ВСЕ версии — замерено
+        # на 2.1.223/228/238/243/245, на stable и на манифест, с французского
+        # выходного IP, то есть это не геоблок и не наша сеть. pkgs-master
+        # тянет 2.1.245, которую скачать неоткуда, и сборка падает целиком.
+        # В stable-канале лежит 2.1.238 — ТОТ ЖЕ store-путь, что установлен
+        # сейчас, поэтому переключение ничего не меняет в работающем и просто
+        # снимает скачивание.
+        # Вернуть на pkgs-master, когда раздача починится; проверка —
+        #   curl -o /dev/null -w '%{http_code}' \
+        #     https://downloads.claude.ai/claude-code-releases/stable
+        # должна отдать 200, а не 403.
+        package = pkgs.claude-code;
 
         # ── Settings → ~/.claude/settings.json ───────────────────
         settings = {
@@ -270,7 +282,7 @@
 
           ## Go — modern-go guidelines (всегда)
           - При написании/правке любого Go-кода — современный синтаксис по версии проекта (из go.mod): `any` вместо `interface{}`, пакеты `slices`/`maps`/`cmp`, `errors.Is`/`errors.As`, `strings.Cut`, типобезопасные атомики, `min`/`max`, `for range N`. Не использовать устаревшие паттерны при наличии современной замены; не использовать фичи новее целевой версии. (Плагин `modern-go-guidelines:use-modern-go` установлен глобально; при сомнении вызвать скилл — он читает версию из go.mod.)
-          - Гейт (манифест #7): скилл = промпт-уровень; детерминированная проверка — линтер `modernize` в golangci-lint v2 (включён в `.golangci.yml` проектов kb-engine/deal-sense/floq). Правило живёт в CI, не в памяти агента.
+          - Гейт (манифест #7): скилл = промпт-уровень; детерминированная проверка — линтер `modernize` в golangci-lint v2 (включён в `.golangci.yml` моих Go-проектов). Правило живёт в CI, не в памяти агента.
 
           ## TDD + DDD + Clean Architecture — механические гейты
 
@@ -318,6 +330,23 @@
 
         # ── MCP servers (no secrets) → ~/.claude/settings.json ───
         mcpServers = {
+          # База знаний: агенты ищут по каталогу теми же четырьмя слоями, что
+          # витрина и терминал — сервер зовёт тот же usecase, второй реализации
+          # поиска нет. Отдельный бинарь, потому что SDK протокола весит +4 МБ,
+          # а основной kbengine от него не растёт ни на байт (замерено).
+          # ⚠️ Ставится через `kbup` (go install), а не nix-пакетом — путь
+          # поэтому в ~/go/bin. Разъехавшись с kbengine по версиям, они дали бы
+          # «поиск отвечает по-разному» без видимой причины, и ровно поэтому
+          # kbup собирает оба одной командой.
+          kb = {
+            command = "${config.home.homeDirectory}/go/bin/kbengine-mcp";
+            args = [
+              "--catalog"
+              "${config.home.homeDirectory}/claude-cowork/knowledge-base/_data/catalog.json"
+            ];
+            type = "stdio";
+          };
+
           # Browser automation
           playwright = {
             command = "npx";
@@ -1077,11 +1106,13 @@
 
       # Finance Log skill
       home.file.".claude/skills/finance-log/SKILL.md".text = builtins.readFile ./claude-skills/finance-log/SKILL.md;
-      # Вложенная копия finance-log-skill/SKILL.md снята с деплоя 03.08: это была
-      # версия до v0.12.0, учившая писать балансы openpyxl'ом прямо в лист «Счета»
-      # по номерам строк. Второй писатель книги — источник дубля 140 ₽ (02.08).
-      # Исходник оставлен в dotfiles, но в ~/.claude больше не попадает:
-      # процедура должна жить в одном месте, копии расходятся молча.
+      # Вложенная копия finance-log-skill/SKILL.md снята с деплоя 03.08 и УДАЛЕНА
+      # 26.08: это была версия до v0.12.0, учившая писать балансы openpyxl'ом
+      # прямо в лист «Счета» по номерам строк. Второй писатель книги — источник
+      # дубля 140 ₽ (02.08). До удаления она полтора месяца лежала в ПУБЛИЧНОМ
+      # репозитории и разошлась с живой: несла утверждение о пересборке дашборда,
+      # закрытого 04.08. Процедура живёт в одном месте — копии расходятся молча,
+      # и «снята с деплоя» этого не предотвращает. Восстановима из истории git.
 
       # Codebase-to-Course skill
       home.file.".claude/skills/codebase-to-course/SKILL.md".text = builtins.readFile ./claude-skills/codebase-to-course/SKILL.md;
@@ -1099,11 +1130,23 @@
       # артефакты он всё равно пишет по-русски.
       home.file.".claude/skills/close-session/SKILL.md".text = builtins.readFile ./claude-skills/close-session/SKILL.md;
 
+      # Next skill: по команде «что дальше» ассистент САМ меряет состояние и
+      # предлагает выбор через AskUserQuestion, вместо того чтобы спрашивать
+      # открытым вопросом. Заведён 21.08 по просьбе владельца — «писать уже
+      # надоело самому». Главное правило внутри: заканчивать вызовом выбора, а
+      # не текстовым вопросом, и предлагать из того, что ассистент может
+      # доделать сам; дела, требующие человека, идут одной строкой в конце, а не
+      # пунктами списка — иначе инструмент превращается в напоминалку.
+      home.file.".claude/skills/next/SKILL.md".text = builtins.readFile ./claude-skills/next/SKILL.md;
+
       # yt-dlp: script-режим PO-token провайдера (bgutil) по умолчанию — чтобы YouTube-скачивание
       # не давало 403. server_home указывает на бандл node-сервера внутри nix-пакета bgutil.
       # extractor-arg именно youtube-специфичный → на не-YouTube игнорируется. Проверено 2026-07-03.
+      # pkgs-master, а не pkgs: сам python-env взят из master (см. hosts/daniil-laptop) из-за
+      # поломки curl-cffi в канале. Два среза дали бы РАЗНЫЕ пути к бандлу, и провайдер
+      # молча указывал бы на несобранный пакет — путь обязан идти оттуда же, откуда yt-dlp.
       home.file.".config/yt-dlp/config".text = ''
-        --extractor-args "youtubepot-bgutilscript:server_home=${pkgs.python3Packages.bgutil-ytdlp-pot-provider}/share/bgutil-ytdlp-pot-provider"
+        --extractor-args "youtubepot-bgutilscript:server_home=${pkgs-master.python3Packages.bgutil-ytdlp-pot-provider}/share/bgutil-ytdlp-pot-provider"
       '';
 
       # ── Profile sync: symlink shared config into work/personal profiles ──
@@ -1114,7 +1157,39 @@
           mkdir -p "$dir/hooks"
           ln -sf "$HOME/.claude/statusline.sh" "$dir/statusline.sh"
           ln -sf "$HOME/.claude/statusline.conf" "$dir/statusline.conf"
-          ln -sf "$HOME/.claude/settings.json" "$dir/settings.json"
+
+          # settings.json: личные профили делят один файл, work — НЕТ.
+          # Remote Control (claude.ai/code, `claude remote-control`, --rc,
+          # автостарт и переключатель в сессии) читается из mergedSettings, то
+          # есть из пользовательского слоя тоже, а не только из managed —
+          # `ntr(){return y5()?.settings.disableRemoteControl===!0}` в бинаре
+          # 2.1.238. Переменной окружения для него не существует (среди 52
+          # CLAUDE_CODE_DISABLE_* её нет), managed-настройки machine-wide и
+          # выключили бы его и на личном. Остаётся отдельный файл у профиля.
+          #
+          # Файл СОБИРАЕТСЯ ИЗ ОБЩЕГО каждый switch, а не копируется однажды:
+          # источник настроек остаётся один, поэтому work не может отстать.
+          # Обычный writable-файл, а не симлинк в /nix/store: Claude Code
+          # пишет в settings.json в рантайме (секция autoMode), и симлинк на
+          # store он бы заменил, свалив следующий checkLinkTargets.
+          if [ "$profile" = ".claude-work" ]; then
+            rm -f "$dir/settings.json"
+            if ${pkgs.jq}/bin/jq '.disableRemoteControl = true' \
+                 "$HOME/.claude/settings.json" > "$dir/settings.json.tmp"; then
+              mv "$dir/settings.json.tmp" "$dir/settings.json"
+              chmod 644 "$dir/settings.json"
+            else
+              # jq не смог разобрать общий файл — не оставляем обрубок и не
+              # подсовываем симлинк молча: без своего файла профиль остался бы
+              # вовсе без настроек, и это было бы видно, а не тихо.
+              rm -f "$dir/settings.json.tmp"
+              echo "claudeProfiles: не удалось собрать $dir/settings.json из ~/.claude/settings.json" >&2
+              exit 1
+            fi
+          else
+            ln -sf "$HOME/.claude/settings.json" "$dir/settings.json"
+          fi
+
           ln -sf "$HOME/.claude/CLAUDE.md" "$dir/CLAUDE.md"
           ln -sf "$HOME/.claude/hooks/session_start.py" "$dir/hooks/session_start.py"
           ln -sf "$HOME/.claude/hooks/stop.py" "$dir/hooks/stop.py"

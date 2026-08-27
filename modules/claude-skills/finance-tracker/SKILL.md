@@ -244,3 +244,13 @@ kbengine fin report --ledger ~/claude-cowork/finances/transactions.jsonl
 - **One transaction = one row.** Never duplicate entries from the same purchase.
 - **Backup awareness.** Before making large batch changes, mention to the user that they might want to keep a backup.
 - **Date awareness.** Today's date is available from the system. Use it as default when the user says "сегодня" or doesn't specify a date.
+
+## Правила движка, которые фото не отменяет
+
+- **Перевод между своими счетами** пишется двумя записями с подкатегорией и источником
+  **«Перевод себе»**. Старое «Переводы» движок считает обычной тратой.
+- **Долг — это счёт, а не транзакция**: ДВИЖЕНИЕ долга (выдал, занял, вернул) в журнал
+  не идёт, правится лист «Счета». ⚠️ Но то, ради чего занимали, — обычный расход:
+  вопрос «деньги ещё у тебя или уже потрачены?». Потрачены — одна запись на покупку.
+- **Отказ «такая запись уже есть» — сработавшая защита.** Показать владельцу, не обходить;
+  `--force` только по прямому слову.

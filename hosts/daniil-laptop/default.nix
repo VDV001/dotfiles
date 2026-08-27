@@ -45,7 +45,7 @@
   ];
 
   config =
-    { pkgs, username, ... }:
+    { pkgs, pkgs-master, username, ... }:
     {
       home-manager.users.${username} = {
         sops.age.keyFile = "/Users/${username}/.config/sops/age/keys.txt";
@@ -67,7 +67,17 @@
         # /watch skill: yt-dlp + bgutil PO-token плагин В ОДНОМ python-env, чтобы yt-dlp грузил плагин
         # (иначе YouTube отдаёт 403 без PO-token). Пакет bgutil бандлит и node-сервер (script-режим).
         # Проверено 2026-07-03: генерит токен + качает YouTube + ffmpeg режет кадры. Пара к ffmpeg + whisper-cpp.
-        (python3.withPackages (ps: with ps; [ yt-dlp bgutil-ytdlp-pot-provider ]))
+        # ⚠️ Взято из pkgs-master, а не из pkgs, и это временно. На 22.08.2026 канал
+        # nixpkgs-unstable стоит на 391b592 (20.08 07:12 UTC) и отстаёт от master на
+        # 464 коммита, а починка curl-cffi приехала в master позже: PR #554482
+        # (0.15.0 → 0.16.0) в 17:21 того же дня и #554592 (install name dylib на
+        # darwin) в 02:03 следующего. На канальной версии сборка падает в
+        # pythonImportsCheckPhase — .so собран без LC_RPATH и не находит
+        # libcurl-impersonate.4.dylib.
+        # Вернуть на обычный python3, когда канал продвинется за эти коммиты:
+        #   gh api repos/NixOS/nixpkgs/compare/a77731fd5319...nixpkgs-unstable
+        # должен показать status=identical или ahead, а не behind.
+        (pkgs-master.python3.withPackages (ps: with ps; [ yt-dlp bgutil-ytdlp-pot-provider ]))
         gh
         glab
         glow
@@ -123,6 +133,7 @@
         ];
 
         casks = [
+          "anydesk"
           "amneziavpn"
           "claude"
           "figma"
