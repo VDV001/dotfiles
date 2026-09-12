@@ -41,10 +41,18 @@
           claude-old = "TELEGRAM_BOT_TOKEN= command claude --model 'claude-opus-4-6[1m]'";
           claude-work = "CLAUDE_CONFIG_DIR=$HOME/.claude-work TELEGRAM_BOT_TOKEN= command claude";
           claude-personal = "CLAUDE_CONFIG_DIR=$HOME/.claude-personal TELEGRAM_BOT_TOKEN= command claude";
-          # Telegram ON только этими спец-командами: реальный токен (из ~/.claude/channels/telegram/.env) + канал.
+          # Telegram ON только этими спец-командами: реальный токен + канал.
           # 'command claude' обходит alias 'claude', поэтому токен НЕ обнуляется.
-          claude-work-tg = "CLAUDE_CONFIG_DIR=$HOME/.claude-work command claude --channels plugin:telegram@claude-plugins-official";
-          claude-personal-tg = "CLAUDE_CONFIG_DIR=$HOME/.claude-personal command claude --channels plugin:telegram@claude-plugins-official";
+          # ⚠️ TELEGRAM_STATE_DIR обязателен, и вот почему (замер 11.09.2026). Плагин берёт
+          # каталог состояния как TELEGRAM_STATE_DIR ?? $CLAUDE_CONFIG_DIR/channels/telegram
+          # (server.ts:27-28). Раз здесь задан CLAUDE_CONFIG_DIR, сервер искал токен в
+          # ~/.claude-work|personal/channels/telegram/.env — а его там нет и не было никогда:
+          # токен живёт в ~/.claude. Без токена server.ts выходит кодом 1, и Claude Code
+          # показывает CONNECTION_CLOSED. То есть ОБА tg-алиаса не работали по конструкции,
+          # а прежний комментарий обещал «токен из ~/.claude», куда код не смотрит.
+          # Один каталог на все профили держит вместе и .env, и access.json, и approved/.
+          claude-work-tg = "CLAUDE_CONFIG_DIR=$HOME/.claude-work TELEGRAM_STATE_DIR=$HOME/.claude/channels/telegram command claude --channels plugin:telegram@claude-plugins-official";
+          claude-personal-tg = "CLAUDE_CONFIG_DIR=$HOME/.claude-personal TELEGRAM_STATE_DIR=$HOME/.claude/channels/telegram command claude --channels plugin:telegram@claude-plugins-official";
         }
         // lib.optionalAttrs config.programs.eza.enable {
           ll = "eza -la --sort name --group-directories-first --no-permissions --no-filesize --no-user --no-time";
