@@ -6,8 +6,6 @@
       sops.secrets.context7_api_key = { };
       sops.secrets.magic_21st_api_key = { };
       sops.secrets.figma_api_key = { };
-      sops.secrets.openbrand_api_key = { };
-      sops.secrets.stitch_api_key = { };
 
       # ── MCP servers with secrets → ~/.mcp.json (via sops) ─────
       sops.templates."mcp.json" = {
@@ -49,28 +47,6 @@
               ];
               env = {
                 FIGMA_API_KEY = config.sops.placeholder.figma_api_key;
-              };
-            };
-
-            # Brand asset search (OpenBrand)
-            openbrand = {
-              type = "stdio";
-              command = "npx";
-              args = [
-                "-y"
-                "openbrand-mcp"
-              ];
-              env = {
-                OPENBRAND_API_KEY = config.sops.placeholder.openbrand_api_key;
-              };
-            };
-
-            # Google Stitch
-            stitch = {
-              type = "http";
-              url = "https://stitch.googleapis.com/mcp";
-              headers = {
-                X-Goog-Api-Key = config.sops.placeholder.stitch_api_key;
               };
             };
 
@@ -149,8 +125,6 @@
             "21st-magic"
             "context7"
             "figma-context"
-            "openbrand"
-            "stitch"
           ];
           enableAllProjectMcpServers = true;
 
@@ -241,6 +215,9 @@
           ## Безопасность
           - min-release-age=7 в .npmrc (supply chain defense)
           - Не устанавливать пакеты моложе 7 дней без явного запроса
+
+          ## Длина сессии (замер 13.10.2026)
+          Каждый ход заново читает весь контекст из кэша: сессия в 336 ходов при 190 тыс. токенов на старте стоит ~130 млн токенов чтения. Когда сессия перевалила за ~150 ходов или ~3 часа, или тема сменилась: предложи один раз `/close-session` и новую сессию вместо продолжения. Не навязывай, если владелец в середине задачи.
 
           ## Handoffs
           В конце каждой сессии длиннее 15 минут записывать handoff в папку `.claude/handoffs/YYYY-MM-DD_тема.md`:
@@ -374,46 +351,12 @@
             type = "stdio";
           };
 
-          # Task Master AI for project management
-          taskmaster-ai = {
-            command = "npx";
-            args = [
-              "-y"
-              "task-master-ai"
-            ];
-            type = "stdio";
-          };
-
-          # Token Enhancer — strips HTML noise, saves tokens on web fetches
-          token-enhancer = {
-            command = "${pkgs.uv}/bin/uv";
-            args = [
-              "run"
-              "--with"
-              "xelektron-token-enhancer"
-              "python"
-              "-m"
-              "mcp_server"
-            ];
-            type = "stdio";
-          };
-
           # Figma MCP Bridge
           figma-bridge = {
             command = "npx";
             args = [
               "-y"
               "@gethopp/figma-mcp-bridge"
-            ];
-            type = "stdio";
-          };
-
-          # Pencil design editor
-          pencil = {
-            command = "${config.home.homeDirectory}/.pencil/mcp/visual_studio_code/out/mcp-server-darwin-arm64";
-            args = [
-              "--app"
-              "visual_studio_code"
             ];
             type = "stdio";
           };

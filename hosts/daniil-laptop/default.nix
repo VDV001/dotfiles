@@ -127,7 +127,6 @@
 
         brews = [
           "ollama"
-          "vercel-cli"
           "whisper-cpp" # расшифровка голосовых Telegram (whisper-cli + Metal). Объявлено,
           # чтобы cleanup=zap не сносил при ребилде. Модель: ~/models/whisper/ggml-small.bin (загружается отдельно).
         ];
@@ -148,6 +147,7 @@
           "parallels"
           "tailscale-app"
           "termius"
+          "vercel" # CLI переехал из formula (vercel-cli) в cask: formula удалена из homebrew-core, ребилд падал на её установке
           "visual-studio-code"
           "zed" # готовый бинарь Zed (настройки/расширения декларативно через programs.zed-editor)
         ];
