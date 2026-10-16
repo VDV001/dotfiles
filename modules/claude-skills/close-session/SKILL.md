@@ -53,8 +53,10 @@ Include what did **not** work — that is the part with future value.
 
 ## 3. Handoff draft
 
-Write to `outputs/YYYY-MM-DD_<тема>.md` — **never** into `.claude/handoffs/`,
-which the owner maintains by hand. Four sections, in this order:
+Write it to the project's `.claude/handoffs/YYYY-MM-DD_<тема>.md` — the Stop
+hook requires it there and the SessionStart hook reads the latest one back.
+Keep it short; a longer version may also go to `outputs/`, linked from the
+handoff. Four sections, in this order:
 
 1. **Что сделано** — with the numbers that were actually measured.
 2. **Что НЕ сработало** — the most valuable section. False starts, reverted
@@ -77,7 +79,8 @@ give the exact command. Do not pad the summary with what went well.
 
 ## Boundaries
 
-- Never write to `.claude/handoffs/` — draft to `outputs/`, the owner moves it.
+- Write handoffs only as new dated files; never edit or delete existing ones
+  in `.claude/handoffs/`.
 - Never put the owner's real financial figures or personal data into a public
   repo, a PR description, a CHANGELOG or a commit message.
 - Do not merge PRs; `--admin` is blocked for the assistant. Print the command.
