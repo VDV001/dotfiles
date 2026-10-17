@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Каждый уходящий коммит проверяется на секреты. stdin: <local ref> <local sha> <remote ref> <remote sha>
+set -Eeuo pipefail
+zero=0000000000000000000000000000000000000000
+while read -r _ lsha _ rsha; do
+  [ "$lsha" = "$zero" ] && continue                        # удаление ветки
+  if [ "$rsha" = "$zero" ]; then range="$lsha --not --remotes"  # новая ветка: всё, чего нет на remote
+  else range="$rsha..$lsha"; fi
+  "$(git rev-parse --show-toplevel)/.githooks/check-secrets.sh" range "$range"
+done

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Секреты в индексе останавливают коммит. Включение: git config core.hooksPath .githooks
+exec "$(git rev-parse --show-toplevel)/.githooks/check-secrets.sh" staged

@@ -1,0 +1,10 @@
+# Настройка gitleaks для публичного репозитория dotfiles (17.10.2026).
+# Правила по умолчанию плюс одно исключение: отпечатки GPG-ключей.
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Публичные отпечатки GPG (signingKey = 40 hex) не секрет: подписать ими без приватного ключа нельзя"
+regexTarget = "line"
+regexes = ['''signingKey\s*=\s*"[0-9A-Fa-f]{40}"''']
