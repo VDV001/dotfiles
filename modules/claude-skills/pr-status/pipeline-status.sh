@@ -2,6 +2,9 @@
 # Живая лента этапов PR: «что, где, когда, что дальше» в одном комментарии.
 # Формат по образцу «The life of a change» (Anthropic, 15.10.2026).
 #
+# ЭТАЛОН: dotfiles, modules/claude-skills/pr-status/. В репозиториях лежит копия
+# в .github/scripts/: правка здесь, потом копия, иначе разойдутся.
+#
 # Вызов: pipeline-status.sh OWNER/REPO PR_NUMBER [EVENT]
 #   DRY_RUN=1  печатает комментарий, ничего не пишет в PR.
 # Нужны gh и jq (на раннерах GitHub есть). Токен: GH_TOKEN.
@@ -28,10 +31,19 @@ for id in $(jq -r '.[] | select(.name == "review" or .conclusion == "failure") |
   notes="$(jq -s 'add' <<<"$notes $a")"
 done
 
+# Запуски, не стартовавшие из-за лимита Actions (бесплатный план), это не
+# провал и не проверка: убираем их и считаем отдельно. Статус этапа тогда
+# дают статусы коммита local/* с машины владельца (pr-status).
+billing_ids="$(jq -c '[.[] | select(.msg | test("payments have failed|spending limit")) | .id] | unique' <<<"$notes")"
+billed="$(jq 'length' <<<"$billing_ids")"
+checks="$(jq --argjson b "$billing_ids" '[.[] | select(.id as $i | $b | index($i) | not)]' <<<"$checks")"
+statuses="$(gh api "repos/$repo/commits/$sha/status" --jq '[.statuses[] | {context, state, description, updated_at}]')"
+
 bot_comments="$(gh api "repos/$repo/pulls/$pr/comments?per_page=100" --paginate --jq '.[] | select(.user.type == "Bot" and (.user.login | test("claude"; "i"))) | .id' | wc -l | tr -d ' ')"
 
 body="$(jq --arg event "$event" --argjson checks "$checks" --argjson notes "$notes" \
-  --arg bot "$bot_comments" --arg marker "$marker" -r -f "$(dirname "$0")/pipeline-status.jq" <<<"$pr_json")"
+  --arg bot "$bot_comments" --arg marker "$marker" \
+  --argjson statuses "$statuses" --arg billed "$billed" -r -f "$(dirname "$0")/pipeline-status.jq" <<<"$pr_json")"
 
 
 if [ "${DRY_RUN:-}" = 1 ]; then printf '%s\n' "$body"; exit 0; fi

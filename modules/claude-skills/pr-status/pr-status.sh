@@ -6,6 +6,13 @@
 #   pr-status all          все открытые PR по проектам из ~/.config/pr-status/repos
 #   pr-status --no-post …  только показать, комментарий в PR не трогать
 #   pr-status --hook       режим хука: читает JSON PostToolUse со stdin
+#   pr-status ci-passed    отметить коммит: pre-push хуки прошли (local/ci)
+#   pr-status review ok|issues "итог" [--security] [--body-file f.md]
+#                          записать итог локального ревью (local/review или
+#                          local/security) и полный текст комментарием в PR
+#
+# Actions на бесплатном плане не стартуют, поэтому этапы CI, ревью и
+# security подтверждаются статусами коммита local/* (API статусов бесплатен).
 #
 # Сам расчёт этапов: pipeline-status.sh/.jq рядом (тот же код лежит в
 # .github/scripts/ репозиториев и гоняется там из Actions).
@@ -49,6 +56,51 @@ waiting() { # одна строка на PR с ◆: что ждёт челове
 current_repo() { gh repo view --json nameWithOwner --jq .nameWithOwner 2>/dev/null; }
 my_prs() { gh pr list -R "$1" --author @me --state open --json number --jq '.[].number'; }
 
+set_status() { # repo sha context state description
+  gh api -X POST "repos/$1/statuses/$2" -f context="$3" -f state="$4" -f description="${5:0:140}" >/dev/null
+}
+
+# pre-push есть? Тогда успешный push означает, что гейты прошли.
+has_pre_push() {
+  local hp; hp="$(git config core.hooksPath || true)"
+  [ -n "$hp" ] && [ -x "$(git rev-parse --show-toplevel)/$hp/pre-push" ] && return 0
+  [ -x "$(git rev-parse --git-common-dir)/hooks/pre-push" ]
+}
+
+# ci-passed: только если HEAD реально уехал (совпал с @{push}) и в репо есть
+# pre-push. ponytail: обход --no-verify отсюда не виден; хук отсекает его по
+# тексту команды, ручной вызов доверяет вызвавшему.
+ci_passed() {
+  local repo sha
+  repo="$(current_repo)" || return 1
+  has_pre_push || { echo "○ в репо нет pre-push: отмечать нечего"; return 0; }
+  sha="$(git rev-parse HEAD)"
+  [ "$sha" = "$(git rev-parse '@{push}' 2>/dev/null)" ] || { echo "○ HEAD ещё не запушен"; return 0; }
+  set_status "$repo" "$sha" local/ci success "pre-push хуки прошли на машине владельца"
+  echo "✓ local/ci: $repo@${sha:0:7}"
+}
+
+record_review() { # ok|issues summary [--security] [--body-file f]
+  local verdict="${1:?ok|issues}" summary="${2:?итог}" ctx=local/review marker='<!-- local-review -->' file="" repo pr sha
+  shift 2
+  while [ $# -gt 0 ]; do case "$1" in
+    --security) ctx=local/security; marker='<!-- local-security -->' ;;
+    --body-file) file="$2"; shift ;;
+  esac; shift; done
+  repo="$(current_repo)"; pr="$(gh pr view --json number --jq .number)"
+  sha="$(gh pr view --json headRefOid --jq .headRefOid)"
+  [ "$sha" = "$(git rev-parse HEAD)" ] || { echo "✘ локальный HEAD не совпадает с головой PR: ревью не того коммита" >&2; return 2; }
+  set_status "$repo" "$sha" "$ctx" "$([ "$verdict" = ok ] && echo success || echo failure)" "$summary"
+  if [ -n "$file" ]; then
+    local body existing; body="$marker"$'\n'"$(cat "$file")"
+    existing="$(gh api "repos/$repo/issues/$pr/comments?per_page=100" --paginate --jq ".[] | select(.body | startswith(\"$marker\")) | .id" | head -1)"
+    if [ -n "$existing" ]; then gh api -X PATCH "repos/$repo/issues/comments/$existing" -f body="$body" >/dev/null
+    else gh api -X POST "repos/$repo/issues/$pr/comments" -f body="$body" >/dev/null; fi
+  fi
+  echo "✓ $ctx: $repo#$pr ${sha:0:7} $verdict"
+  EVENT="$ctx" one "$repo" "$pr"
+}
+
 args=()
 for a in "$@"; do case "$a" in --no-post) post=0 ;; *) args+=("$a") ;; esac; done
 set -- "${args[@]+"${args[@]}"}"
@@ -63,11 +115,16 @@ case "${1:-}" in
     grep -qE '(^|[;&| ])(gh pr (create|merge|ready)|git push)( |$)' <<<"$cmd" || exit 0
     cwd="$(jq -r '.cwd // ""' <<<"$input")"; [ -d "$cwd" ] && cd "$cwd"
     repo="$(current_repo)" || exit 0; [ -n "$repo" ] || exit 0
+    if grep -q 'git push' <<<"$cmd" && ! grep -q -- '--no-verify' <<<"$cmd"; then ci_passed >/dev/null 2>&1 || true; fi
     pr="$(gh pr view --json number --jq .number 2>/dev/null)" || exit 0
     out="$(EVENT="хук: ${cmd%% *} ${cmd#* }" one "$repo" "$pr" 2>/dev/null)" || exit 0
-    jq -n --arg o "$out" '{hookSpecificOutput: {hookEventName: "PostToolUse",
-      additionalContext: ("Лента этапов PR обновлена (и в комментарии PR). Покажи её владельцу в блоке кода как есть:\n" + $o)}}'
+    hint=""
+    grep -q 'gh pr create' <<<"$cmd" && hint=$'\n\nPR только что открыт: проведи /code-review по REVIEW.md репозитория (и /security-review для высокого риска), затем запиши итог: ~/.claude/pr-status/pr-status.sh review ok|issues "итог" --body-file <файл с находками>.'
+    jq -n --arg o "$out" --arg h "$hint" '{hookSpecificOutput: {hookEventName: "PostToolUse",
+      additionalContext: ("Лента этапов PR обновлена (и в комментарии PR). Покажи её владельцу в блоке кода как есть:\n" + $o + $h)}}'
     ;;
+  ci-passed) ci_passed ;;
+  review) shift; record_review "$@" ;;
   all)
     [ -f "$repos_file" ] || { echo "✘ нет $repos_file (по репозиторию OWNER/REPO на строку)" >&2; exit 2; }
     pending=""

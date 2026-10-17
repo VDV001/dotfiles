@@ -11,15 +11,32 @@ def group: if length == 0 then "none"
   elif any(.[]; bad) then "fail"
   elif any(.[]; .status != "completed") then "run" else "ok" end;
 def when: [.[] | (.completed_at // .started_at)] | map(select(. != null)) | max | msk;
-def billing: [$notes[] | select(.msg | test("payments have failed|spending limit"))] | length > 0;
 def row($icon; $stage; $what; $when): "| \($icon) | **\($stage)** | \($what) | \($when) |";
+# Локальный результат: статус коммита local/* (ставит pr-status с машины владельца).
+def lstat($ctx): [$statuses[] | select(.context == $ctx)] | first;
+def lstate: if . == null then "none" elif .state == "success" then "ok"
+  elif .state == "pending" then "run" else "fail" end;
+# Итог этапа из запусков Actions ($g) и локального статуса ($l): красное
+# побеждает, потом «идёт», потом зелёное. Запуски, не стартовавшие из-за
+# биллинга, сюда не попадают вовсе: их убрал pipeline-status.sh.
+def merge($g; $l): if $g == "fail" or $l == "fail" then "fail"
+  elif $g == "run" or $l == "run" then "run"
+  elif $g == "ok" or $l == "ok" then "ok" else "none" end;
+def icon: if . == "ok" then "✓" elif . == "run" then "⏳" elif . == "fail" then "✗" else "○" end;
+def lwhen: if . == null then "" else .updated_at | msk end;
 
 . as $pr
 | ($checks | map(select(.name == "review"))) as $rev
 | ($checks | map(select(.name | test("secur|codeql|gitleaks|redteam|analyze"; "i")))) as $sec
-| ($checks | map(select(.name != "review" and (.name | test("secur|codeql|gitleaks|redteam|analyze"; "i") | not)))) as $ci
-| ($ci | group) as $cis | ($sec | group) as $secs | ($rev | group) as $revs
+# CI это только задачи GitHub Actions: чеки сторонних приложений (превью
+# Vercel и т.п.) тестов не гоняют и зелёным CI не считаются.
+| ($checks | map(select(.app.slug == "github-actions" and .name != "review" and (.name | test("secur|codeql|gitleaks|redteam|analyze"; "i") | not)))) as $ci
+| lstat("local/ci") as $lci | lstat("local/review") as $lrev | lstat("local/security") as $lsec
+| merge($ci | group; $lci | lstate) as $cis
+| merge($sec | group; $lsec | lstate) as $secs
+| (if $lrev != null then ($lrev | lstate) else ($rev | group) end) as $revs
 | ([$notes[] | select(.msg | test("Добавьте секрет"))] | length > 0) as $nokey
+| ($billed | tonumber) as $nb
 | ($pr | section("(Testing|Проверка)")) as $testing
 | ($pr | section("(Risk|Риск)")) as $risk
 | (if ($risk | test("[Вв]ысок")) then "high" elif ($risk | test("[Сс]редн")) then "mid"
@@ -27,39 +44,50 @@ def row($icon; $stage; $what; $when): "| \($icon) | **\($stage)** | \($what) | \
 | ($pr | section("(How to revert|Откат)") | split("\n")[0] // "") as $revert
 | ($pr.merged_at != null) as $merged
 | ($pr.user.login) as $author
+| (($cis == "ok" or ($cis == "none" and $nb == 0)) and $secs != "fail" and $secs != "run"
+   and (($revs == "ok" and ($lrev != null or ($nokey | not))) or ($revs == "none" and $nb == 0 and $lrev == null and ($bot | tonumber) == 0))
+   and $tier != "none") as $ready
 
 | [ row(if $testing != "" then "✓" else "✗" end; "Проверено автором";
         if $testing != "" then "секция Testing заполнена: что запускали и с каким итогом"
         else "секция Testing пустая: непонятно, чем проверено" end; $pr.created_at | msk),
 
-    row(if $cis == "ok" then "✓" elif $cis == "run" then "⏳" elif $cis == "none" then "○" else "✗" end;
-        "CI";
-        if ($ci | billing) then "Actions не стартуют: биллинг аккаунта (payments have failed). Код не виноват"
-        elif $cis == "ok" then "\($ci | length) проверок зелёные: \([$ci[].name] | join(", "))"
-        elif $cis == "run" then "идут: \([$ci[] | select(.status != "completed") | .name] | join(", "))"
-        elif $cis == "none" then "проверок на этом коммите нет"
-        else "упали: \([$ci[] | select(bad) | .name] | join(", ")). Красное блокирует мерж" end;
-        $ci | when),
+    row($cis | icon; "CI";
+        if $cis == "fail" then
+          ([$ci[] | select(bad) | .name] + (if ($lci | lstate) == "fail" then ["локально: " + $lci.description] else [] end)
+           | "упало: " + join(", ") + ". Красное блокирует мерж")
+        elif $cis == "run" then "идёт: " + ([$ci[] | select(.status != "completed") | .name] + (if ($lci | lstate) == "run" then ["локальные гейты"] else [] end) | join(", "))
+        elif $cis == "ok" then
+          ([(if $lci != null then "локально: " + $lci.description else empty end),
+            (if ($ci | length) > 0 then "Actions: \([$ci[].name] | join(", "))" else empty end)]
+           | join(" · ")) + (if $nb > 0 then " (Actions не стартовали: бесплатный лимит)" else "" end)
+        elif $nb > 0 then "нет подтверждения: Actions не стартовали, локального прогона на этом коммите нет. Отметит git push с pre-push хуками"
+        else "проверок на этом коммите нет" end;
+        (if $lci != null then ($lci | lwhen) else ($ci | when) end)),
 
-    row(if $revs == "run" then "⏳" elif $revs == "fail" then "✗"
-        elif $revs == "none" or $nokey then "○" elif ($bot | tonumber) > 0 then "◆" else "✓" end;
+    row(if $lrev == null and $nokey then "○"
+        elif $revs == "ok" and $lrev == null and ($bot | tonumber) > 0 then "◆"
+        elif $revs == "fail" and $lrev != null then "◆" else ($revs | icon) end;
         "AI-ревью Claude";
-        if $revs == "run" then "Claude читает дифф по правилам REVIEW.md"
-        elif $revs == "fail" and ($rev | billing) then "не стартовало: биллинг Actions"
+        if $lrev != null then
+          (if $revs == "ok" then "локально по REVIEW.md: " + $lrev.description
+           elif $revs == "run" then "идёт локально: " + $lrev.description
+           else "локально по REVIEW.md: " + $lrev.description + ". Разобрать до мержа" end)
+        elif $revs == "run" then "Claude читает дифф по правилам REVIEW.md"
+        elif $nokey then "в Actions выключено (нет секрета): /code-review по REVIEW.md, итог в pr-status review"
         elif $revs == "fail" then "ревьюер упал, смотри лог задачи review"
-        elif $revs == "none" then "не запускалось на этом коммите"
+        elif $revs == "none" then "не запускалось на этом коммите: /code-review по REVIEW.md, итог в pr-status review"
         elif $nokey then "выключено: нет секрета CLAUDE_CODE_OAUTH_TOKEN"
         elif ($bot | tonumber) > 0 then "замечаний на строках: \($bot). Разобрать до мержа"
         else "замечаний нет" end;
-        $rev | when),
+        (if $lrev != null then ($lrev | lwhen) else ($rev | when) end)),
 
-    row(if $secs == "ok" then "✓" elif $secs == "run" then "⏳" elif $secs == "none" then "○" else "✗" end;
-        "Security";
-        if $secs == "none" then "отдельного прохода безопасности в этом репо нет"
-        elif $secs == "ok" then "чисто: \([$sec[].name] | join(", "))"
-        elif $secs == "run" then "идёт: \([$sec[] | select(.status != "completed") | .name] | join(", "))"
-        else "есть находки: \([$sec[] | select(bad) | .name] | join(", ")). Блокирует мерж" end;
-        $sec | when),
+    row(if $secs == "fail" and ($lsec | lstate) == "fail" then "◆" else ($secs | icon) end; "Security";
+        if $secs == "none" then "не запускалось: /security-review, итог в pr-status review --security"
+        elif $secs == "ok" then "чисто: " + ([(if $lsec != null then "локально: " + $lsec.description else empty end), ($sec[] | .name)] | join(", "))
+        elif $secs == "run" then "идёт: " + ([$sec[] | select(.status != "completed") | .name] + (if ($lsec | lstate) == "run" then ["локально"] else [] end) | join(", "))
+        else "есть находки: " + ([$sec[] | select(bad) | .name] + (if ($lsec | lstate) == "fail" then [$lsec.description] else [] end) | join(", ")) + ". Блокирует мерж" end;
+        (if $lsec != null then ($lsec | lwhen) else ($sec | when) end)),
 
     row(if $merged then "✓" elif $tier == "none" then "✗" elif $tier == "low" then "✓" else "◆" end;
         "Решение по риску";
@@ -69,15 +97,12 @@ def row($icon; $stage; $what; $when): "| \($icon) | **\($stage)** | \($what) | \
         else "высокий: только человек, AI-апрув не заменяет" end; ""),
 
     "| | **МЕРЖ** | | |",
-    row(if $merged then "✓" elif $pr.state == "closed" then "✗" elif $pr.draft then "○"
-        elif ($cis == "ok" or $cis == "none") and $secs != "fail" and $revs != "fail" and ($bot | tonumber) == 0 and $tier != "none" then "◆"
-        else "○" end;
+    row(if $merged then "✓" elif $pr.state == "closed" then "✗" elif $pr.draft then "○" elif $ready then "◆" else "○" end;
         "Мерж в \($pr.base.ref)";
         if $merged then "влит"
         elif $pr.state == "closed" then "PR закрыт без мержа"
         elif $pr.draft then "черновик"
-        elif ($cis == "ok" or $cis == "none") and $secs != "fail" and $revs != "fail" and ($bot | tonumber) == 0 and $tier != "none"
-          then "можно мержить: блокеров нет" else "ждёт: сначала закрыть строки выше с ✗, ⏳ и ◆" end;
+        elif $ready then "можно мержить: блокеров нет" else "ждёт: сначала закрыть строки выше с ✗, ⏳ и ◆" end;
         $pr.merged_at | msk),
 
     "| | **ПОСЛЕ МЕРЖА** | | |",

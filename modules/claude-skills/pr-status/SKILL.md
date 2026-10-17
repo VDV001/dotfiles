@@ -22,6 +22,31 @@ The script is installed at `~/.claude/pr-status/pr-status.sh`.
 
 The project list lives in `~/.config/pr-status/repos` (one `OWNER/REPO` per line).
 
+## GitHub Actions is not relied on
+
+The owner is on the free plan: Actions jobs do not start. Jobs that failed to
+start for billing are ignored by the strip. The stages are confirmed locally by
+commit statuses (free API):
+
+| Status | Set by | Meaning |
+|---|---|---|
+| `local/ci` | the PostToolUse hook after `git push` (not `--no-verify`), or `pr-status.sh ci-passed` | the repo has a pre-push hook and HEAD reached the remote, so the gates passed |
+| `local/review` | `pr-status.sh review ok|issues "summary" --body-file f.md` | your review by REVIEW.md |
+| `local/security` | same with `--security` | your security pass |
+
+## Local review, the required step after a PR is opened
+
+1. Read the repo's `REVIEW.md` and the PR diff (`git diff origin/<base>...HEAD`,
+   three dots: two dots also shows newer commits of the base).
+2. Review only by REVIEW.md: defects with a file, line and failure scenario.
+   No style notes, no praise. List what you did NOT check.
+3. Write the findings to a file and record them:
+   `~/.claude/pr-status/pr-status.sh review issues "N замечаний: ..." --body-file f.md`
+   or `review ok "замечаний нет" --body-file f.md`.
+4. For high-risk changes run the security pass too and record it with `--security`.
+5. A new commit invalidates the statuses (they are per commit): after fixes,
+   review only the new diff and record again.
+
 ## How to report
 
 1. Run the command. It prints the strip and updates the comment in each PR.
