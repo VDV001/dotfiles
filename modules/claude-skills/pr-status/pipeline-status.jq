@@ -5,7 +5,10 @@ def section($h): (.body // "") as $b
   | if $i == null then "" else
       ($l[($i+1):] | until(length == 0 or (.[0] | test("^##")); .[1:]) as $rest
       | $l[($i+1):(($l | length) - ($rest | length))] | join("\n")
-      | gsub("<!--[\\s\\S]*?-->"; "") | gsub("^\\s+|\\s+$"; "")) end;
+      | gsub("<!--[\\s\\S]*?-->"; "")
+      # Невыбранный чекбокс шаблона («- [ ] go test») это заготовка, а не ответ.
+      | [split("\n")[] | select(test("^\\s*[-*] \\[ \\]") | not)] | join("\n")
+      | gsub("^\\s+|\\s+$"; "")) end;
 def bad: .conclusion as $c | ["failure","timed_out","cancelled","action_required","startup_failure"] | index($c) != null;
 def group: if length == 0 then "none"
   elif any(.[]; bad) then "fail"
