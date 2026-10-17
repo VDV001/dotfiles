@@ -164,6 +164,20 @@
                 ];
               }
             ];
+            # Лента этапов PR после gh pr create / git push / gh pr merge:
+            # обновляет комментарий в PR и отдаёт ленту ассистенту (17.10.2026).
+            PostToolUse = [
+              {
+                matcher = "Bash";
+                hooks = [
+                  {
+                    type = "command";
+                    command = "bash ~/.claude/pr-status/pr-status.sh --hook";
+                    timeout = 60;
+                  }
+                ];
+              }
+            ];
           };
 
           # Statusline — model, git, cost, context, VPS monitoring
@@ -1098,6 +1112,24 @@
       # доделать сам; дела, требующие человека, идут одной строкой в конце, а не
       # пунктами списка — иначе инструмент превращается в напоминалку.
       home.file.".claude/skills/next/SKILL.md".text = builtins.readFile ./claude-skills/next/SKILL.md;
+
+      # pr-status: живая лента этапов PR («The life of a change», Anthropic) в
+      # терминале и комментарием в самом PR. Заведён 17.10.2026 по просьбе
+      # владельца: «проектов у меня всегда несколько и я должен все понимать
+      # что происходит». Эталон скрипта здесь; копии лежат в .github/scripts/
+      # репозиториев и гоняются из Actions. Хук PostToolUse выше зовёт --hook.
+      home.file.".claude/skills/pr-status/SKILL.md".text = builtins.readFile ./claude-skills/pr-status/SKILL.md;
+      home.file.".claude/pr-status/pr-status.sh" = { executable = true; text = builtins.readFile ./claude-skills/pr-status/pr-status.sh; };
+      home.file.".claude/pr-status/pipeline-status.sh" = { executable = true; text = builtins.readFile ./claude-skills/pr-status/pipeline-status.sh; };
+      home.file.".claude/pr-status/pipeline-status.jq".text = builtins.readFile ./claude-skills/pr-status/pipeline-status.jq;
+      home.file.".config/pr-status/repos".text = ''
+        # Проекты для `pr-status all`: OWNER/REPO на строку.
+        VDV001/deal-sense
+        4key-team/birka
+        VDV001/floq
+        VDV001/english-hub
+        VDV001/courses-hub
+      '';
 
       # yt-dlp: script-режим PO-token провайдера (bgutil) по умолчанию — чтобы YouTube-скачивание
       # не давало 403. server_home указывает на бандл node-сервера внутри nix-пакета bgutil.
