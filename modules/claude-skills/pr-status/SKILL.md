@@ -33,6 +33,7 @@ commit statuses (free API):
 | `local/ci` | the PostToolUse hook after `git push` (not `--no-verify`), or `pr-status.sh ci-passed` | the repo has a pre-push hook and HEAD reached the remote, so the gates passed |
 | `local/review` | `pr-status.sh review ok|issues "summary" --body-file f.md` | your review by REVIEW.md |
 | `local/security` | same with `--security` | your security pass |
+| `local/visual` | `pr-status.sh visual ok|issues "what you looked at" --body-file f.md` | you opened the change in a browser and looked; required when the PR touches `web/`, `frontend/` or `*.tsx|jsx|vue|svelte|css|scss|html` |
 
 ## Local review, the required step after a PR is opened
 
@@ -44,7 +45,14 @@ commit statuses (free API):
    `~/.claude/pr-status/pr-status.sh review issues "N замечаний: ..." --body-file f.md`
    or `review ok "замечаний нет" --body-file f.md`.
 4. For high-risk changes run the security pass too and record it with `--security`.
-5. A new commit invalidates the statuses (they are per commit): after fixes,
+5. If the PR touches the frontend, the strip shows ✗ "Посмотрено глазами" and
+   blocks the merge. Open the changed screens with Playwright at 390px and
+   1280px, look at them (Read the screenshots), and record what you saw:
+   `visual ok "390 и 1280: форма заявки, поля видны" --body-file f.md` with the
+   URL, widths, what was checked and the screenshot paths. `visual issues` if
+   something is wrong. Green tests do not count: an input with an undefined CSS
+   token passes every test and is invisible on screen (deal-sense #495).
+6. A new commit invalidates the statuses (they are per commit): after fixes,
    review only the new diff and record again.
 
 ## How to report

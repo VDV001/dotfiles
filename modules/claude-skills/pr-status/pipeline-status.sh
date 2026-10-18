@@ -37,13 +37,17 @@ done
 billing_ids="$(jq -c '[.[] | select(.msg | test("payments have failed|spending limit")) | .id] | unique' <<<"$notes")"
 billed="$(jq 'length' <<<"$billing_ids")"
 checks="$(jq --argjson b "$billing_ids" '[.[] | select(.id as $i | $b | index($i) | not)]' <<<"$checks")"
+# Фронтенд-файлы PR: им нужен этап «посмотрено глазами». Тесты и сборка зелёные
+# и на невидимом поле ввода (deal-sense #495: нашёл владелец глазами).
+front="$(gh api "repos/$repo/pulls/$pr/files?per_page=100" --paginate --jq '.[].filename' \
+  | grep -cE '^(web|frontend)/|\.(tsx|jsx|vue|svelte|css|scss|html)$' || true)"
 statuses="$(gh api "repos/$repo/commits/$sha/status" --jq '[.statuses[] | {context, state, description, updated_at}]')"
 
 bot_comments="$(gh api "repos/$repo/pulls/$pr/comments?per_page=100" --paginate --jq '.[] | select(.user.type == "Bot" and (.user.login | test("claude"; "i"))) | .id' | wc -l | tr -d ' ')"
 
 body="$(jq --arg event "$event" --argjson checks "$checks" --argjson notes "$notes" \
   --arg bot "$bot_comments" --arg marker "$marker" \
-  --argjson statuses "$statuses" --arg billed "$billed" -r -f "$(dirname "$0")/pipeline-status.jq" <<<"$pr_json")"
+  --argjson statuses "$statuses" --arg billed "$billed" --arg front "$front" -r -f "$(dirname "$0")/pipeline-status.jq" <<<"$pr_json")"
 
 
 if [ "${DRY_RUN:-}" = 1 ]; then printf '%s\n' "$body"; exit 0; fi

@@ -35,6 +35,7 @@ def lwhen: if . == null then "" else .updated_at | msk end;
 # Vercel и т.п.) тестов не гоняют и зелёным CI не считаются.
 | ($checks | map(select(.app.slug == "github-actions" and .name != "review" and (.name | test("secur|codeql|gitleaks|redteam|analyze"; "i") | not)))) as $ci
 | lstat("local/ci") as $lci | lstat("local/review") as $lrev | lstat("local/security") as $lsec
+| lstat("local/visual") as $lvis | ($front | tonumber) as $nfront
 | merge($ci | group; $lci | lstate) as $cis
 | merge($sec | group; $lsec | lstate) as $secs
 | (if $lrev != null then ($lrev | lstate) else ($rev | group) end) as $revs
@@ -49,7 +50,8 @@ def lwhen: if . == null then "" else .updated_at | msk end;
 | ($pr.user.login) as $author
 | (($cis == "ok" or ($cis == "none" and $nb == 0)) and $secs != "fail" and $secs != "run"
    and (($revs == "ok" and ($lrev != null or ($nokey | not))) or ($revs == "none" and $nb == 0 and $lrev == null and ($bot | tonumber) == 0))
-   and $tier != "none") as $ready
+   and $tier != "none"
+   and ($nfront == 0 or ($lvis | lstate) == "ok")) as $ready
 
 | [ row(if $testing != "" then "✓" else "✗" end; "Проверено автором";
         if $testing != "" then "секция Testing заполнена: что запускали и с каким итогом"
@@ -91,6 +93,14 @@ def lwhen: if . == null then "" else .updated_at | msk end;
         elif $secs == "run" then "идёт: " + ([$sec[] | select(.status != "completed") | .name] + (if ($lsec | lstate) == "run" then ["локально"] else [] end) | join(", "))
         else "есть находки: " + ([$sec[] | select(bad) | .name] + (if ($lsec | lstate) == "fail" then [$lsec.description] else [] end) | join(", ")) + ". Блокирует мерж" end;
         (if $lsec != null then ($lsec | lwhen) else ($sec | when) end)),
+
+    row(if $nfront == 0 then "○" elif ($lvis | lstate) == "ok" then "✓" else "✗" end;
+        "Посмотрено глазами";
+        if $nfront == 0 then "фронтенд не тронут: не нужно"
+        elif ($lvis | lstate) == "ok" then "локально: " + $lvis.description
+        elif ($lvis | lstate) == "fail" then "найдено на экране: " + $lvis.description + ". Блокирует мерж"
+        else "PR трогает фронтенд (файлов: \($nfront)): открыть в браузере, снять Playwright, pr-status visual ok \"что смотрел\". Блокирует мерж" end;
+        ($lvis | lwhen)),
 
     row(if $merged then "✓" elif $tier == "none" then "✗" elif $tier == "low" then "✓" else "◆" end;
         "Решение по риску";

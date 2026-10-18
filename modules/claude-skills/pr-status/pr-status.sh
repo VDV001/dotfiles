@@ -85,6 +85,7 @@ record_review() { # ok|issues summary [--security] [--body-file f]
   shift 2
   while [ $# -gt 0 ]; do case "$1" in
     --security) ctx=local/security; marker='<!-- local-security -->' ;;
+    --visual) ctx=local/visual; marker='<!-- local-visual -->' ;;
     --body-file) file="$2"; shift ;;
   esac; shift; done
   repo="$(current_repo)"; pr="$(gh pr view --json number --jq .number)"
@@ -135,6 +136,8 @@ case "${1:-}" in
     ;;
   ci-passed) ci_passed ;;
   review) shift; record_review "$@" ;;
+  # Фронт-PR: открыл в браузере, снял Playwright, назвал что видел (адрес, ширина, итог).
+  visual) shift; record_review "$@" --visual ;;
   all)
     [ -f "$repos_file" ] || { echo "✘ нет $repos_file (по репозиторию OWNER/REPO на строку)" >&2; exit 2; }
     pending=""
