@@ -112,10 +112,20 @@ case "${1:-}" in
     # владельцу. Любая ошибка молча выходит: хук не должен ломать работу.
     input="$(cat)"
     cmd="$(jq -r '.tool_input.command // ""' <<<"$input" 2>/dev/null || true)"
-    grep -qE '(^|[;&| ])(gh pr (create|merge|ready)|git push)( |$)' <<<"$cmd" || exit 0
+    grep -qE '(^|[;&| ])(gh pr (create|merge|ready)|git( +-C +[^ ;&|]+)? push)( |$)' <<<"$cmd" || exit 0
     cwd="$(jq -r '.cwd // ""' <<<"$input")"; [ -d "$cwd" ] && cd "$cwd"
+    # .cwd это каталог сессии, а команда часто сама уходит в репозиторий:
+    # `cd ~/git/x && git push` или `git -C ~/git/x push`. Без этого хук молча
+    # выходил вне git (замер 18.10: ни одного срабатывания за две сессии).
+    # ponytail: берётся последний cd/git -C в строке, подоболочки и переменные
+    # в пути не разбираются; понадобится - разбирать команду настоящим парсером.
+    dir="$(grep -oE '(^|[;&|] *)cd +[^ ;&|]+' <<<"$cmd" | tail -1 | sed -E 's/^.*cd +//' || true)"
+    gdir="$(grep -oE 'git +-C +[^ ;&|]+' <<<"$cmd" | tail -1 | sed -E 's/^git +-C +//' || true)"
+    [ -n "$gdir" ] && dir="$gdir"
+    dir="${dir%\"}"; dir="${dir#\"}"; dir="${dir%\'}"; dir="${dir#\'}"; dir="${dir/#\~/$HOME}"
+    [ -n "$dir" ] && [ -d "$dir" ] && cd "$dir"
     repo="$(current_repo)" || exit 0; [ -n "$repo" ] || exit 0
-    if grep -q 'git push' <<<"$cmd" && ! grep -q -- '--no-verify' <<<"$cmd"; then ci_passed >/dev/null 2>&1 || true; fi
+    if grep -qE 'git( +-C +[^ ;&|]+)? push' <<<"$cmd" && ! grep -q -- '--no-verify' <<<"$cmd"; then ci_passed >/dev/null 2>&1 || true; fi
     pr="$(gh pr view --json number --jq .number 2>/dev/null)" || exit 0
     out="$(EVENT="хук: ${cmd%% *} ${cmd#* }" one "$repo" "$pr" 2>/dev/null)" || exit 0
     hint=""
