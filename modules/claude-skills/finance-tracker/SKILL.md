@@ -152,13 +152,17 @@ When the user sends one or more photos:
 LEDGER=~/claude-cowork/finances/transactions.jsonl
 BOOK=~/claude-cowork/finances/Учёт_финансов.xlsx
 
-kbengine fin add --ledger "$LEDGER" \
+kbengine fin add --ledger "$LEDGER" --from "$BOOK" \
   --kind expense --date 2026-08-02 \
   --cat 'Еда' --sub 'Продукты' --place 'Магнит' \
   --amount '129,98' --source 'Чек' --account 'Сбербанк'
 
 kbengine fin sync --from "$BOOK" --ledger "$LEDGER"
 ```
+
+`--from "$BOOK"` нужен, чтобы движок взял валюту счёта с листа «Счета»: чек в долларах со
+счёта в долларах записывается в долларах сам. Без `--from` запись уходит рублями, и `fin sync`
+откажет на несовпадении с валютой счёта. Сумму с чека называть в его валюте, не пересчитывая.
 
 `--date` по умолчанию сегодня, `--amount` понимает `129,98`, `1 500` и `418р`.
 `id` движок генерирует сам. Категорию сверять со словарём
