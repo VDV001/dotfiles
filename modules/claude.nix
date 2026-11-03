@@ -351,6 +351,14 @@
               # разъедутся они молча.
               "--view-base"
               "http://127.0.0.1:8097"
+              # Поиск по файлам (search_files, read_file) по папкам, выбранным
+              # в окне kb-desktop: тот же config.json, что у окна, и общий с ним
+              # index.gob. ⚠️ Расширяет то, что читает агент: с флагом это
+              # текстовые файлы из папок окна, а не только записи каталога.
+              # Закрыто то же, что индексу: exclude окна (finances), секреты,
+              # служебные папки. Решение владельца 03.11, kb-engine #375.
+              "--files-config"
+              "${config.home.homeDirectory}/Library/Application Support/kb-desktop/config.json"
             ];
             type = "stdio";
           };
