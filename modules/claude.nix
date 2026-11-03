@@ -186,6 +186,11 @@
             command = "bash ${config.home.homeDirectory}/.claude/statusline.sh";
             padding = 0;
           };
+
+          env = lib.optionalAttrs
+            pkgs.stdenv.hostPlatform.isDarwin {
+              NODE_EXTRA_CA_CERTS = "/etc/ssl/certs/ca-certificates.crt";
+          };
         };
 
         # ── Global instructions → ~/.claude/CLAUDE.md ────────────
